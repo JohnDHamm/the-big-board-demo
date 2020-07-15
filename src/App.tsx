@@ -1,19 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { TestComponent } from './components';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BoardPage,
+  HomePage,
+  MorePage,
+  MyTeamPage,
+  PlayersPage,
+} from './pages';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload!
-        </p>
-        <TestComponent />
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/board" component={BoardPage} />
+        <Route path="/players" component={PlayersPage} />
+        <Route path="/my-team" component={MyTeamPage} />
+        <Route path="/more" component={MorePage} />
+        <Route path="/" component={HomePage} />
+      </Switch>
+    </Router>
   );
 }
 

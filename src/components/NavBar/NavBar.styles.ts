@@ -13,11 +13,15 @@ export const Container = styled.div`
 
 export const LogoContainer = styled.div``;
 
-export const TextLogo = styled(Link)`
-  font-size: 2rem;
-  color: #bada55;
-  font-weight: 900;
+export const LogoLink = styled(Link)`
   text-decoration: none;
+`;
+
+export const TextLogo = styled.h1<{ active: boolean }>`
+  margin: 0;
+  font-size: 2.25rem;
+  color: ${(props) => (props.active ? '#bada55' : 'grey')};
+  font-weight: 900;
 `;
 
 export const TabsContainer = styled.div`
@@ -30,11 +34,11 @@ export const TabLink = styled(Link)`
 
 export const Tab = styled.div<{ active: boolean }>`
   margin: 0 2rem;
-  color: ${(props) => (props.active ? '#bada55' : 'white')};
+  color: ${(props) => (props.active ? '#bada55' : 'grey')};
   font-size: 1.25rem;
   font-weight: bold;
   &:hover {
-    color: grey;
+    color: ${(props) => (props.active ? 'white' : 'grey')};
   }
   &:last-of-type {
     margin-right: 0;

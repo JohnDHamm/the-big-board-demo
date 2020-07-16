@@ -20,7 +20,7 @@ describe('NavBar', () => {
         <NavBar />
       </MemoryRouter>
     );
-    const tabs = ['Board', 'Players', 'My Team', 'More'];
+    const tabs = ['Players', 'My Team', 'More'];
     tabs.forEach((tab) => {
       const boardTab = getByText(tab);
       console.log('boardTab', boardTab);

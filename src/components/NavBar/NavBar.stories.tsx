@@ -6,9 +6,11 @@ export default {
   title: 'NavBar',
   decorators: [
     (getStory: () => React.ReactNode) => (
-      <MemoryRouter>{getStory()}</MemoryRouter>
+      <MemoryRouter initialEntries={['/app/board']}>{getStory()}</MemoryRouter>
     ),
   ],
 };
 
 export const Default = () => <NavBar />;
+
+export const Disabled = () => <NavBar disabled={true} />;

@@ -1,7 +1,11 @@
+const protectedRoutePath = '/app';
+
 export const ROUTES = {
+  APP: protectedRoutePath,
+  APP_LOADING: `${protectedRoutePath}/loading`,
   HOME: '/',
-  BOARD: '/board',
-  PLAYERS: '/players',
-  MY_TEAM: '/my-team',
-  MORE: '/more',
+  BOARD: `${protectedRoutePath}/board`,
+  PLAYERS: `${protectedRoutePath}/players`,
+  MY_TEAM: `${protectedRoutePath}/my-team`,
+  MORE: `${protectedRoutePath}/more`,
 };

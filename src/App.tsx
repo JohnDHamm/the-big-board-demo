@@ -16,11 +16,14 @@ import {
 } from './pages';
 import { NavBar } from './components';
 import { useLocation } from 'react-router-dom';
+import { PlayersContext, TeamsContext, UserContext } from './contexts';
+import { usePlayers, useTeams, useUser } from './hooks';
 
 const ProtectedRoutes = () => {
   const location = useLocation();
+  const { user } = React.useContext(UserContext);
 
-  return (
+  return user.id.length > 0 ? (
     <div>
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
       <Switch>
@@ -32,17 +35,29 @@ const ProtectedRoutes = () => {
       </Switch>
       <Redirect to={ROUTES.APP_LOADING} />
     </div>
+  ) : (
+    <Redirect to={ROUTES.HOME} />
   );
 };
 
 function App() {
+  const players = usePlayers();
+  const teams = useTeams();
+  const user = useUser();
+
   return (
-    <Router>
-      <Switch>
-        <Route path={ROUTES.APP} component={ProtectedRoutes} />
-        <Route path={ROUTES.HOME} component={HomePage} />
-      </Switch>
-    </Router>
+    <UserContext.Provider value={user}>
+      <TeamsContext.Provider value={teams}>
+        <PlayersContext.Provider value={players}>
+          <Router>
+            <Switch>
+              <Route path={ROUTES.APP} component={ProtectedRoutes} />
+              <Route path={ROUTES.HOME} component={HomePage} />
+            </Switch>
+          </Router>
+        </PlayersContext.Provider>
+      </TeamsContext.Provider>
+    </UserContext.Provider>
   );
 }
 

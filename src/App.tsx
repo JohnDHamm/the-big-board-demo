@@ -16,6 +16,8 @@ import {
 } from './pages';
 import { NavBar } from './components';
 import { useLocation } from 'react-router-dom';
+import { PlayersContext } from './contexts';
+import { usePlayers } from './hooks';
 
 const ProtectedRoutes = () => {
   const location = useLocation();
@@ -36,13 +38,17 @@ const ProtectedRoutes = () => {
 };
 
 function App() {
+  const players = usePlayers();
+
   return (
-    <Router>
-      <Switch>
-        <Route path={ROUTES.APP} component={ProtectedRoutes} />
-        <Route path={ROUTES.HOME} component={HomePage} />
-      </Switch>
-    </Router>
+    <PlayersContext.Provider value={players}>
+      <Router>
+        <Switch>
+          <Route path={ROUTES.APP} component={ProtectedRoutes} />
+          <Route path={ROUTES.HOME} component={HomePage} />
+        </Switch>
+      </Router>
+    </PlayersContext.Provider>
   );
 }
 

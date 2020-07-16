@@ -11,7 +11,7 @@ declare global {
 
   interface PlayersContextInterface {
     players: PlayersContext;
-    setCurrentPlayers: (player: PlayersContext) => void;
+    setCurrentPlayers: (players: PlayersContext) => void;
   }
 }
 

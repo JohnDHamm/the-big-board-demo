@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTES } from '../../routes';
-import { PlayersContext } from '../../contexts';
+import { PlayersContext, TeamsContext } from '../../contexts';
 
 const AppLoadingPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
+  const { teams } = React.useContext(TeamsContext);
 
   React.useEffect(() => {
     console.log('players', players);
-  }, [players]);
+    console.log('teams', teams);
+  }, [players, teams]);
 
   return (
     <div>

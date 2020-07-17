@@ -2,7 +2,7 @@ import React from 'react';
 
 declare global {
   interface SelectionPick {
-    selection: number;
+    selectionNumber: number;
   }
 
   type MyPlayer = Player & SelectionPick;
@@ -23,7 +23,7 @@ export const mockMyTeam: MyTeam = [
     team_id: 'PIT',
     position: 'WR',
     rankings: null,
-    selection: 42,
+    selectionNumber: 42,
   },
   {
     id: 'RTannehillTENQB',
@@ -32,7 +32,7 @@ export const mockMyTeam: MyTeam = [
     team_id: 'TEN',
     position: 'QB',
     rankings: null,
-    selection: 30,
+    selectionNumber: 30,
   },
 ];
 

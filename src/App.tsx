@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
   const location = useLocation();
   const { user } = React.useContext(UserContext);
 
-  return user.id.length > 0 ? (
+  return user ? (
     <div>
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
       <Switch>

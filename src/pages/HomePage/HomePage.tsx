@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
     const testUser: User = {
       id: 'TestUser-SomeLeague-1',
       name: 'Testy Mac',
-      commish: true,
+      isCommish: true,
     };
     setCurrentUser(testUser);
     history.push(ROUTES.APP);

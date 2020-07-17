@@ -1,8 +1,7 @@
 import React from 'react';
-import { mockUser } from '../../contexts/UserContext/UserContext';
 
 export const useUser = (): UserContextInterface => {
-  const [user, setUser] = React.useState<User>(mockUser);
+  const [user, setUser] = React.useState<User>(null);
 
   const setCurrentUser = React.useCallback((currentUser: User): void => {
     setUser(currentUser);

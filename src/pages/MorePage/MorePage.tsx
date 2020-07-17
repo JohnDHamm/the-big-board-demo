@@ -5,11 +5,7 @@ const MorePage: React.FC = () => {
   const { setCurrentUser } = React.useContext(UserContext);
 
   const logout = (): void => {
-    setCurrentUser({
-      id: '',
-      name: '',
-      commish: false,
-    });
+    setCurrentUser(null);
   };
 
   return (

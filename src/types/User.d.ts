@@ -1,5 +1,7 @@
-interface User {
+interface Owner {
   id: string;
   name: string;
-  commish: boolean;
+  isCommish: boolean;
 }
+
+type User = Owner | null;

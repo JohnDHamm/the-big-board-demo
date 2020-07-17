@@ -7,14 +7,8 @@ declare global {
   }
 }
 
-export const mockUser: User = {
-  id: '',
-  name: '',
-  commish: false,
-};
-
 export const USER_DEFAULT_VALUE: UserContextInterface = {
-  user: mockUser,
+  user: null,
   setCurrentUser: () => {},
 };
 

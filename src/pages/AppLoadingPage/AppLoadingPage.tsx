@@ -6,20 +6,23 @@ import {
   TeamsContext,
   UserContext,
   MyTeamContext,
+  DraftContext,
 } from '../../contexts';
 
 const AppLoadingPage: React.FC = () => {
+  const { draft } = React.useContext(DraftContext);
   const { myTeam } = React.useContext(MyTeamContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
   const { user } = React.useContext(UserContext);
 
   React.useEffect(() => {
+    console.log('draft', draft);
     console.log('players', players);
     console.log('teams', teams);
     console.log('user', user);
     console.log('myTeam', myTeam);
-  }, [myTeam, players, teams, user]);
+  }, [draft, myTeam, players, teams, user]);
 
   return (
     <div>

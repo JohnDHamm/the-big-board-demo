@@ -23,7 +23,6 @@ export const mockDraft: Draft = {
   league: {
     id: 'NashvilleVolleyball-1',
     name: 'Nashville Volleyball',
-    commish_ids: ['John-NashvilleVolleyball-1', 'Homer-NashvilleVolleyball-1'],
     ppr: false,
     position_slots: [
       {

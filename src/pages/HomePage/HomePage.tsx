@@ -2,26 +2,21 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
-import { getLeaguesList } from '../../api';
+import { getLeaguesList, login } from '../../api';
 
 const HomePage: React.FC = () => {
   const { user, setCurrentUser } = React.useContext(UserContext);
   const history = useHistory();
 
-  const [leagues, setLeagues] = React.useState<LeagueListItem>([]);
+  const [leagues, setLeagues] = React.useState<LeagueListItem[]>([]);
   const [selectedLeague, setSelectedLeague] = React.useState<string>('');
   const [showInputs, setShowInputs] = React.useState<boolean>(false);
 
   const initLeagues = async () => {
     const leaguesList = await getLeaguesList();
-    console.log('leaguesList', leaguesList);
     if (leaguesList) {
       setLeagues(leaguesList);
     }
-  };
-
-  const selectLeague = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedLeague(e.target.value);
   };
 
   const renderSelectOptions = (): JSX.Element[] => {
@@ -42,21 +37,26 @@ const HomePage: React.FC = () => {
 
   const renderSelect = (): JSX.Element => {
     return (
-      <select onChange={selectLeague} value={selectedLeague}>
+      <select
+        onChange={(e) => setSelectedLeague(e.target.value)}
+        value={selectedLeague}
+      >
         {renderSelectOptions()}
       </select>
     );
   };
 
-  const login = (): void => {
-    const testUser: User = {
-      id: 'TestUser-SomeLeague-1',
-      name: 'Testy Mac',
-      isCommish: true,
-      leagueId: 'NashvilleVolleyball-1',
-    };
-    setCurrentUser(testUser);
-    history.push(ROUTES.APP);
+  const userLogin = async () => {
+    if (selectedLeague) {
+      const testUser: UserLogin = {
+        name: 'John',
+        password: 'password',
+        leagueId: selectedLeague,
+      };
+      const loggedInUser: User = await login(testUser);
+      setCurrentUser(loggedInUser);
+      history.push(ROUTES.APP);
+    }
   };
 
   React.useEffect(() => {
@@ -64,7 +64,6 @@ const HomePage: React.FC = () => {
   }, [user]);
 
   React.useEffect(() => {
-    console.log('selectedLeague', selectedLeague);
     setShowInputs(selectedLeague.length > 0);
   }, [selectedLeague]);
 
@@ -78,9 +77,9 @@ const HomePage: React.FC = () => {
       {leagues && renderSelect()}
       {showInputs && (
         <div>
-          <p>name</p>
-          <p>password</p>
-          <button onClick={() => login()}>login</button>
+          <p>name: John</p>
+          <p>password: password</p>
+          <button onClick={() => userLogin()}>login</button>
         </div>
       )}
     </div>

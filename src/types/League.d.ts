@@ -11,4 +11,4 @@ interface League {
   draftOrder: string[];
 }
 
-type LeagueListItem = Pick<League, 'id', 'name'>;
+type LeagueListItem = Pick<League, 'id' | 'name'>;

@@ -19,9 +19,9 @@ export const mockPlayers: PlayersContext = {
   JSmithSchusterPITWR: {
     info: {
       id: 'JSmithSchusterPITWR',
-      first_name: 'JuJu',
-      last_name: 'Smith-Schuster',
-      team_id: 'PIT',
+      firstName: 'JuJu',
+      lastName: 'Smith-Schuster',
+      teamId: 'PIT',
       position: 'WR',
       rankings: null,
     },
@@ -30,9 +30,9 @@ export const mockPlayers: PlayersContext = {
   RTannehillTENQB: {
     info: {
       id: 'RTannehillTENQB',
-      first_name: 'Ryan',
-      last_name: 'Tannehill',
-      team_id: 'TEN',
+      firstName: 'Ryan',
+      lastName: 'Tannehill',
+      teamId: 'TEN',
       position: 'QB',
       rankings: null,
     },

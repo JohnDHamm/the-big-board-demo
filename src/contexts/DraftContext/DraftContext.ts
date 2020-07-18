@@ -9,7 +9,6 @@ declare global {
     };
     owners: User[];
     status: 'closed' | 'open' | 'paused' | 'done';
-    draftOrder: string[];
     picks: DraftPick[];
   }
 
@@ -24,7 +23,7 @@ export const mockDraft: Draft = {
     id: 'NashvilleVolleyball-1',
     name: 'Nashville Volleyball',
     ppr: false,
-    position_slots: [
+    positionSlots: [
       {
         position: 'QB',
         total: 2,
@@ -50,6 +49,11 @@ export const mockDraft: Draft = {
         total: 2,
       },
     ],
+    draftOrder: [
+      'Homer-NashvilleVolleyball-1',
+      'Rayne-NashvilleVolleyball-1',
+      'John-NashvilleVolleyball-1',
+    ],
   },
   currentPick: {
     selectionNumber: 7,
@@ -60,25 +64,23 @@ export const mockDraft: Draft = {
       id: 'John-NashvilleVolleyball-1',
       name: 'John',
       isCommish: true,
+      leagueId: 'NashvilleVolleyball-1',
     },
     {
       id: 'Homer-NashvilleVolleyball-1',
       name: 'Homer',
       isCommish: true,
+      leagueId: 'NashvilleVolleyball-1',
     },
     {
       id: 'Rayne-NashvilleVolleyball-1',
       name: 'Rayne',
       isCommish: false,
+      leagueId: 'NashvilleVolleyball-1',
     },
   ],
   status: 'open',
   picks: [],
-  draftOrder: [
-    'Homer-NashvilleVolleyball-1',
-    'Rayne-NashvilleVolleyball-1',
-    'John-NashvilleVolleyball-1',
-  ],
 };
 
 export const DRAFT_DEFAULT_VALUE: DraftContextInterface = {

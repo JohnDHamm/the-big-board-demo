@@ -8,7 +8,13 @@ import {
   MyTeamContext,
   DraftContext,
 } from '../../contexts';
-import { getLeague, getOwners, getPlayers, getTeams } from '../../api';
+import {
+  getLeague,
+  getOwners,
+  getPicks,
+  getPlayers,
+  getTeams,
+} from '../../api';
 import { createObjWithKeyBy } from '../../functions';
 import isEmpty from 'lodash.isempty';
 
@@ -21,12 +27,14 @@ const AppLoadingPage: React.FC = () => {
 
   const [league, setLeague] = React.useState<League | null>(null);
   const [owners, setOwners] = React.useState<Owner[] | null>(null);
+  const [picks, setPicks] = React.useState<DraftPick[] | null>(null);
 
   const initDraft = React.useCallback(
     (leagueId: string) => {
       getLeague(leagueId)
         .then((usersLeague: League) => {
           if (usersLeague) {
+            console.log('usersLeague', usersLeague);
             setLeague(usersLeague);
           }
         })
@@ -34,6 +42,7 @@ const AppLoadingPage: React.FC = () => {
           getOwners(leagueId)
             .then((leagueOwners: Owner[]) => {
               if (leagueOwners.length > 0) {
+                console.log('leagueOwners', leagueOwners);
                 setOwners(leagueOwners);
               }
             })
@@ -41,6 +50,7 @@ const AppLoadingPage: React.FC = () => {
               getTeams()
                 .then((leagueTeams: Team[]) => {
                   if (!isEmpty(leagueTeams)) {
+                    console.log('leagueTeams', leagueTeams);
                     setTimeout(
                       () =>
                         setCurrentTeams(createObjWithKeyBy(leagueTeams, 'id')),
@@ -49,17 +59,33 @@ const AppLoadingPage: React.FC = () => {
                   }
                 })
                 .then(() =>
-                  getPlayers().then((leaguePlayers: Player[]) => {
-                    if (!isEmpty(leaguePlayers)) {
-                      setTimeout(
-                        () =>
-                          setCurrentPlayers(
-                            createObjWithKeyBy(leaguePlayers, 'id')
-                          ),
-                        3000
-                      );
-                    }
-                  })
+                  getPlayers()
+                    .then((leaguePlayers: Player[]) => {
+                      if (!isEmpty(leaguePlayers)) {
+                        console.log('leaguePlayers', leaguePlayers);
+                        setTimeout(
+                          () =>
+                            setCurrentPlayers(
+                              createObjWithKeyBy(leaguePlayers, 'id')
+                            ),
+                          3000
+                        );
+                      }
+                    })
+                    .then(() =>
+                      getPicks(leagueId).then((leaguePicks: DraftPick[]) => {
+                        if (!isEmpty(leaguePicks)) {
+                          setTimeout(() => {
+                            console.log('leaguePicks', leaguePicks);
+                            const formatPicks = createObjWithKeyBy(
+                              leaguePicks,
+                              'selectionNumber'
+                            );
+                            setPicks(formatPicks as DraftPick[]);
+                          }, 2000);
+                        }
+                      })
+                    )
                 )
             )
         );
@@ -69,11 +95,12 @@ const AppLoadingPage: React.FC = () => {
 
   React.useEffect(() => {
     // console.log('user', user);
-    console.log('league', league);
-    console.log('owners', owners);
-    console.log('teams', teams);
-    console.log('players', players);
-  }, [league, owners, players, teams]);
+    // console.log('league', league);
+    // console.log('owners', owners);
+    // console.log('teams', teams);
+    // console.log('players', players);
+    console.log('picks', picks);
+  }, [league, owners, picks, players, teams]);
 
   React.useEffect(() => {
     if (user) {

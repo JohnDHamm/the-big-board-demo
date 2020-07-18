@@ -1,5 +1,8 @@
-interface User {
+interface Owner {
   id: string;
   name: string;
-  commish: boolean;
+  leagueId: string;
+  isCommish: boolean;
 }
+
+type User = Owner | null;

@@ -6,7 +6,9 @@ interface Position_Slot {
 interface League {
   id: string;
   name: string;
-  commish_ids: string[];
   ppr?: boolean;
-  position_slots: Position_Slot[];
+  positionSlots: Position_Slot[];
+  draftOrder: string[];
 }
+
+type LeagueListItem = Pick<League, 'id', 'name'>;

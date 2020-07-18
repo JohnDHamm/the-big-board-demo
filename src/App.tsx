@@ -16,14 +16,20 @@ import {
 } from './pages';
 import { NavBar } from './components';
 import { useLocation } from 'react-router-dom';
-import { PlayersContext, TeamsContext, UserContext } from './contexts';
-import { usePlayers, useTeams, useUser } from './hooks';
+import {
+  DraftContext,
+  MyTeamContext,
+  PlayersContext,
+  TeamsContext,
+  UserContext,
+} from './contexts';
+import { useDraft, useMyTeam, usePlayers, useTeams, useUser } from './hooks';
 
 const ProtectedRoutes = () => {
   const location = useLocation();
   const { user } = React.useContext(UserContext);
 
-  return user.id.length > 0 ? (
+  return user ? (
     <div>
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
       <Switch>
@@ -41,22 +47,28 @@ const ProtectedRoutes = () => {
 };
 
 function App() {
+  const draft = useDraft();
+  const myTeam = useMyTeam();
   const players = usePlayers();
   const teams = useTeams();
   const user = useUser();
 
   return (
     <UserContext.Provider value={user}>
-      <TeamsContext.Provider value={teams}>
-        <PlayersContext.Provider value={players}>
-          <Router>
-            <Switch>
-              <Route path={ROUTES.APP} component={ProtectedRoutes} />
-              <Route path={ROUTES.HOME} component={HomePage} />
-            </Switch>
-          </Router>
-        </PlayersContext.Provider>
-      </TeamsContext.Provider>
+      <DraftContext.Provider value={draft}>
+        <TeamsContext.Provider value={teams}>
+          <PlayersContext.Provider value={players}>
+            <MyTeamContext.Provider value={myTeam}>
+              <Router>
+                <Switch>
+                  <Route path={ROUTES.APP} component={ProtectedRoutes} />
+                  <Route path={ROUTES.HOME} component={HomePage} />
+                </Switch>
+              </Router>
+            </MyTeamContext.Provider>
+          </PlayersContext.Provider>
+        </TeamsContext.Provider>
+      </DraftContext.Provider>
     </UserContext.Provider>
   );
 }

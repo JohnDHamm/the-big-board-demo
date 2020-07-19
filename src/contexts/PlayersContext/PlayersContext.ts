@@ -1,10 +1,11 @@
 import React from 'react';
+interface Available {
+  available: boolean;
+}
 
 declare global {
-  interface PlayerInfo {
-    info: Player;
-    available: boolean;
-  }
+  type PlayerInfo = Player & Available;
+
   interface PlayersContext {
     [key: string]: PlayerInfo;
   }

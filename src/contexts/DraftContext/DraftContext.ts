@@ -7,9 +7,9 @@ declare global {
       selectionNumber: number;
       ownerId: string;
     };
-    owners: User[];
+    owners: Owner[];
     status: 'closed' | 'open' | 'paused' | 'done';
-    picks: DraftPick[];
+    picks: DraftPickContext;
   }
 
   interface DraftContextInterface {
@@ -80,7 +80,7 @@ export const mockDraft: Draft = {
     },
   ],
   status: 'open',
-  picks: [],
+  picks: {},
 };
 
 export const DRAFT_DEFAULT_VALUE: DraftContextInterface = {

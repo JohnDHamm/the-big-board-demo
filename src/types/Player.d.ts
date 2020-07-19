@@ -1,7 +1,7 @@
 type NFL_Position = 'QB' | 'RB' | 'WR' | 'TE' | 'D' | 'K';
 
 interface NFL_Ranking {
-  non_ppr: number;
+  nonPpr: number;
   ppr: number;
 }
 interface NFL_Player_Ranking {
@@ -11,9 +11,9 @@ interface NFL_Player_Ranking {
 
 interface Player {
   id: string;
-  first_name: string;
-  last_name: string;
-  team_id: string | null;
+  firstName: string;
+  lastName: string;
+  teamId: string | null;
   position: NFL_Position;
   rankings?: NFL_Player_Ranking | null;
 }

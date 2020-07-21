@@ -3,12 +3,15 @@ interface Position_Slot {
   total: number;
 }
 
+type DraftStatus = 'closed' | 'open' | 'paused' | 'done';
+
 interface League {
   id: string;
   name: string;
   ppr?: boolean;
   positionSlots: Position_Slot[];
   draftOrder: string[];
+  draftStatus: DraftStatus;
 }
 
 type LeagueListItem = Pick<League, 'id' | 'name'>;

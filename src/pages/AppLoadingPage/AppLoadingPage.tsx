@@ -22,9 +22,9 @@ import concat from 'lodash.concat';
 
 const AppLoadingPage: React.FC = () => {
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
-  const { myTeam } = React.useContext(MyTeamContext);
+  const { setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
-  const { teams, setCurrentTeams } = React.useContext(TeamsContext);
+  const { setCurrentTeams } = React.useContext(TeamsContext);
   const { user } = React.useContext(UserContext);
 
   const [league, setLeague] = React.useState<League>({
@@ -36,6 +36,11 @@ const AppLoadingPage: React.FC = () => {
   });
   const [owners, setOwners] = React.useState<Owner[]>([]);
   const [savedPicks, setSavedPicks] = React.useState<DraftPickContext>({});
+
+  const [teamsAreReady, setTeamsAreReady] = React.useState<boolean>(false);
+  const [playersAreReady, setPlayersAreReady] = React.useState<boolean>(false);
+  const [myTeamIsReady, setMyTeamIsReady] = React.useState<boolean>(false);
+  const [picksAreReady, setPicksAreReady] = React.useState<boolean>(false);
 
   //TODO: move this to functions
   const createCompleteDraftOrder = (
@@ -108,6 +113,7 @@ const AppLoadingPage: React.FC = () => {
     updatedDraft.picks = picksContext;
     updatedDraft.currentPick = currentPick;
     setCurrentDraft(updatedDraft);
+    setTimeout(() => setPicksAreReady(true), 3000);
   }, [league, owners, savedPicks, initPicks, draft, setCurrentDraft]);
 
   const initDraft = React.useCallback(
@@ -133,54 +139,43 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getTeams())
         .then((leagueTeams: Team[]) => {
           if (!isEmpty(leagueTeams)) {
-            // setTimeout(() => {
-            const formatTeams: TeamsContext = keyby(leagueTeams, 'id');
-            setCurrentTeams(formatTeams);
-            // }, 1000);
+            setTimeout(() => {
+              const formatTeams: TeamsContext = keyby(leagueTeams, 'id');
+              setCurrentTeams(formatTeams);
+              setTeamsAreReady(true);
+            }, 1000);
           }
         })
         .then(() => getPlayers())
         .then((leaguePlayers: Player[]) => {
           if (!isEmpty(leaguePlayers)) {
-            // setTimeout(() => {
+            setTimeout(() => {
+              //set all players' availability to true
+              const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
+                available: true,
+                ...player,
+              }));
 
-            //set all players' availability to true
-            const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
-              available: true,
-              ...player,
-            }));
-
-            const formatPlayers: PlayersContext = keyby(playersInfo, 'id');
-            setCurrentPlayers(formatPlayers);
-            // }, 2000);
+              const formatPlayers: PlayersContext = keyby(playersInfo, 'id');
+              setCurrentPlayers(formatPlayers);
+              setPlayersAreReady(true);
+            }, 2000);
           }
         })
         .then(() => getPicks(leagueId))
         .then((leaguePicks: DraftPick[]) => {
           if (!isEmpty(leaguePicks)) {
-            // setTimeout(() => {
             const formatPicks: DraftPickContext = keyby(
               leaguePicks,
               'selectionNumber'
             );
             setSavedPicks(formatPicks);
-            // }, 3000);
           }
         })
         .catch((err) => console.log('err', err));
     },
     [setCurrentTeams, setCurrentPlayers, draft, setCurrentDraft]
   );
-
-  React.useEffect(() => {
-    console.log('draft', draft);
-  }, [draft]);
-
-  React.useEffect(() => {
-    if (!isEmpty(league.draftOrder) && !isEmpty(owners)) {
-      createPicksContext();
-    }
-  }, [league, owners, createPicksContext]);
 
   const checkPlayersAvailability = React.useCallback((): void => {
     const selectedPlayers: DraftPick[] = [];
@@ -195,15 +190,15 @@ const AppLoadingPage: React.FC = () => {
     selectedPlayers.forEach((player) => {
       updatedPlayers[player.playerId].available = false;
     });
-
     setCurrentPlayers(updatedPlayers);
-  }, [players, savedPicks, setCurrentPlayers]);
 
-  React.useEffect(() => {
-    if (!isEmpty(savedPicks) && !isEmpty(players)) {
-      checkPlayersAvailability();
-    }
-  }, [savedPicks, players, checkPlayersAvailability]);
+    const userPlayers = selectedPlayers.filter(
+      (player) => player.ownerId === user?.id
+    );
+    userPlayers.forEach((player) => delete player.ownerId);
+    setCurrentMyTeam(userPlayers as MyTeam);
+    setTimeout(() => setMyTeamIsReady(true), 4000);
+  }, [players, savedPicks, setCurrentPlayers, user, setCurrentMyTeam]);
 
   React.useEffect(() => {
     if (user) {
@@ -212,23 +207,43 @@ const AppLoadingPage: React.FC = () => {
   }, [user, initDraft]);
 
   React.useEffect(() => {
-    console.log('draft', draft);
-  }, [draft]);
+    if (!isEmpty(savedPicks) && !isEmpty(players)) {
+      checkPlayersAvailability();
+    }
+  }, [savedPicks, players, checkPlayersAvailability]);
+
+  React.useEffect(() => {
+    if (!isEmpty(league.draftOrder) && !isEmpty(owners)) {
+      createPicksContext();
+    }
+  }, [league, owners, createPicksContext]);
 
   // React.useEffect(() => {
   // }, []);
 
+  const showButton = (): boolean => {
+    const done =
+      (picksAreReady && myTeamIsReady) ||
+      (isEmpty(savedPicks) && picksAreReady && !myTeamIsReady);
+    return teamsAreReady && playersAreReady && done;
+  };
+
   return (
     <div>
       <h1>preparing draft data for</h1>
-      {league && owners && <h3>{league.name}</h3>}
-      {!isEmpty(teams) && <h3>NFL TEAMS</h3>}
-      {!isEmpty(players) && <h3>NFL PLAYERS</h3>}
-      {!isEmpty(savedPicks) && <h3>League draft selections</h3>}
+      {!isEmpty(league.draftOrder) && !isEmpty(owners) && (
+        <h3>{league.name}</h3>
+      )}
+      {teamsAreReady && <h3>NFL TEAMS</h3>}
+      {playersAreReady && <h3>NFL PLAYERS</h3>}
+      {picksAreReady && <h3>DRAFT SETTINGS AND PICKS</h3>}
+      {myTeamIsReady && <h3>YOUR TEAM ROSTER</h3>}
 
-      <Link to={ROUTES.BOARD}>
-        <button>data is loaded</button>
-      </Link>
+      {showButton() && (
+        <Link to={ROUTES.BOARD}>
+          <button>continue</button>
+        </Link>
+      )}
     </div>
   );
 };

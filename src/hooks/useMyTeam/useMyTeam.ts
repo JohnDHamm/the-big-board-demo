@@ -1,8 +1,7 @@
 import React from 'react';
-import { mockMyTeam } from '../../contexts/MyTeamContext/MyTeamContext';
 
 export const useMyTeam = (): MyTeamContextInterface => {
-  const [myTeam, setMyTeam] = React.useState<MyTeam>(mockMyTeam);
+  const [myTeam, setMyTeam] = React.useState<MyTeam>([]);
 
   const setCurrentMyTeam = React.useCallback((currentMyTeam: MyTeam): void => {
     setMyTeam(currentMyTeam);

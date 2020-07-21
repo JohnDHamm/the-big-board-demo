@@ -22,7 +22,7 @@ export const DRAFT_INITIAL_VALUE: Draft = {
     id: '',
     name: '',
     draftOrder: [],
-    draftStatus: 'closed',
+    draftStatus: 'not started',
     positionSlots: [],
   },
   owners: [],

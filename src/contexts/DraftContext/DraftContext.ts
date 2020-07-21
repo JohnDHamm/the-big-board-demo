@@ -3,10 +3,7 @@ import React from 'react';
 declare global {
   interface Draft {
     league: League;
-    currentPick: {
-      selectionNumber: number;
-      ownerId: string;
-    };
+    currentPick: CurrentDraftPick;
     owners: Owner[];
     picks: DraftPickContext;
   }

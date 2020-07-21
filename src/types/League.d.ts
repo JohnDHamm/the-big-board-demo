@@ -3,7 +3,7 @@ interface Position_Slot {
   total: number;
 }
 
-type DraftStatus = 'closed' | 'open' | 'paused' | 'done';
+type DraftStatus = 'not started' | 'open' | 'paused' | 'done';
 
 interface League {
   id: string;

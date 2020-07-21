@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import {
   PlayersContext,
@@ -22,7 +22,7 @@ import concat from 'lodash.concat';
 
 const AppLoadingPage: React.FC = () => {
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
-  const { setCurrentMyTeam } = React.useContext(MyTeamContext);
+  const { myTeam, setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { setCurrentTeams } = React.useContext(TeamsContext);
   const { user } = React.useContext(UserContext);
@@ -31,18 +31,19 @@ const AppLoadingPage: React.FC = () => {
     id: '',
     name: '',
     draftOrder: [],
-    draftStatus: 'closed',
+    draftStatus: 'not started',
     positionSlots: [],
   });
   const [owners, setOwners] = React.useState<Owner[]>([]);
-  const [savedPicks, setSavedPicks] = React.useState<DraftPickContext>({});
+  const [savedPicks, setSavedPicks] = React.useState<DraftPick[]>([]);
 
   const [teamsAreReady, setTeamsAreReady] = React.useState<boolean>(false);
   const [playersAreReady, setPlayersAreReady] = React.useState<boolean>(false);
   const [myTeamIsReady, setMyTeamIsReady] = React.useState<boolean>(false);
   const [picksAreReady, setPicksAreReady] = React.useState<boolean>(false);
+  const [goToBoard, setGoToBoard] = React.useState<boolean>(false);
 
-  //TODO: move this to functions
+  // TODO: move this to functions
   const createCompleteDraftOrder = (
     draftOrder: string[],
     totalPicks: number
@@ -62,7 +63,7 @@ const AppLoadingPage: React.FC = () => {
     return completeOrder;
   };
 
-  //TODO: move this to functions
+  // TODO: move this to functions
   const initPicks = React.useCallback(
     (league: League, owners: Owner[]): DraftPickContext => {
       const numOwners = owners.length;
@@ -92,9 +93,13 @@ const AppLoadingPage: React.FC = () => {
 
   const createPicksContext = React.useCallback(() => {
     const picksContext: DraftPickContext = initPicks(league, owners);
-    if (!isEmpty(savedPicks)) {
-      for (let key in savedPicks) {
-        picksContext[key] = savedPicks[key];
+    const savedPicksContext: DraftPickContext = keyby(
+      savedPicks,
+      'selectionNumber'
+    );
+    if (!isEmpty(savedPicksContext)) {
+      for (let key in savedPicksContext) {
+        picksContext[key] = savedPicksContext[key];
       }
     }
     let currentPick: CurrentDraftPick = {
@@ -139,9 +144,9 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getTeams())
         .then((leagueTeams: Team[]) => {
           if (!isEmpty(leagueTeams)) {
+            const formatTeams: TeamsContext = keyby(leagueTeams, 'id');
+            setCurrentTeams(formatTeams);
             setTimeout(() => {
-              const formatTeams: TeamsContext = keyby(leagueTeams, 'id');
-              setCurrentTeams(formatTeams);
               setTeamsAreReady(true);
             }, 1000);
           }
@@ -149,27 +154,16 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getPlayers())
         .then((leaguePlayers: Player[]) => {
           if (!isEmpty(leaguePlayers)) {
-            setTimeout(() => {
-              //set all players' availability to true
-              const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
-                available: true,
-                ...player,
-              }));
+            const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
+              available: true,
+              ...player,
+            }));
 
-              const formatPlayers: PlayersContext = keyby(playersInfo, 'id');
-              setCurrentPlayers(formatPlayers);
+            const formatPlayers: PlayersContext = keyby(playersInfo, 'id');
+            setCurrentPlayers(formatPlayers);
+            setTimeout(() => {
               setPlayersAreReady(true);
             }, 2000);
-          }
-        })
-        .then(() => getPicks(leagueId))
-        .then((leaguePicks: DraftPick[]) => {
-          if (!isEmpty(leaguePicks)) {
-            const formatPicks: DraftPickContext = keyby(
-              leaguePicks,
-              'selectionNumber'
-            );
-            setSavedPicks(formatPicks);
           }
         })
         .catch((err) => console.log('err', err));
@@ -186,7 +180,7 @@ const AppLoadingPage: React.FC = () => {
       }
     }
 
-    let updatedPlayers = players;
+    let updatedPlayers = Object.assign(players);
     selectedPlayers.forEach((player) => {
       updatedPlayers[player.playerId].available = false;
     });
@@ -195,12 +189,25 @@ const AppLoadingPage: React.FC = () => {
     const userPlayers = selectedPlayers.filter(
       (player) => player.ownerId === user?.id
     );
-    userPlayers.forEach((player) => delete player.ownerId);
-    setCurrentMyTeam(userPlayers as MyTeam);
+    setCurrentMyTeam(userPlayers);
     setTimeout(() => setMyTeamIsReady(true), 4000);
-  }, [players, savedPicks, setCurrentPlayers, user, setCurrentMyTeam]);
+  }, [players, savedPicks, setCurrentMyTeam, setCurrentPlayers, user]);
+
+  const getLeaguePicks = (leagueId: string) => {
+    getPicks(leagueId)
+      .then((leaguePicks: DraftPick[]) => {
+        if (!isEmpty(leaguePicks)) {
+          console.log('leaguePicks', leaguePicks);
+          setSavedPicks(leaguePicks);
+        }
+      })
+      .catch((err) => console.log('err', err));
+  };
 
   React.useEffect(() => {
+    console.log('user', user);
+    if (user && user.leagueId !== '') {
+    }
     if (user) {
       initDraft(user.leagueId);
     }
@@ -218,15 +225,41 @@ const AppLoadingPage: React.FC = () => {
     }
   }, [league, owners, createPicksContext]);
 
-  // React.useEffect(() => {
-  // }, []);
+  React.useEffect(() => {
+    console.log('league', league);
+    if (league.id !== '') {
+      if (league.draftStatus !== 'not started') {
+        getLeaguePicks(league.id);
+      } else {
+        setTimeout(() => {
+          setPicksAreReady(true);
+          setMyTeamIsReady(true);
+        }, 3000);
+      }
+    }
+  }, [league]);
 
-  const showButton = (): boolean => {
-    const done =
-      (picksAreReady && myTeamIsReady) ||
-      (isEmpty(savedPicks) && picksAreReady && !myTeamIsReady);
-    return teamsAreReady && playersAreReady && done;
-  };
+  React.useEffect(() => {
+    console.log('players', players);
+  }, [players]);
+
+  React.useEffect(() => {
+    console.log('draft', draft);
+  }, [draft]);
+
+  React.useEffect(() => {
+    console.log('myTeam', myTeam);
+  }, [myTeam]);
+
+  React.useEffect(() => {
+    console.log('savedPicks', savedPicks);
+  }, [savedPicks]);
+
+  React.useEffect(() => {
+    if (teamsAreReady && playersAreReady && picksAreReady && myTeamIsReady) {
+      setTimeout(() => setGoToBoard(true), 1500);
+    }
+  }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
 
   return (
     <div>
@@ -238,12 +271,7 @@ const AppLoadingPage: React.FC = () => {
       {playersAreReady && <h3>NFL PLAYERS</h3>}
       {picksAreReady && <h3>DRAFT SETTINGS AND PICKS</h3>}
       {myTeamIsReady && <h3>YOUR TEAM ROSTER</h3>}
-
-      {showButton() && (
-        <Link to={ROUTES.BOARD}>
-          <button>continue</button>
-        </Link>
-      )}
+      {goToBoard && <Redirect to={ROUTES.BOARD} />}
     </div>
   );
 };

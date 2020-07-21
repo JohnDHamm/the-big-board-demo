@@ -1,14 +1,7 @@
 import React from 'react';
 
 declare global {
-  interface SelectionPick {}
-
-  interface MyPlayer {
-    playerId: string;
-    selectionNumber: number;
-  }
-
-  type MyTeam = MyPlayer[];
+  type MyTeam = DraftPick[];
 
   interface MyTeamContextInterface {
     myTeam: MyTeam;

@@ -15,7 +15,7 @@ import {
 interface Props {
   selectionNumber: number;
   ownerName: string;
-  player: Player;
+  player: PlayerInfo | undefined;
   team: Team | null;
 }
 

@@ -16,11 +16,13 @@ const BoardPage: React.FC = () => {
     const { picks } = draft;
     const listEndNum = roundNum * picksPerRound;
     const listStartNum = listEndNum - picksPerRound + 1;
-    const foo: JSX.Element[] = [];
+    const picksToRender: JSX.Element[] = [];
     for (let i = listStartNum; i < listEndNum + 1; i++) {
-      const owner = draft.owners.find((owner) => picks[i].ownerId === owner.id);
-      const player = players[picks[i].playerId];
-      foo.push(
+      const owner: Owner | undefined = draft.owners.find(
+        (owner) => picks[i].ownerId === owner.id
+      );
+      const player: PlayerInfo | undefined = players[picks[i].playerId];
+      picksToRender.push(
         <PickCard
           key={i}
           selectionNumber={picks[i].selectionNumber}
@@ -30,7 +32,7 @@ const BoardPage: React.FC = () => {
         />
       );
     }
-    return foo;
+    return picksToRender;
   };
 
   React.useEffect(() => {

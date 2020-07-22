@@ -1,8 +1,9 @@
 import React from 'react';
 import TestComponent from './TestComponent';
+import { componentPathHelper } from '../../storybook';
 
 export default {
-  title: 'TestComponent',
+  title: componentPathHelper('TestComponent'),
   component: TestComponent,
 };
 

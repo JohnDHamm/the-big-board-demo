@@ -1,3 +1,4 @@
 import calcPickRoundNumber from './calcPickRoundNumber/calcPickRoundNumber';
+import calcTotalRounds from './calcTotalRounds/calcTotalRounds';
 
-export { calcPickRoundNumber };
+export { calcPickRoundNumber, calcTotalRounds };

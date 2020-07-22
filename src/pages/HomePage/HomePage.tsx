@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
 
   const [leagues, setLeagues] = React.useState<LeagueListItem[]>([]);
   const [selectedLeague, setSelectedLeague] = React.useState<string>('');
-  const [showInputs, setShowInputs] = React.useState<boolean>(false);
+  const [showInputs, setShowInputs] = React.useState<boolean>(true);
 
   const initLeagues = async () => {
     const leaguesList = await getLeaguesList();
@@ -47,16 +47,17 @@ const HomePage: React.FC = () => {
   };
 
   const userLogin = async () => {
-    if (selectedLeague) {
-      const testUser: UserLogin = {
-        name: 'John',
-        password: 'password',
-        leagueId: selectedLeague,
-      };
-      const loggedInUser: User = await login(testUser);
-      setCurrentUser(loggedInUser);
-      history.push(ROUTES.APP);
-    }
+    // if (selectedLeague) {
+    const testUser: UserLogin = {
+      name: 'Richard',
+      password: 'password',
+      // leagueId: selectedLeague,
+      leagueId: 'Nashville_Volleyball-1',
+    };
+    const loggedInUser: User = await login(testUser);
+    setCurrentUser(loggedInUser);
+    history.push(ROUTES.APP);
+    // }
   };
 
   React.useEffect(() => {
@@ -64,7 +65,7 @@ const HomePage: React.FC = () => {
   }, [user]);
 
   React.useEffect(() => {
-    setShowInputs(selectedLeague.length > 0);
+    // setShowInputs(selectedLeague.length > 0);
   }, [selectedLeague]);
 
   React.useEffect(() => {

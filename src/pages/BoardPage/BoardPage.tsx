@@ -1,7 +1,12 @@
 import React from 'react';
-import { PickCard } from '../../components';
+import {
+  CenterContent,
+  PageContainer,
+  PicksContainer,
+} from './BoardPage.styles';
+import { DraftRoundTitleBar, PickCard } from '../../components';
 import { DraftContext, PlayersContext, TeamsContext } from '../../contexts';
-import { calcPickRoundNumber } from '../../functions';
+import { calcPickRoundNumber, calcTotalRounds } from '../../functions';
 
 const BoardPage: React.FC = () => {
   const { draft } = React.useContext(DraftContext);
@@ -10,6 +15,7 @@ const BoardPage: React.FC = () => {
 
   const [draftStarted, setDraftStarted] = React.useState<boolean>(false);
   const picksPerRound = draft.owners.length;
+  const totalRounds = calcTotalRounds(draft.league.positionSlots);
   const [currentRoundNum, setCurrentRoundNum] = React.useState<number>();
 
   const renderPicks = (roundNum: number): JSX.Element[] => {
@@ -42,7 +48,7 @@ const BoardPage: React.FC = () => {
   }, [picksPerRound, draft]);
 
   React.useEffect(() => {
-    // console.log('draft', draft);
+    console.log('draft', draft);
     // console.log('players', players);
     if (draft.league.draftStatus !== 'not started') {
       setDraftStarted(true);
@@ -50,16 +56,22 @@ const BoardPage: React.FC = () => {
   }, [draft, players]);
 
   return (
-    <div>
+    <PageContainer>
       {draftStarted ? (
-        <div>
-          <h3>round: {currentRoundNum}</h3>
-          {currentRoundNum && renderPicks(currentRoundNum)}
-        </div>
+        <CenterContent>
+          <DraftRoundTitleBar
+            roundNum={currentRoundNum}
+            totalRounds={totalRounds}
+            onRoundChange={(newRoundNum) => setCurrentRoundNum(newRoundNum)}
+          />
+          <PicksContainer>
+            {currentRoundNum && renderPicks(currentRoundNum)}
+          </PicksContainer>
+        </CenterContent>
       ) : (
         <h3>DRAFT HAS NOT YET STARTED</h3>
       )}
-    </div>
+    </PageContainer>
   );
 };
 

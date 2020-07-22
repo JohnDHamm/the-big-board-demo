@@ -7,7 +7,6 @@ export const Container = styled.div`
   border-radius: 21px;
   display: flex;
   margin: 4px 0;
-  position: relative;
 `;
 
 export const PickNumBlock = styled.div`

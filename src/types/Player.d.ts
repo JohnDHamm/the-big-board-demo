@@ -13,7 +13,7 @@ interface Player {
   id: string;
   firstName: string;
   lastName: string;
-  teamId: string | null;
+  teamId: string;
   position: NFL_Position;
   rankings?: NFL_Player_Ranking | null;
 }

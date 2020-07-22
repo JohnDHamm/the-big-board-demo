@@ -16,7 +16,7 @@ interface Props {
   selectionNumber: number;
   ownerName: string;
   player: PlayerInfo | undefined;
-  team: Team | null;
+  team: Team | undefined;
 }
 
 const PickCard: React.FC<Props> = ({

@@ -6,7 +6,7 @@ export const Container = styled.div`
   height: 42px;
   border-radius: 21px;
   display: flex;
-  margin: 2px 0;
+  margin: 4px 0;
   position: relative;
 `;
 

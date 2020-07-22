@@ -19,6 +19,7 @@ import isEmpty from 'lodash.isempty';
 import keyby from 'lodash.keyby';
 import find from 'lodash.find';
 import concat from 'lodash.concat';
+import { calcTotalRounds } from '../../functions';
 
 const AppLoadingPage: React.FC = () => {
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
@@ -67,8 +68,8 @@ const AppLoadingPage: React.FC = () => {
   const initPicks = React.useCallback(
     (league: League, owners: Owner[]): DraftPickContext => {
       const numOwners = owners.length;
-      const picksPerRound: number = league.positionSlots.length;
-      const totalPicks = numOwners * picksPerRound;
+      const numRounds = calcTotalRounds(league.positionSlots);
+      const totalPicks = numRounds * numOwners;
 
       const completeDraftOrder: string[] = createCompleteDraftOrder(
         league.draftOrder,
@@ -118,7 +119,7 @@ const AppLoadingPage: React.FC = () => {
     updatedDraft.picks = picksContext;
     updatedDraft.currentPick = currentPick;
     setCurrentDraft(updatedDraft);
-    setTimeout(() => setPicksAreReady(true), 3000);
+    setTimeout(() => setPicksAreReady(true), 3);
   }, [league, owners, savedPicks, initPicks, draft, setCurrentDraft]);
 
   const initDraft = React.useCallback(
@@ -148,7 +149,7 @@ const AppLoadingPage: React.FC = () => {
             setCurrentTeams(formatTeams);
             setTimeout(() => {
               setTeamsAreReady(true);
-            }, 1000);
+            }, 1);
           }
         })
         .then(() => getPlayers())
@@ -163,7 +164,7 @@ const AppLoadingPage: React.FC = () => {
             setCurrentPlayers(formatPlayers);
             setTimeout(() => {
               setPlayersAreReady(true);
-            }, 2000);
+            }, 2);
           }
         })
         .catch((err) => console.log('err', err));
@@ -190,14 +191,14 @@ const AppLoadingPage: React.FC = () => {
       (player) => player.ownerId === user?.id
     );
     setCurrentMyTeam(userPlayers);
-    setTimeout(() => setMyTeamIsReady(true), 4000);
+    setTimeout(() => setMyTeamIsReady(true), 4);
   }, [players, savedPicks, setCurrentMyTeam, setCurrentPlayers, user]);
 
   const getLeaguePicks = (leagueId: string) => {
     getPicks(leagueId)
       .then((leaguePicks: DraftPick[]) => {
         if (!isEmpty(leaguePicks)) {
-          console.log('leaguePicks', leaguePicks);
+          // console.log('leaguePicks', leaguePicks);
           setSavedPicks(leaguePicks);
         }
       })
@@ -205,7 +206,7 @@ const AppLoadingPage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    console.log('user', user);
+    // console.log('user', user);
     if (user && user.leagueId !== '') {
     }
     if (user) {
@@ -226,7 +227,7 @@ const AppLoadingPage: React.FC = () => {
   }, [league, owners, createPicksContext]);
 
   React.useEffect(() => {
-    console.log('league', league);
+    // console.log('league', league);
     if (league.id !== '') {
       if (league.draftStatus !== 'not started') {
         getLeaguePicks(league.id);
@@ -234,30 +235,30 @@ const AppLoadingPage: React.FC = () => {
         setTimeout(() => {
           setPicksAreReady(true);
           setMyTeamIsReady(true);
-        }, 3000);
+        }, 3);
       }
     }
   }, [league]);
 
   React.useEffect(() => {
-    console.log('players', players);
+    // console.log('players', players);
   }, [players]);
 
   React.useEffect(() => {
-    console.log('draft', draft);
+    // console.log('draft', draft);
   }, [draft]);
 
   React.useEffect(() => {
-    console.log('myTeam', myTeam);
+    // console.log('myTeam', myTeam);
   }, [myTeam]);
 
   React.useEffect(() => {
-    console.log('savedPicks', savedPicks);
+    // console.log('savedPicks', savedPicks);
   }, [savedPicks]);
 
   React.useEffect(() => {
     if (teamsAreReady && playersAreReady && picksAreReady && myTeamIsReady) {
-      setTimeout(() => setGoToBoard(true), 1500);
+      setTimeout(() => setGoToBoard(true), 15);
     }
   }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
 

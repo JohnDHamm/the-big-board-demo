@@ -26,18 +26,19 @@ const PickCard: React.FC<Props> = ({
   team,
 }) => {
   return (
-    <Container>
-      <PickNumBlock>
-        <PickNum>{selectionNumber}</PickNum>
+    <Container hasPick={player !== undefined}>
+      <PickNumBlock hasPick={player !== undefined}>
+        <PickNum hasPick={player !== undefined}>{selectionNumber}</PickNum>
       </PickNumBlock>
-      <OwnerBlock>{ownerName}</OwnerBlock>
-      {player && (
-        <PlayerBlock>
+      <OwnerBlock hasPick={player !== undefined}>{ownerName}</OwnerBlock>
+      {player && team && (
+        <PlayerBlock
+          bgColor={team.colors.primary}
+          accentColor={team.colors.secondary}
+        >
           <PlayerNameBlock>
             <PlayerFirstName>{player.firstName}</PlayerFirstName>
-            <PlayerLastName>
-              {player.lastName}-{team && team.abbv}
-            </PlayerLastName>
+            <PlayerLastName>{player.lastName}</PlayerLastName>
           </PlayerNameBlock>
           <PositionBlock>
             <Position>{player.position}</Position>

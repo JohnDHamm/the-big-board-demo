@@ -34,7 +34,7 @@ const BoardPage: React.FC = () => {
           selectionNumber={picks[i].selectionNumber}
           ownerName={owner?.name || ''}
           player={player}
-          team={player && player.teamId ? teams[player.teamId] : null}
+          team={player && player.teamId ? teams[player.teamId] : undefined}
         />
       );
     }
@@ -49,7 +49,6 @@ const BoardPage: React.FC = () => {
 
   React.useEffect(() => {
     console.log('draft', draft);
-    // console.log('players', players);
     if (draft.league.draftStatus !== 'not started') {
       setDraftStarted(true);
     }

@@ -43,7 +43,7 @@ export const NoPick = () => (
     selectionNumber={43}
     ownerName="Rayne"
     player={undefined}
-    team={null}
+    team={undefined}
   />
 );
 

@@ -30,7 +30,7 @@ const testTeam: Team = {
 
 export const Available = () => (
   <PlayerCard
-    player={{ available: true, ...testPlayer }}
+    player={{ available: true, positionRank: null, ...testPlayer }}
     team={testTeam}
     rank={24}
   />
@@ -38,7 +38,7 @@ export const Available = () => (
 
 export const NotAvailable = () => (
   <PlayerCard
-    player={{ available: false, ...testPlayer }}
+    player={{ available: false, positionRank: null, ...testPlayer }}
     team={testTeam}
     rank={null}
   />

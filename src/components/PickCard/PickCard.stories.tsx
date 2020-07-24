@@ -14,6 +14,7 @@ const mockPlayer: PlayerInfo = {
   teamId: 'PIT',
   position: 'WR',
   available: false,
+  positionRank: null,
 };
 
 const mockTeam: Team = {

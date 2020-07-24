@@ -21,6 +21,7 @@ export const DRAFT_INITIAL_VALUE: Draft = {
     draftOrder: [],
     draftStatus: 'not started',
     positionSlots: [],
+    scoringType: 'non-ppr',
   },
   owners: [],
   currentPick: {

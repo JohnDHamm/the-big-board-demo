@@ -1,8 +1,10 @@
 import React from 'react';
 import { PageContainer, CenterContent } from './PlayersPage.styles';
-import { PlayerCard } from '../../components';
+import { PlayerCard, PositionToggle } from '../../components';
 import { PlayersContext, TeamsContext } from '../../contexts';
 import sortBy from 'lodash.sortby';
+
+type Sorting = 'alpha' | 'rank' | 'team';
 
 const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
@@ -11,9 +13,10 @@ const PlayersPage: React.FC = () => {
   const [playersRenderList, setPlayersRenderList] = React.useState<
     PlayerInfo[]
   >([]);
-  const [positionToggle, setPositionToggle] = React.useState<NFL_Position>(
-    'RB'
-  );
+  const [selectedPositions, setSelectedPositions] = React.useState<
+    NFL_Position[]
+  >(['TE']);
+  const [sorting, setSorting] = React.useState<Sorting>('team');
 
   const renderPlayers = () => {
     return playersRenderList.map((player) => {
@@ -22,27 +25,48 @@ const PlayersPage: React.FC = () => {
           key={player.id}
           player={player}
           team={teams[player.teamId]}
-          rank={null}
+          rank={player.positionRank}
         />
       );
     });
   };
 
   React.useEffect(() => {
-    console.log('players', players);
     const list: PlayerInfo[] = [];
     for (let key in players) {
-      // if (players[key].position === positionToggle) {
-      list.push(players[key]);
-      // }
+      selectedPositions.forEach((selPos) => {
+        if (players[key].position === selPos) {
+          list.push(players[key]);
+        }
+      });
     }
-    setPlayersRenderList(sortBy(list, ['lastName']));
-  }, [players, positionToggle]);
+    // console.log('list', list);
+    console.log('sorting', sorting);
+    switch (sorting) {
+      case 'alpha':
+        setPlayersRenderList(sortBy(list, ['lastName', 'firstName']));
+        break;
+      case 'rank':
+        setPlayersRenderList(
+          sortBy(list, ['positionRank', 'lastName', 'firstName'])
+        );
+        break;
+      case 'team':
+        setPlayersRenderList(sortBy(list, ['teamId', 'lastName', 'firstName']));
+        break;
+    }
+  }, [players, selectedPositions, sorting]);
 
   return (
     <PageContainer>
       <CenterContent>
-        <h1>position: {positionToggle}</h1>
+        <PositionToggle
+          positions={['QB', 'RB', 'WR', 'TE', 'D', 'K']}
+          selectedPositions={selectedPositions}
+          onPositionsToggle={(newSelectedPositions) =>
+            setSelectedPositions(newSelectedPositions)
+          }
+        />
         <div>{players && renderPlayers()}</div>
       </CenterContent>
     </PageContainer>

@@ -27,7 +27,7 @@ export const Football = styled.div<{ position: NFL_Position }>`
 export const FootballText = styled.p`
   margin: 0;
   font-size: 1.75rem;
-  color: white;
+  color: ${COLORS.WHITE};
 `;
 
 export const PlayerBlock = styled.div<{ bgColor: string }>`
@@ -49,12 +49,12 @@ export const PlayerNameBlock = styled.div`
 export const PlayerFirstName = styled.p`
   margin: 0;
   font-size: 10px;
-  color: white;
+  color: ${COLORS.WHITE};
 `;
 
 export const PlayerLastName = styled.p`
   margin: 0;
-  color: white;
+  color: ${COLORS.WHITE};
   font-size: 24px;
 `;
 

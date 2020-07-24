@@ -3,7 +3,8 @@ import { COLORS } from '../../styles';
 
 export const Container = styled.div<{ hasPick: boolean }>`
   border: 1px solid grey;
-  border-color: ${(props) => (props.hasPick ? '#bada55' : 'lightgrey')};
+  border-color: ${(props) =>
+    props.hasPick ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
   max-width: 400px;
   height: 42px;
   border-radius: 21px;
@@ -16,14 +17,15 @@ export const PickNumBlock = styled.div<{ hasPick: boolean }>`
   width: 42px;
   height: 42px;
   border-radius: 21px;
-  background-color: ${(props) => (props.hasPick ? 'black' : 'lightgrey')};
+  background-color: ${(props) =>
+    props.hasPick ? COLORS.BLACK : COLORS.DISABLED_GRAY};
   justify-content: center;
   align-items: center;
 `;
 
 export const PickNum = styled.h2<{ hasPick: boolean }>`
   margin: 0;
-  color: ${(props) => (props.hasPick ? '#bada55' : 'white')};
+  color: ${(props) => (props.hasPick ? COLORS.PRIMARY_GREEN : COLORS.WHITE)};
 `;
 
 export const OwnerBlock = styled.div<{ hasPick: boolean }>`
@@ -34,7 +36,7 @@ export const OwnerBlock = styled.div<{ hasPick: boolean }>`
   justify-content: flex-start;
   align-items: center;
   font-size: 1.25rem;
-  color: ${(props) => (props.hasPick ? 'black' : 'lightgrey')};
+  color: ${(props) => (props.hasPick ? COLORS.BLACK : COLORS.DISABLED_GRAY)};
 `;
 
 export const PlayerBlock = styled.div<{ bgColor: string; accentColor: string }>`
@@ -62,12 +64,12 @@ export const PlayerFirstName = styled.p`
   margin: 0;
   margin-bottom: -0.5rem;
   font-size: 10px;
-  color: white;
+  color: ${COLORS.WHITE};
 `;
 
 export const PlayerLastName = styled.p`
   margin: 0;
-  color: white;
+  color: ${COLORS.WHITE};
   font-size: 1.75rem;
 `;
 
@@ -83,6 +85,6 @@ export const PositionBlock = styled.div<{ position: NFL_Position }>`
 
 export const Position = styled.p`
   margin: 0;
-  color: white;
+  color: ${COLORS.WHITE};
   font-size: 1.25rem;
 `;

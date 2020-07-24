@@ -13,6 +13,7 @@ import {
   getOwners,
   getPicks,
   getPlayers,
+  getPositionRankings,
   getTeams,
 } from '../../api';
 import isEmpty from 'lodash.isempty';
@@ -20,6 +21,14 @@ import keyby from 'lodash.keyby';
 import find from 'lodash.find';
 import concat from 'lodash.concat';
 import { calcTotalRounds } from '../../functions';
+
+interface SavedRanking {
+  id: string;
+  position: NFL_Position;
+  scoringType: ScoringType;
+  rank: number;
+  playerId: string;
+}
 
 const AppLoadingPage: React.FC = () => {
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
@@ -34,9 +43,13 @@ const AppLoadingPage: React.FC = () => {
     draftOrder: [],
     draftStatus: 'not started',
     positionSlots: [],
+    scoringType: 'non-ppr',
   });
   const [owners, setOwners] = React.useState<Owner[]>([]);
   const [savedPicks, setSavedPicks] = React.useState<DraftPick[]>([]);
+  const [savedPositionRankings, setSavedRankings] = React.useState<
+    SavedRanking[]
+  >([]);
 
   const [teamsAreReady, setTeamsAreReady] = React.useState<boolean>(false);
   const [playersAreReady, setPlayersAreReady] = React.useState<boolean>(false);
@@ -157,6 +170,7 @@ const AppLoadingPage: React.FC = () => {
           if (!isEmpty(leaguePlayers)) {
             const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
               available: true,
+              positionRank: null,
               ...player,
             }));
 
@@ -198,7 +212,6 @@ const AppLoadingPage: React.FC = () => {
     getPicks(leagueId)
       .then((leaguePicks: DraftPick[]) => {
         if (!isEmpty(leaguePicks)) {
-          // console.log('leaguePicks', leaguePicks);
           setSavedPicks(leaguePicks);
         }
       })
@@ -231,6 +244,12 @@ const AppLoadingPage: React.FC = () => {
     if (league.id !== '') {
       if (league.draftStatus !== 'not started') {
         getLeaguePicks(league.id);
+        getPositionRankings(league.scoringType).then((rankings) => {
+          console.log('rankings', rankings);
+          if (!isEmpty(rankings)) {
+            setSavedRankings(rankings);
+          }
+        });
       } else {
         setTimeout(() => {
           setPicksAreReady(true);
@@ -241,20 +260,18 @@ const AppLoadingPage: React.FC = () => {
   }, [league]);
 
   React.useEffect(() => {
-    // console.log('players', players);
-  }, [players]);
-
-  React.useEffect(() => {
-    // console.log('draft', draft);
-  }, [draft]);
-
-  React.useEffect(() => {
-    // console.log('myTeam', myTeam);
-  }, [myTeam]);
-
-  React.useEffect(() => {
-    // console.log('savedPicks', savedPicks);
-  }, [savedPicks]);
+    console.log('ranking...');
+    const updatePlayers: PlayersContext = Object.assign(players);
+    for (let key in players) {
+      const rank = savedPositionRankings.filter(
+        (ranking) => ranking.playerId === players[key].id
+      );
+      if (!isEmpty(rank)) {
+        updatePlayers[key].positionRank = rank[0].rank;
+      }
+    }
+    console.log('updatePlayers', updatePlayers);
+  }, [players, savedPositionRankings]);
 
   React.useEffect(() => {
     if (teamsAreReady && playersAreReady && picksAreReady && myTeamIsReady) {

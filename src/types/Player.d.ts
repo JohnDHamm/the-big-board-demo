@@ -15,5 +15,4 @@ interface Player {
   lastName: string;
   teamId: string;
   position: NFL_Position;
-  rankings?: NFL_Player_Ranking | null;
 }

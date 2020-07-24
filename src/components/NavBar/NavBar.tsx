@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Container,
+  DisabledTab,
   LogoContainer,
   LogoLink,
   Tab,
@@ -33,9 +34,9 @@ const NavBar: React.FC<Props> = ({ disabled = false }) => {
             <TextLogo active={false}>The Big Board</TextLogo>
           </LogoContainer>
           <TabsContainer>
-            <Tab active={false}>Players</Tab>
-            <Tab active={false}>My Team</Tab>
-            <Tab active={false}>More</Tab>
+            <DisabledTab active={false}>Players</DisabledTab>
+            <DisabledTab active={false}>My Team</DisabledTab>
+            <DisabledTab active={false}>More</DisabledTab>
           </TabsContainer>
         </Container>
       ) : (

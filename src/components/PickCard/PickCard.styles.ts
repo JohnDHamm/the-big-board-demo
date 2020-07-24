@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { COLORS } from '../../styles';
 
 export const Container = styled.div<{ hasPick: boolean }>`
   border: 1px solid grey;
@@ -70,12 +71,12 @@ export const PlayerLastName = styled.p`
   font-size: 1.75rem;
 `;
 
-export const PositionBlock = styled.div`
+export const PositionBlock = styled.div<{ position: NFL_Position }>`
   display: flex;
   width: 42px;
   height: 42px;
   border-radius: 21px;
-  background-color: grey;
+  background-color: ${(props) => COLORS.NFL_POSITIONS[props.position]};
   justify-content: center;
   align-items: center;
 `;

@@ -260,7 +260,7 @@ const AppLoadingPage: React.FC = () => {
   }, [league]);
 
   React.useEffect(() => {
-    console.log('ranking...');
+    // console.log('ranking...');
     const updatePlayers: PlayersContext = Object.assign(players);
     for (let key in players) {
       const rank = savedPositionRankings.filter(
@@ -270,7 +270,6 @@ const AppLoadingPage: React.FC = () => {
         updatePlayers[key].positionRank = rank[0].rank;
       }
     }
-    console.log('updatePlayers', updatePlayers);
   }, [players, savedPositionRankings]);
 
   React.useEffect(() => {

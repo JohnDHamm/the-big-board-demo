@@ -1,10 +1,11 @@
 import React from 'react';
 import { PageContainer, CenterContent } from './PlayersPage.styles';
-import { PlayerCard, PositionToggle } from '../../components';
+import { PlayerCard, PositionToggle, SortToggle } from '../../components';
 import { PlayersContext, TeamsContext } from '../../contexts';
 import sortBy from 'lodash.sortby';
 
-type Sorting = 'alpha' | 'rank' | 'team';
+type Sorting = 'RANK' | 'A-Z' | 'TEAM';
+const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
 
 const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
@@ -16,7 +17,7 @@ const PlayersPage: React.FC = () => {
   const [selectedPositions, setSelectedPositions] = React.useState<
     NFL_Position[]
   >(['TE']);
-  const [sorting, setSorting] = React.useState<Sorting>('team');
+  const [sorting, setSorting] = React.useState<Sorting>('RANK');
 
   const renderPlayers = () => {
     return playersRenderList.map((player) => {
@@ -43,15 +44,15 @@ const PlayersPage: React.FC = () => {
     // console.log('list', list);
     console.log('sorting', sorting);
     switch (sorting) {
-      case 'alpha':
+      case 'A-Z':
         setPlayersRenderList(sortBy(list, ['lastName', 'firstName']));
         break;
-      case 'rank':
+      case 'RANK':
         setPlayersRenderList(
           sortBy(list, ['positionRank', 'lastName', 'firstName'])
         );
         break;
-      case 'team':
+      case 'TEAM':
         setPlayersRenderList(sortBy(list, ['teamId', 'lastName', 'firstName']));
         break;
     }
@@ -66,6 +67,11 @@ const PlayersPage: React.FC = () => {
           onPositionsToggle={(newSelectedPositions) =>
             setSelectedPositions(newSelectedPositions)
           }
+        />
+        <SortToggle
+          sortTypes={sortTypes}
+          selectedSortType={sorting}
+          onSortToggle={(newSort) => setSorting(newSort as Sorting)}
         />
         <div>{players && renderPlayers()}</div>
       </CenterContent>

@@ -1,15 +1,16 @@
 import styled from 'styled-components';
+import { COLORS } from '../../styles';
 
 export const Container = styled.div`
   /* border: 1px dotted grey; */
   max-width: 400px;
   height: 42px;
   display: flex;
-  margin: 4px 0;
+  margin: 6px 0;
   position: relative;
 `;
 
-export const Football = styled.div`
+export const Football = styled.div<{ position: NFL_Position }>`
   height: 42px;
   width: 60px;
   border: 2px solid #bada55;
@@ -17,7 +18,7 @@ export const Football = styled.div`
   position: absolute;
   top: -2px;
   left: -1px;
-  background-color: orange;
+  background-color: ${(props) => COLORS.NFL_POSITIONS[props.position]};
   display: flex;
   justify-content: center;
   align-items: center;

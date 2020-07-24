@@ -40,7 +40,7 @@ const PickCard: React.FC<Props> = ({
             <PlayerFirstName>{player.firstName}</PlayerFirstName>
             <PlayerLastName>{player.lastName}</PlayerLastName>
           </PlayerNameBlock>
-          <PositionBlock>
+          <PositionBlock position={player.position}>
             <Position>{player.position}</Position>
           </PositionBlock>
         </PlayerBlock>

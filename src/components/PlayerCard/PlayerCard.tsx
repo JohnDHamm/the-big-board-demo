@@ -34,7 +34,7 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
 
   return (
     <Container>
-      <Football>
+      <Football position={player.position}>
         <FootballText>{rank || '--'}</FootballText>
       </Football>
       <PlayerBlock bgColor={colors.primary}>

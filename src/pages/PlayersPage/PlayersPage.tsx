@@ -6,6 +6,7 @@ import sortBy from 'lodash.sortby';
 
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
+const positions: NFL_Position[] = ['QB', 'RB', 'WR', 'TE', 'D', 'K'];
 
 const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
@@ -16,7 +17,7 @@ const PlayersPage: React.FC = () => {
   >([]);
   const [selectedPositions, setSelectedPositions] = React.useState<
     NFL_Position[]
-  >(['TE']);
+  >(['RB']);
   const [sorting, setSorting] = React.useState<Sorting>('RANK');
 
   const renderPlayers = () => {
@@ -41,8 +42,7 @@ const PlayersPage: React.FC = () => {
         }
       });
     }
-    // console.log('list', list);
-    console.log('sorting', sorting);
+
     switch (sorting) {
       case 'A-Z':
         setPlayersRenderList(sortBy(list, ['lastName', 'firstName']));
@@ -62,7 +62,7 @@ const PlayersPage: React.FC = () => {
     <PageContainer>
       <CenterContent>
         <PositionToggle
-          positions={['QB', 'RB', 'WR', 'TE', 'D', 'K']}
+          positions={positions}
           selectedPositions={selectedPositions}
           onPositionsToggle={(newSelectedPositions) =>
             setSelectedPositions(newSelectedPositions)

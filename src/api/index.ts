@@ -3,6 +3,7 @@ import { getLeaguesList } from './getLeaguesList/getLeaguesList';
 import { getOwners } from './getOwners/getOwners';
 import { getPicks } from './getPicks/getPicks';
 import { getPlayers } from './getPlayers/getPlayers';
+import { getPositionRankings } from './getPositionRankings/getPositionRankings';
 import { getTeams } from './getTeams/getTeams';
 import { login } from './login/login';
 
@@ -14,6 +15,7 @@ export {
   getOwners,
   getPicks,
   getPlayers,
+  getPositionRankings,
   getTeams,
   login,
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { COLORS } from '../../styles';
+import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
   height: 3rem;
@@ -19,6 +19,8 @@ export const LogoLink = styled(Link)`
 
 export const TextLogo = styled.h1<{ active: boolean }>`
   margin: 0;
+  margin-bottom: -0.5rem;
+  font-family: ${FONTS.BLOCKLETTER};
   font-size: 2.25rem;
   color: ${(props) =>
     props.active ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
@@ -35,10 +37,11 @@ export const TabLink = styled(Link)`
 
 export const Tab = styled.div<{ active: boolean }>`
   margin-left: 2rem;
+  margin-bottom: -0.5rem;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 1.5rem;
   color: ${(props) =>
     props.active ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
-  font-size: 1.25rem;
-  font-weight: bold;
   &:hover {
     color: ${(props) => (props.active ? COLORS.PRIMARY_GREEN : COLORS.WHITE)};
   }

@@ -1,16 +1,16 @@
 import React from 'react';
 import {
+  AccentStripe,
   Container,
   OwnerBlock,
+  OwnerName,
   PickNum,
   PickNumBlock,
   PlayerBlock,
-  PlayerNameBlock,
-  PlayerFirstName,
-  PlayerLastName,
   Position,
   PositionBlock,
 } from './PickCard.styles';
+import CardNameBlock from '../CardNameBlock/CardNameBlock';
 
 interface Props {
   selectionNumber: number;
@@ -25,25 +25,33 @@ const PickCard: React.FC<Props> = ({
   player,
   team,
 }) => {
+  const hasPick = player !== undefined;
+
   return (
-    <Container hasPick={player !== undefined}>
-      <PickNumBlock hasPick={player !== undefined}>
-        <PickNum hasPick={player !== undefined}>{selectionNumber}</PickNum>
+    <Container hasPick={hasPick}>
+      <PickNumBlock hasPick={hasPick}>
+        <PickNum hasPick={hasPick} isLarge={selectionNumber > 99}>
+          {selectionNumber}
+        </PickNum>
       </PickNumBlock>
-      <OwnerBlock hasPick={player !== undefined}>{ownerName}</OwnerBlock>
+      <OwnerBlock hasPick={hasPick}>
+        <OwnerName hasPick={hasPick}>{ownerName}</OwnerName>
+      </OwnerBlock>
+
       {player && team && (
-        <PlayerBlock
-          bgColor={team.colors.primary}
-          accentColor={team.colors.secondary}
-        >
-          <PlayerNameBlock>
-            <PlayerFirstName>{player.firstName}</PlayerFirstName>
-            <PlayerLastName>{player.lastName}</PlayerLastName>
-          </PlayerNameBlock>
+        <>
+          <AccentStripe accentColor={team.colors.secondary} />
+
+          <PlayerBlock bgColor={team.colors.primary}>
+            <CardNameBlock
+              firstName={player.firstName}
+              lastName={player.lastName}
+            />
+          </PlayerBlock>
           <PositionBlock position={player.position}>
             <Position>{player.position}</Position>
           </PositionBlock>
-        </PlayerBlock>
+        </>
       )}
     </Container>
   );

@@ -17,6 +17,16 @@ const mockPlayer: PlayerInfo = {
   positionRank: null,
 };
 
+const longNamePlayer: PlayerInfo = {
+  id: 'JSmith-Schuster-WR',
+  firstName: 'Gregg',
+  lastName: 'Something-ReallyLong',
+  teamId: 'LAC',
+  position: 'K',
+  available: false,
+  positionRank: null,
+};
+
 const mockTeam: Team = {
   id: 'PIT',
   city: 'Pittsburgh',
@@ -32,9 +42,18 @@ const mockTeam: Team = {
 
 export const Default = () => (
   <PickCard
-    selectionNumber={42}
-    ownerName="John"
+    selectionNumber={7}
+    ownerName="Mattecca"
     player={mockPlayer}
+    team={mockTeam}
+  />
+);
+
+export const LongNamesAndLatePick = () => (
+  <PickCard
+    selectionNumber={142}
+    ownerName="Susie & the Banshees"
+    player={longNamePlayer}
     team={mockTeam}
   />
 );

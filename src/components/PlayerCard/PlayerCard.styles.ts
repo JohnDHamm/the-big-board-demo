@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { COLORS } from '../../styles';
+import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
-  /* border: 1px dotted grey; */
   max-width: 400px;
   height: 42px;
   display: flex;
@@ -26,8 +25,9 @@ export const Football = styled.div<{ position: NFL_Position }>`
 
 export const FootballText = styled.p`
   margin: 0;
+  font-family: ${FONTS.BLOCKLETTER};
   font-size: 1.75rem;
-  color: white;
+  color: ${COLORS.WHITE};
 `;
 
 export const PlayerBlock = styled.div<{ bgColor: string }>`
@@ -39,25 +39,6 @@ export const PlayerBlock = styled.div<{ bgColor: string }>`
   background-color: ${(props) => props.bgColor};
 `;
 
-export const PlayerNameBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-`;
-
-export const PlayerFirstName = styled.p`
-  margin: 0;
-  font-size: 10px;
-  color: white;
-`;
-
-export const PlayerLastName = styled.p`
-  margin: 0;
-  color: white;
-  font-size: 24px;
-`;
-
 export const ByeBlock = styled.div<{ bgColor: string }>`
   width: 1.75rem;
   border-radius: 0 8px 8px 0;
@@ -66,17 +47,20 @@ export const ByeBlock = styled.div<{ bgColor: string }>`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0.25rem 0;
 `;
 
 export const ByeText = styled.p<{ textColor: string }>`
-  color: ${(props) => props.textColor};
   margin: 0;
-  font-size: 0.6rem;
+  margin-top: -0.15rem;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 1rem;
+  color: ${(props) => props.textColor};
 `;
 
 export const ByeNum = styled.p<{ textColor: string }>`
-  color: ${(props) => props.textColor};
+  font-family: ${FONTS.BLOCKLETTER};
   margin: 0;
-  font-size: 1.5rem;
+  margin-top: -0.75rem;
+  font-size: 1.75rem;
+  color: ${(props) => props.textColor};
 `;

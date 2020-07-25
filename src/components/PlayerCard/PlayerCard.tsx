@@ -7,10 +7,8 @@ import {
   Football,
   FootballText,
   PlayerBlock,
-  PlayerNameBlock,
-  PlayerFirstName,
-  PlayerLastName,
 } from './PlayerCard.styles';
+import CardNameBlock from '../CardNameBlock/CardNameBlock';
 
 declare global {
   interface PlayerCardInterface {
@@ -38,10 +36,10 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
         <FootballText>{rank || '--'}</FootballText>
       </Football>
       <PlayerBlock bgColor={colors.primary}>
-        <PlayerNameBlock>
-          <PlayerFirstName>{player.firstName}</PlayerFirstName>
-          <PlayerLastName>{player.lastName}</PlayerLastName>
-        </PlayerNameBlock>
+        <CardNameBlock
+          firstName={player.firstName}
+          lastName={player.lastName}
+        />
       </PlayerBlock>
       <ByeBlock bgColor={colors.secondary}>
         <ByeText textColor={colors.primary}>BYE</ByeText>

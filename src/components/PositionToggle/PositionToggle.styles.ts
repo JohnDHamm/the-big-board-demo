@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../../styles';
+import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
   display: flex;
@@ -27,6 +27,7 @@ export const PositionCircle = styled.div<{
 `;
 
 export const PositionText = styled.p<{ selected: boolean }>`
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 1.7rem;
   color: ${(props) => (props.selected ? COLORS.WHITE : COLORS.DISABLED_GRAY)};
-  font-size: 1.4rem;
 `;

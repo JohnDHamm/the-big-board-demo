@@ -3,7 +3,7 @@ const NFL_POSITIONS = {
   RB: '#1b55a7',
   WR: '#552d90',
   TE: '#f06b00',
-  D: '#009345',
+  D: '#007c45',
   K: '#5a4a42',
 };
 

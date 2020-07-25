@@ -1,14 +1,15 @@
 import styled from 'styled-components';
+import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
   height: 42px;
   max-width: 400px;
-  background-color: #bada55;
+  margin: 0.5rem 0;
+  background-color: ${COLORS.PRIMARY_GREEN};
   border-radius: 21px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 0;
 `;
 
 export const NavBlock = styled.div`
@@ -17,6 +18,7 @@ export const NavBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: ${COLORS.WHITE};
 `;
 
 export const CenterBlock = styled.div`
@@ -24,11 +26,12 @@ export const CenterBlock = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h2`
+export const Title = styled.p`
   margin: 0;
-  color: white;
   padding-right: 0.5rem;
+  font-family: ${FONTS.BLOCKLETTER};
   font-size: 2rem;
+  color: ${COLORS.WHITE};
 `;
 
 export const NumberContainer = styled.div`
@@ -36,14 +39,15 @@ export const NumberContainer = styled.div`
   height: 48px;
   border-radius: 26px;
   border: 2px solid white;
-  background-color: black;
+  background-color: ${COLORS.BLACK};
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const Number = styled.h2`
+export const Number = styled.p`
   margin: 0;
-  color: white;
+  font-family: ${FONTS.BLOCKLETTER};
   font-size: 2.2rem;
+  color: ${COLORS.WHITE};
 `;

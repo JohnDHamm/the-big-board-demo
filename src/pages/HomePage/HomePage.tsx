@@ -74,12 +74,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1 style={{ fontFamily: 'Blockletter' }}>THE BIG BOARD</h1>
       {leagues && renderSelect()}
       {showInputs && (
         <div>
-          <p>name: John</p>
-          <p>password: password</p>
+          <p style={{ fontFamily: 'PT Sans Narrow' }}>name: John</p>
+          <p style={{ fontFamily: 'PT Sans Narrow' }}>password: password</p>
           <button onClick={() => userLogin()}>login</button>
         </div>
       )}

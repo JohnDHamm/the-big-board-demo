@@ -25,12 +25,12 @@ const testTeam: Team = {
     primary: '#0C2340',
     secondary: '#4B92DB',
   },
-  byeWeek: 7,
+  byeWeek: 10,
 };
 
 export const Available = () => (
   <PlayerCard
-    player={{ available: true, positionRank: null, ...testPlayer }}
+    player={{ available: true, positionRank: 24, ...testPlayer }}
     team={testTeam}
     rank={24}
   />

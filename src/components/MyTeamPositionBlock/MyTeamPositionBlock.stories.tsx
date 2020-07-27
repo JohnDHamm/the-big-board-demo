@@ -37,5 +37,5 @@ const mockMyPlayer: MyPlayer = {
 };
 
 export const Default = () => (
-  <MyTeamPositionBlock position="D" totalSlots={3} players={[mockMyPlayer]} />
+  <MyTeamPositionBlock position="WR" totalSlots={3} players={[mockMyPlayer]} />
 );

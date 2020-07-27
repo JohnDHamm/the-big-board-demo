@@ -22,19 +22,15 @@ export const TitleBlock = styled.div<{ position: NFL_Position }>`
   border-radius: 4px 4px 0 0;
 `;
 
-export const Football = styled.div`
-  height: 42px;
+export const FootballContainer = styled.div`
   width: 60px;
-  border: 1px solid ${COLORS.PRIMARY_GREEN};
-  border-radius: 75%;
 `;
 
 export const FootballText = styled.p`
   margin: 0;
   font-family: ${FONTS.BLOCKLETTER};
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: ${COLORS.PRIMARY_GREEN};
-  text-align: center;
 `;
 
 export const Title = styled.p`

@@ -48,6 +48,6 @@ export const NumberContainer = styled.div`
 export const Number = styled.p`
   margin: 0;
   font-family: ${FONTS.BLOCKLETTER};
-  font-size: 2.2rem;
-  color: ${COLORS.WHITE};
+  font-size: 2.4rem;
+  color: ${COLORS.PRIMARY_GREEN};
 `;

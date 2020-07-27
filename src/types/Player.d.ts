@@ -16,3 +16,16 @@ interface Player {
   teamId: string;
   position: NFL_Position;
 }
+
+interface Info {
+  available: boolean;
+  positionRank: number | null;
+}
+
+type PlayerInfo = Player & Info;
+
+interface MyPlayer {
+  playerInfo: PlayerInfo;
+  roundSelectionNum: number;
+  team: NFL_Team;
+}

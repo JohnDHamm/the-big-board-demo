@@ -1,5 +1,8 @@
 import React from 'react';
-import { Container, SortCircle, SortText } from './SortToggle.styles';
+import { Container, FootballContainer, SortText } from './SortToggle.styles';
+import Football from '../Football/Football';
+import { COLORS } from '../../styles';
+
 interface Props {
   onSortToggle: (sortType: string) => void;
   sortTypes: string[];
@@ -22,13 +25,17 @@ const SortToggle: React.FC<Props> = ({
     return sortTypes.map((sortType) => {
       const isSelected: boolean = selected.includes(sortType);
       return (
-        <SortCircle
+        <FootballContainer
           key={sortType}
           onClick={() => handleToggle(sortType)}
-          selected={isSelected}
         >
-          <SortText selected={isSelected}>{sortType}</SortText>
-        </SortCircle>
+          <Football
+            fillColor={isSelected ? COLORS.PRIMARY_GREEN : COLORS.WHITE}
+            outlineColor={isSelected ? COLORS.BLACK : COLORS.DISABLED_GRAY}
+          >
+            <SortText selected={isSelected}>{sortType}</SortText>
+          </Football>
+        </FootballContainer>
       );
     });
   };

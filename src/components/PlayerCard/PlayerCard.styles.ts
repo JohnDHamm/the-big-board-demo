@@ -9,18 +9,11 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const Football = styled.div<{ position: NFL_Position }>`
-  height: 42px;
-  width: 60px;
-  border: 2px solid #bada55;
-  border-radius: 70%;
+export const FootballContainer = styled.div`
+  width: 66px;
   position: absolute;
   top: -2px;
-  left: -1px;
-  background-color: ${(props) => COLORS.NFL_POSITIONS[props.position]};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  left: 0px;
 `;
 
 export const FootballText = styled.p`

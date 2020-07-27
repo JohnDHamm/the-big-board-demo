@@ -4,11 +4,13 @@ import {
   ByeText,
   ByeNum,
   Container,
-  Football,
+  FootballContainer,
   FootballText,
   PlayerBlock,
 } from './PlayerCard.styles';
 import CardNameBlock from '../CardNameBlock/CardNameBlock';
+import Football from '../Football/Football';
+import { COLORS } from '../../styles';
 
 declare global {
   interface PlayerCardInterface {
@@ -24,17 +26,25 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
   React.useEffect(() => {
     if (!player.available) {
       setColors({
-        primary: 'lightgrey',
-        secondary: 'lightgrey',
+        primary: COLORS.DISABLED_GRAY,
+        secondary: COLORS.DISABLED_GRAY,
       });
     }
   }, [player]);
 
   return (
     <Container>
-      <Football position={player.position}>
-        <FootballText>{rank || '--'}</FootballText>
-      </Football>
+      <FootballContainer>
+        <Football
+          fillColor={
+            player.available
+              ? COLORS.NFL_POSITIONS[player.position]
+              : COLORS.DISABLED_GRAY
+          }
+        >
+          {rank && <FootballText>{rank}</FootballText>}
+        </Football>
+      </FootballContainer>
       <PlayerBlock bgColor={colors.primary}>
         <CardNameBlock
           firstName={player.firstName}

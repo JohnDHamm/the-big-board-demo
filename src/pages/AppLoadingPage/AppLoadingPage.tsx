@@ -46,7 +46,7 @@ const AppLoadingPage: React.FC = () => {
     scoringType: 'non-ppr',
   });
   const [owners, setOwners] = React.useState<Owner[]>([]);
-  const [savedPicks, setSavedPicks] = React.useState<DraftPick[]>([]);
+  const [savedPicks, setSavedPicks] = React.useState<DraftPick[] | null>(null);
   const [savedPositionRankings, setSavedRankings] = React.useState<
     SavedRanking[]
   >([]);
@@ -211,9 +211,7 @@ const AppLoadingPage: React.FC = () => {
   const getLeaguePicks = (leagueId: string) => {
     getPicks(leagueId)
       .then((leaguePicks: DraftPick[]) => {
-        if (!isEmpty(leaguePicks)) {
-          setSavedPicks(leaguePicks);
-        }
+        setSavedPicks(leaguePicks);
       })
       .catch((err) => console.log('err', err));
   };
@@ -228,7 +226,7 @@ const AppLoadingPage: React.FC = () => {
   }, [user, initDraft]);
 
   React.useEffect(() => {
-    if (!isEmpty(savedPicks) && !isEmpty(players)) {
+    if (savedPicks && !isEmpty(players)) {
       checkPlayersAvailability();
     }
   }, [savedPicks, players, checkPlayersAvailability]);

@@ -20,7 +20,7 @@ export const FirstRound = () => (
 );
 export const MiddleRound = () => (
   <DraftRoundTitleBar
-    roundNum={6}
+    roundNum={7}
     totalRounds={totalRounds}
     onRoundChange={onRoundChange}
   />

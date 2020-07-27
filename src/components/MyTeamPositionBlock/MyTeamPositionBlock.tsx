@@ -1,14 +1,16 @@
 import React from 'react';
 import {
-  Football,
+  FootballContainer,
   FootballText,
   PositionBlock,
   SlotsBlock,
   Title,
   TitleBlock,
 } from './MyTeamPositionBlock.styles';
-import MyPlayerCard from '../MyPlayerCard/MyPlayerCard';
 import EmptyCardSlot from '../EmptySlotCard/EmptySlotCard';
+import Football from '../Football/Football';
+import MyPlayerCard from '../MyPlayerCard/MyPlayerCard';
+import { COLORS } from '../../styles';
 
 const NFL_POSITIONS = {
   QB: 'QUARTERBACKS',
@@ -52,9 +54,11 @@ const MyTeamPositionBlock: React.FC<Props> = ({
   return (
     <PositionBlock position={position}>
       <TitleBlock position={position}>
-        <Football>
-          <FootballText>{position}</FootballText>
-        </Football>
+        <FootballContainer>
+          <Football fillColor={COLORS.NFL_POSITIONS[position]}>
+            <FootballText>{position}</FootballText>
+          </Football>
+        </FootballContainer>
         <Title>{NFL_POSITIONS[position]}</Title>
       </TitleBlock>
       <SlotsBlock>{renderPlayers()}</SlotsBlock>

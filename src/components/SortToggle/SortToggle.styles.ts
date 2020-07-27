@@ -8,22 +8,9 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const SortCircle = styled.div<{
-  selected: boolean;
-}>`
-  width: 60px;
-  height: 42px;
+export const FootballContainer = styled.div`
+  width: 66px;
   margin: 1rem;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 75%;
-  border-color: ${(props) =>
-    props.selected ? COLORS.BLACK : COLORS.DISABLED_GRAY};
-  background-color: ${(props) =>
-    props.selected ? COLORS.PRIMARY_GREEN : COLORS.WHITE};
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const SortText = styled.p<{ selected: boolean }>`

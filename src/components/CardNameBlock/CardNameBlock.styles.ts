@@ -3,7 +3,7 @@ import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
   height: 100%;
-  padding-left: 0.25rem;
+  padding-left: 0.5rem;
   padding-right: 0.75rem;
   display: flex;
   flex: 1;
@@ -21,7 +21,7 @@ export const FirstName = styled.p`
 
 export const LastName = styled.p`
   margin-top: 0;
-  margin-bottom: -0.4rem;
+  margin-bottom: -0.2rem;
   font-family: ${FONTS.NAMES}, sans-serif;
   font-size: 1.7rem;
   font-weight: 600;

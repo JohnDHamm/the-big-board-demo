@@ -4,11 +4,18 @@ import { COLORS, FONTS } from '../../styles';
 
 export const Container = styled.div`
   height: 3rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   background-color: ${COLORS.BLACK};
+  z-index: 10;
+  overflow: hidden;
 `;
 
 export const LogoContainer = styled.div``;
@@ -17,7 +24,7 @@ export const LogoLink = styled(Link)`
   text-decoration: none;
 `;
 
-export const TextLogo = styled.h1<{ active: boolean }>`
+export const TextLogo = styled.p<{ active: boolean }>`
   margin: 0;
   margin-bottom: -0.5rem;
   font-family: ${FONTS.BLOCKLETTER};
@@ -29,6 +36,7 @@ export const TextLogo = styled.h1<{ active: boolean }>`
 
 export const TabsContainer = styled.div`
   display: flex;
+  margin-right: 2rem;
 `;
 
 export const TabLink = styled(Link)`
@@ -36,7 +44,7 @@ export const TabLink = styled(Link)`
 `;
 
 export const Tab = styled.div<{ active: boolean }>`
-  margin-left: 2rem;
+  margin-left: 4rem;
   margin-bottom: -0.5rem;
   font-family: ${FONTS.BLOCKLETTER};
   font-size: 1.5rem;

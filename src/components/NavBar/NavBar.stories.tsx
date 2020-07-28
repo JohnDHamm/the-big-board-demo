@@ -12,6 +12,10 @@ export default {
   ],
 };
 
-export const Default = () => <NavBar />;
+export const Default = () => (
+  <div style={{ width: '100%', height: '400px', backgroundColor: 'lightgrey' }}>
+    <NavBar />
+  </div>
+);
 
 export const Disabled = () => <NavBar disabled={true} />;

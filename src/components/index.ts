@@ -1,6 +1,7 @@
 import CardNameBlock from './CardNameBlock/CardNameBlock';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
+import HidePlayersToggle from './HidePlayersToggle/HidePlayersToggle';
 import MyPlayerCard from './MyPlayerCard/MyPlayerCard';
 import MyTeamPositionBlock from './MyTeamPositionBlock/MyTeamPositionBlock';
 import NavBar from './NavBar/NavBar';
@@ -13,6 +14,7 @@ export {
   CardNameBlock,
   DraftRoundTitleBar,
   EmptySlotCard,
+  HidePlayersToggle,
   MyPlayerCard,
   MyTeamPositionBlock,
   NavBar,

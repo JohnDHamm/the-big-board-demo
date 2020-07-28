@@ -1,3 +1,4 @@
+import BottomTicker from './BottomTicker/BottomTicker';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
@@ -11,6 +12,7 @@ import PositionToggle from './PositionToggle/PositionToggle';
 import SortToggle from './SortToggle/SortToggle';
 
 export {
+  BottomTicker,
   CardNameBlock,
   DraftRoundTitleBar,
   EmptySlotCard,

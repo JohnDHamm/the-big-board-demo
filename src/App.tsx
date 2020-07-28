@@ -14,7 +14,7 @@ import {
   MyTeamPage,
   PlayersPage,
 } from './pages';
-import { NavBar } from './components';
+import { BottomTicker, NavBar } from './components';
 import { useLocation } from 'react-router-dom';
 import {
   DraftContext,
@@ -32,6 +32,7 @@ const ProtectedRoutes = () => {
   return user ? (
     <div>
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
+      <BottomTicker ownerOnClock={user.name} />
       <Switch>
         <Route path={ROUTES.APP_LOADING} component={AppLoadingPage} />
         <Route path={ROUTES.BOARD} component={BoardPage} />

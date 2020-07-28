@@ -1,11 +1,12 @@
 import styled from 'styled-components';
+import { COLORS } from '../../styles';
 
 export const PageContainer = styled.div`
+  margin-top: 4rem;
   padding: 1rem;
-  background-color: white;
   display: flex;
   justify-content: center;
-  width: 100%;
+  background-color: ${COLORS.WHITE};
 `;
 
 export const CenterContent = styled.div`

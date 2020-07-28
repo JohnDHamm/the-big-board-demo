@@ -1,6 +1,11 @@
 import React from 'react';
 import { PageContainer, CenterContent } from './PlayersPage.styles';
-import { PlayerCard, PositionToggle, SortToggle } from '../../components';
+import {
+  HidePlayersToggle,
+  PlayerCard,
+  PositionToggle,
+  SortToggle,
+} from '../../components';
 import { PlayersContext, TeamsContext } from '../../contexts';
 import sortBy from 'lodash.sortby';
 
@@ -19,17 +24,20 @@ const PlayersPage: React.FC = () => {
     NFL_Position[]
   >(['RB']);
   const [sorting, setSorting] = React.useState<Sorting>('RANK');
+  const [hideSelected, setHideSelected] = React.useState<boolean>(false);
 
   const renderPlayers = () => {
     return playersRenderList.map((player) => {
-      return (
-        <PlayerCard
-          key={player.id}
-          player={player}
-          team={teams[player.teamId]}
-          rank={player.positionRank}
-        />
-      );
+      if (!hideSelected || (hideSelected && player.available)) {
+        return (
+          <PlayerCard
+            key={player.id}
+            player={player}
+            team={teams[player.teamId]}
+            rank={player.positionRank}
+          />
+        );
+      }
     });
   };
 
@@ -72,6 +80,10 @@ const PlayersPage: React.FC = () => {
           sortTypes={sortTypes}
           selectedSortType={sorting}
           onSortToggle={(newSort) => setSorting(newSort as Sorting)}
+        />
+        <HidePlayersToggle
+          active={hideSelected}
+          onToggle={() => setHideSelected(!hideSelected)}
         />
         <div>{players && renderPlayers()}</div>
       </CenterContent>

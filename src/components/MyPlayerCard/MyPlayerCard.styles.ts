@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FONTS } from '../../styles';
+import { NFL_TEAMS } from '../../assets/images';
 
 export const Container = styled.div`
   max-width: 400px;
@@ -9,9 +10,12 @@ export const Container = styled.div`
   position: relative;
 `;
 
-export const PlayerBlock = styled.div<{ bgColor: string }>`
+export const PlayerBlock = styled.div<{ bgColor: string; team: string }>`
   display: flex;
   flex: 1;
+  background: url(${(props) => NFL_TEAMS[props.team]}) no-repeat;
+  background-size: 40%;
+  background-position: 98% 40%;
   background-color: ${(props) => props.bgColor};
 `;
 

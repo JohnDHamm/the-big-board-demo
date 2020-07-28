@@ -33,7 +33,7 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
   }, [player]);
 
   return (
-    <Container>
+    <Container available={player.available}>
       <FootballContainer>
         <Football
           fillColor={
@@ -45,7 +45,7 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
           {rank && <FootballText>{rank}</FootballText>}
         </Football>
       </FootballContainer>
-      <PlayerBlock bgColor={colors.primary}>
+      <PlayerBlock bgColor={colors.primary} team={team.abbv}>
         <CardNameBlock
           firstName={player.firstName}
           lastName={player.lastName}

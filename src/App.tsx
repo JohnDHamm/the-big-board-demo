@@ -28,11 +28,19 @@ import { useDraft, useMyTeam, usePlayers, useTeams, useUser } from './hooks';
 const ProtectedRoutes = () => {
   const location = useLocation();
   const { user } = React.useContext(UserContext);
+  const { draft } = React.useContext(DraftContext);
+
+  const getCurrentOwnerName = () => {
+    const currPickOwner = draft.owners.find(
+      (owner) => owner.id === draft.currentPick.ownerId
+    );
+    return currPickOwner ? currPickOwner.name : undefined;
+  };
 
   return user ? (
     <div>
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
-      <BottomTicker ownerOnClock={user.name} />
+      <BottomTicker ownerOnClock={getCurrentOwnerName()} />
       <Switch>
         <Route path={ROUTES.APP_LOADING} component={AppLoadingPage} />
         <Route path={ROUTES.BOARD} component={BoardPage} />

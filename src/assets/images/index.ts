@@ -1,0 +1,38 @@
+type NFL_Image = {
+  [key: string]: string;
+};
+
+export const NFL_TEAMS: NFL_Image = {
+  ARI: require('./NFL_logos/ari.png'),
+  ATL: require('./NFL_logos/atl.png'),
+  BAL: require('./NFL_logos/bal.png'),
+  BUF: require('./NFL_logos/buf.png'),
+  CHI: require('./NFL_logos/chi.png'),
+  CIN: require('./NFL_logos/cin.png'),
+  CLE: require('./NFL_logos/cle.png'),
+  DAL: require('./NFL_logos/dal.png'),
+  DEN: require('./NFL_logos/den.png'),
+  DET: require('./NFL_logos/det.png'),
+  GB: require('./NFL_logos/gb.png'),
+  HOU: require('./NFL_logos/hou.png'),
+  IND: require('./NFL_logos/ind.png'),
+  JAX: require('./NFL_logos/jax.png'),
+  KC: require('./NFL_logos/kc.png'),
+  LAC: require('./NFL_logos/lac.png'),
+  LAR: require('./NFL_logos/lar.png'),
+  LV: require('./NFL_logos/lv.png'),
+  MIA: require('./NFL_logos/mia.png'),
+  MIN: require('./NFL_logos/min.png'),
+  NE: require('./NFL_logos/ne.png'),
+  NO: require('./NFL_logos/no.png'),
+  NYG: require('./NFL_logos/nyg.png'),
+  NYJ: require('./NFL_logos/nyj.png'),
+  PHI: require('./NFL_logos/phi.png'),
+  PIT: require('./NFL_logos/pit.png'),
+  SEA: require('./NFL_logos/sea.png'),
+  SF: require('./NFL_logos/sf.png'),
+  TB: require('./NFL_logos/tb.png'),
+  TEN: require('./NFL_logos/ten.png'),
+  UNK: require('./NFL_logos/unk.png'),
+  WAS: require('./NFL_logos/was.png'),
+};

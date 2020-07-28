@@ -42,7 +42,7 @@ const PickCard: React.FC<Props> = ({
         <>
           <AccentStripe accentColor={team.colors.secondary} />
 
-          <PlayerBlock bgColor={team.colors.primary}>
+          <PlayerBlock bgColor={team.colors.primary} team={team.abbv}>
             <CardNameBlock
               firstName={player.firstName}
               lastName={player.lastName}

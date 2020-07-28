@@ -32,7 +32,7 @@ const MyPlayerCard: React.FC<MyPlayerCardInterface> = ({
         <RoundText textColor={colors.primary}>RND</RoundText>
         <RoundNum textColor={colors.primary}>{round}</RoundNum>
       </RoundBlock>
-      <PlayerBlock bgColor={colors.primary}>
+      <PlayerBlock bgColor={colors.primary} team={team.abbv}>
         <CardNameBlock
           firstName={player.firstName}
           lastName={player.lastName}

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { COLORS, FONTS } from '../../styles';
+import { NFL_TEAMS } from '../../assets/images';
 
 export const Container = styled.div<{ hasPick: boolean }>`
   display: flex;
@@ -63,10 +64,13 @@ export const AccentStripe = styled.div<{ accentColor: string }>`
   background-color: ${(props) => props.accentColor};
 `;
 
-export const PlayerBlock = styled.div<{ bgColor: string }>`
+export const PlayerBlock = styled.div<{ bgColor: string; team: string }>`
   width: calc(65% - 6px);
-  background-color: ${(props) => props.bgColor};
   border-radius: 0 21px 21px 0;
+  background: url(${(props) => NFL_TEAMS[props.team]}) no-repeat;
+  background-size: 40%;
+  background-position: 85% 40%;
+  background-color: ${(props) => props.bgColor};
 `;
 
 export const PositionBlock = styled.div<{ position: NFL_Position }>`

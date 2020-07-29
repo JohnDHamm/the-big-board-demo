@@ -18,12 +18,12 @@ export const TitleBlock = styled(Box)`
 export const TitleText = styled.p`
   margin: 0;
   font-family: ${FONTS.BLOCKLETTER};
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: ${COLORS.PRIMARY_GREEN};
 `;
 
 export const SelectBox = styled(Box)`
-  border: 1px solid ${COLORS.PRIMARY_GREEN};
+  border: 1px solid ${COLORS.SECONDARY_GRAY};
 `;
 
 export const SelectBoxText = styled.p<{ hasSelection: boolean }>`

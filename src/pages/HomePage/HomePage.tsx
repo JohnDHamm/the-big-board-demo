@@ -1,6 +1,13 @@
 import React from 'react';
-import { Content, Page, Logo, TopBlock } from './HomePage.styles';
-import { Select } from '../../components';
+import {
+  Content,
+  ContentItem,
+  Page,
+  Logo,
+  SignIn,
+  TopBlock,
+} from './HomePage.styles';
+import { Input, Select } from '../../components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
@@ -11,8 +18,14 @@ const HomePage: React.FC = () => {
   const history = useHistory();
 
   const [leagues, setLeagues] = React.useState<LeagueListItem[]>([]);
-  const [selectedLeague, setSelectedLeague] = React.useState<string>(''); //leagueId
-  const [showInputs, setShowInputs] = React.useState<boolean>(false);
+  const [selectedLeague, setSelectedLeague] = React.useState<string>('');
+  const [showNameInput, setShowNameInput] = React.useState<boolean>(false);
+  const [showPasswordInput, setShowPasswordInput] = React.useState<boolean>(
+    false
+  );
+  const [showLoginBtn, setShowLoginBtn] = React.useState<boolean>(false);
+  const [name, setName] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
 
   const initLeagues = async () => {
     const leaguesList = await getLeaguesList();
@@ -31,9 +44,9 @@ const HomePage: React.FC = () => {
 
   const handleSelectChange = (option: string) => {
     const league = leagues.filter((league) => league.name === option);
-    console.log('league[0].id', league[0].id);
+    // console.log('league[0].id', league[0].id);
     setSelectedLeague(league[0].id);
-    setShowInputs(true);
+    setShowNameInput(true);
   };
 
   const renderSelect = (): JSX.Element => {
@@ -64,8 +77,13 @@ const HomePage: React.FC = () => {
   }, [user]);
 
   React.useEffect(() => {
-    // setShowInputs(selectedLeague.length > 0);
-  }, [selectedLeague]);
+    console.log('name', name);
+    setShowPasswordInput(name.length > 0);
+  }, [name]);
+
+  React.useEffect(() => {
+    setShowLoginBtn(password.length > 0);
+  }, [password]);
 
   React.useEffect(() => {
     initLeagues();
@@ -77,14 +95,27 @@ const HomePage: React.FC = () => {
         <Logo>THE BIG BOARD</Logo>
       </TopBlock>
       <Content>
-        {leagues && renderSelect()}
-        {showInputs && (
-          <div>
-            <p style={{ fontFamily: 'PT Sans Narrow' }}>name: John</p>
-            <p style={{ fontFamily: 'PT Sans Narrow' }}>password: password</p>
-            <button onClick={() => userLogin()}>login</button>
-          </div>
+        <SignIn>SIGN IN</SignIn>
+        {leagues && <ContentItem>{renderSelect()}</ContentItem>}
+        {showNameInput && (
+          <ContentItem>
+            <Input
+              type="text"
+              placeholder="Name"
+              onTextChange={(text) => setName(text)}
+            />
+          </ContentItem>
         )}
+        {showPasswordInput && (
+          <ContentItem>
+            <Input
+              type="password"
+              placeholder="Password"
+              onTextChange={(text) => setPassword(text)}
+            />
+          </ContentItem>
+        )}
+        {showLoginBtn && <button onClick={() => userLogin()}>login</button>}
       </Content>
     </Page>
   );

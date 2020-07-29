@@ -7,7 +7,6 @@ export const Page = styled.div`
   flex: 1;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
 `;
 
 export const TopBlock = styled.div`
@@ -26,9 +25,24 @@ export const Logo = styled.p`
 
 export const Content = styled.div`
   width: 400px;
-  /* display: flex; */
   flex: 0.75;
   flex-direction: column;
   align-items: center;
-  /* border: 1px solid red; */
+`;
+
+export const SignIn = styled.p`
+  margin: 0;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 2.5rem;
+  color: ${COLORS.SECONDARY_GRAY};
+  text-align: center;
+`;
+
+export const ContentItem = styled.div`
+  margin-bottom: 1rem;
+`;
+
+export const BtnBlock = styled.div`
+  margin-top: 2rem;
+  width: auto;
 `;

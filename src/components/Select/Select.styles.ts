@@ -11,8 +11,19 @@ const Box = styled.div`
   align-items: center;
 `;
 
+export const TitleBlock = styled(Box)`
+  border-style: none;
+`;
+
+export const TitleText = styled.p`
+  margin: 0;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 1.5rem;
+  color: ${COLORS.PRIMARY_GREEN};
+`;
+
 export const SelectBox = styled(Box)`
-  border: 1px solid ${COLORS.PRIMARY_GREEN};
+  border: 1px solid ${COLORS.SECONDARY_GRAY};
 `;
 
 export const SelectBoxText = styled.p<{ hasSelection: boolean }>`
@@ -22,6 +33,11 @@ export const SelectBoxText = styled.p<{ hasSelection: boolean }>`
   font-size: 1.25rem;
   color: ${(props) =>
     props.hasSelection ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
+`;
+
+export const IconBlock = styled.div`
+  width: 10px;
+  padding-right: 0.5rem;
 `;
 
 export const OptionBox = styled(Box)`

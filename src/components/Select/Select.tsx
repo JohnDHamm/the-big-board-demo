@@ -1,5 +1,14 @@
 import React from 'react';
-import { OptionBox, SelectBox, SelectBoxText } from './Select.styles';
+import {
+  IconBlock,
+  OptionBox,
+  SelectBox,
+  SelectBoxText,
+  TitleBlock,
+  TitleText,
+} from './Select.styles';
+import DropdownIcon from '../DropdownIcon/DropdownIcon';
+import { COLORS } from '../../styles';
 
 interface Props {
   options: string[];
@@ -28,13 +37,16 @@ const Select: React.FC<Props> = ({ options, onSelect }) => {
 
   return (
     <div>
+      <TitleBlock>
+        <TitleText>{!selection || 'LEAGUE'}</TitleText>
+      </TitleBlock>
       <SelectBox onClick={() => setShowOptions(!showOptions)}>
         <SelectBoxText hasSelection={selection !== null}>
           {selection || 'SELECT LEAGUE'}
         </SelectBoxText>
-        <div style={{ transform: 'rotate(90deg)', paddingRight: '0.5rem' }}>
-          {'>'}
-        </div>
+        <IconBlock>
+          <DropdownIcon strokeColor={COLORS.SECONDARY_GRAY} />
+        </IconBlock>
       </SelectBox>
       {showOptions && renderOptions()}
     </div>

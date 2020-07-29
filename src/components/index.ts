@@ -1,4 +1,5 @@
 import BottomTicker from './BottomTicker/BottomTicker';
+import Button from './Button/Button';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import DropdownIcon from './DropdownIcon/DropdownIcon';
@@ -16,6 +17,7 @@ import SortToggle from './SortToggle/SortToggle';
 
 export {
   BottomTicker,
+  Button,
   CardNameBlock,
   DraftRoundTitleBar,
   DropdownIcon,

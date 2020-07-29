@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  BtnBlock,
   Content,
   ContentItem,
   Page,
@@ -7,7 +8,7 @@ import {
   SignIn,
   TopBlock,
 } from './HomePage.styles';
-import { Input, Select } from '../../components';
+import { Button, Input, Select } from '../../components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
@@ -115,7 +116,11 @@ const HomePage: React.FC = () => {
             />
           </ContentItem>
         )}
-        {showLoginBtn && <button onClick={() => userLogin()}>login</button>}
+        {showLoginBtn && (
+          <BtnBlock onClick={() => userLogin()}>
+            <Button label="sign in" />
+          </BtnBlock>
+        )}
       </Content>
     </Page>
   );

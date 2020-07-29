@@ -25,11 +25,9 @@ export const Logo = styled.p`
 
 export const Content = styled.div`
   width: 400px;
-  /* display: flex; */
   flex: 0.75;
   flex-direction: column;
   align-items: center;
-  /* border: 1px solid red; */
 `;
 
 export const SignIn = styled.p`
@@ -42,4 +40,9 @@ export const SignIn = styled.p`
 
 export const ContentItem = styled.div`
   margin-bottom: 1rem;
+`;
+
+export const BtnBlock = styled.div`
+  margin-top: 2rem;
+  width: auto;
 `;

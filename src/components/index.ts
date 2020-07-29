@@ -1,6 +1,7 @@
 import BottomTicker from './BottomTicker/BottomTicker';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
+import DropdownIcon from './DropdownIcon/DropdownIcon';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
 import HidePlayersToggle from './HidePlayersToggle/HidePlayersToggle';
 import MyPlayerCard from './MyPlayerCard/MyPlayerCard';
@@ -16,6 +17,7 @@ export {
   BottomTicker,
   CardNameBlock,
   DraftRoundTitleBar,
+  DropdownIcon,
   EmptySlotCard,
   HidePlayersToggle,
   MyPlayerCard,

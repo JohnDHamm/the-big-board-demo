@@ -9,6 +9,7 @@ import NavBar from './NavBar/NavBar';
 import PickCard from './PickCard/PickCard';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
+import Select from './Select/Select';
 import SortToggle from './SortToggle/SortToggle';
 
 export {
@@ -23,5 +24,6 @@ export {
   PickCard,
   PlayerCard,
   PositionToggle,
+  Select,
   SortToggle,
 };

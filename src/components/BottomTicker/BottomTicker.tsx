@@ -18,7 +18,7 @@ const BottomTicker: React.FC<Props> = ({ ownerOnClock = '--' }) => {
         <OnClockText>ON THE CLOCK:</OnClockText>
         <Name>{ownerOnClock}</Name>
       </OnClockBlock>
-      <TickerBlock>something</TickerBlock>
+      <TickerBlock></TickerBlock>
     </Container>
   );
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Content, Page, Logo, TopBlock } from './HomePage.styles';
+import { Select } from '../../components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
@@ -9,8 +11,8 @@ const HomePage: React.FC = () => {
   const history = useHistory();
 
   const [leagues, setLeagues] = React.useState<LeagueListItem[]>([]);
-  const [selectedLeague, setSelectedLeague] = React.useState<string>('');
-  const [showInputs, setShowInputs] = React.useState<boolean>(true);
+  const [selectedLeague, setSelectedLeague] = React.useState<string>(''); //leagueId
+  const [showInputs, setShowInputs] = React.useState<boolean>(false);
 
   const initLeagues = async () => {
     const leaguesList = await getLeaguesList();
@@ -19,30 +21,27 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const renderSelectOptions = (): JSX.Element[] => {
-    const options = [
-      <option key="select" value="">
-        select your league
-      </option>,
-    ];
+  const getSelectOptions = (): string[] => {
+    const options: string[] = [];
     leagues.forEach((league: LeagueListItem) => {
-      options.push(
-        <option key={league.id} value={league.id}>
-          {league.name}
-        </option>
-      );
+      options.push(league.name);
     });
     return options;
   };
 
+  const handleSelectChange = (option: string) => {
+    const league = leagues.filter((league) => league.name === option);
+    console.log('league[0].id', league[0].id);
+    setSelectedLeague(league[0].id);
+    setShowInputs(true);
+  };
+
   const renderSelect = (): JSX.Element => {
     return (
-      <select
-        onChange={(e) => setSelectedLeague(e.target.value)}
-        value={selectedLeague}
-      >
-        {renderSelectOptions()}
-      </select>
+      <Select
+        onSelect={(option) => handleSelectChange(option)}
+        options={getSelectOptions()}
+      />
     );
   };
 
@@ -73,17 +72,21 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1 style={{ fontFamily: 'Blockletter' }}>THE BIG BOARD</h1>
-      {leagues && renderSelect()}
-      {showInputs && (
-        <div>
-          <p style={{ fontFamily: 'PT Sans Narrow' }}>name: John</p>
-          <p style={{ fontFamily: 'PT Sans Narrow' }}>password: password</p>
-          <button onClick={() => userLogin()}>login</button>
-        </div>
-      )}
-    </div>
+    <Page>
+      <TopBlock>
+        <Logo>THE BIG BOARD</Logo>
+      </TopBlock>
+      <Content>
+        {leagues && renderSelect()}
+        {showInputs && (
+          <div>
+            <p style={{ fontFamily: 'PT Sans Narrow' }}>name: John</p>
+            <p style={{ fontFamily: 'PT Sans Narrow' }}>password: password</p>
+            <button onClick={() => userLogin()}>login</button>
+          </div>
+        )}
+      </Content>
+    </Page>
   );
 };
 

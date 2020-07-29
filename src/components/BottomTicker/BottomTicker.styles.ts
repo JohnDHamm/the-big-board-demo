@@ -40,5 +40,5 @@ export const Name = styled.p`
 export const TickerBlock = styled.div`
   display: flex;
   flex: 1;
-  background-color: ${COLORS.BLACK};
+  background-color: ${COLORS.SECONDARY_GRAY};
 `;

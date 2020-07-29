@@ -4,6 +4,7 @@ import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import DropdownIcon from './DropdownIcon/DropdownIcon';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
 import HidePlayersToggle from './HidePlayersToggle/HidePlayersToggle';
+import Input from './Input/Input';
 import MyPlayerCard from './MyPlayerCard/MyPlayerCard';
 import MyTeamPositionBlock from './MyTeamPositionBlock/MyTeamPositionBlock';
 import NavBar from './NavBar/NavBar';
@@ -20,6 +21,7 @@ export {
   DropdownIcon,
   EmptySlotCard,
   HidePlayersToggle,
+  Input,
   MyPlayerCard,
   MyTeamPositionBlock,
   NavBar,

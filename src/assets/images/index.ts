@@ -7,6 +7,7 @@ export const NFL_TEAMS: NFL_Image = {
   ATL: require('./NFL_logos/atl.png'),
   BAL: require('./NFL_logos/bal.png'),
   BUF: require('./NFL_logos/buf.png'),
+  CAR: require('./NFL_logos/car.png'),
   CHI: require('./NFL_logos/chi.png'),
   CIN: require('./NFL_logos/cin.png'),
   CLE: require('./NFL_logos/cle.png'),

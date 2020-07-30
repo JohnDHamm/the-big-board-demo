@@ -15,6 +15,7 @@ import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
 import Select from './Select/Select';
 import SortToggle from './SortToggle/SortToggle';
+import WelcomeUser from './WelcomeUser/WelcomeUser';
 
 export {
   BottomTicker,
@@ -34,4 +35,5 @@ export {
   PositionToggle,
   Select,
   SortToggle,
+  WelcomeUser,
 };

@@ -9,6 +9,7 @@ import Input from './Input/Input';
 import MyPlayerCard from './MyPlayerCard/MyPlayerCard';
 import MyTeamPositionBlock from './MyTeamPositionBlock/MyTeamPositionBlock';
 import NavBar from './NavBar/NavBar';
+import NavIcon from './NavIcon/NavIcon';
 import PickCard from './PickCard/PickCard';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
@@ -27,6 +28,7 @@ export {
   MyPlayerCard,
   MyTeamPositionBlock,
   NavBar,
+  NavIcon,
   PickCard,
   PlayerCard,
   PositionToggle,

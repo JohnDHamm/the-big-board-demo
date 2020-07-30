@@ -14,6 +14,10 @@ const HidePlayersToggle: React.FC<Props> = ({ active, onToggle }) => {
     onToggle();
   };
 
+  React.useEffect(() => {
+    setToggleActive(active);
+  }, [active]);
+
   return (
     <Container>
       <Toggle active={toggleActive} onClick={handleClick} />

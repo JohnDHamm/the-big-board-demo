@@ -21,6 +21,25 @@ export const NavBlock = styled.div`
   color: ${COLORS.WHITE};
 `;
 
+export const NavBtn = styled.div`
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NavIconBlock = styled.div`
+  width: 13px;
+  padding-top: 0.25rem;
+`;
+
+export const NextNavIconBlock = styled(NavIconBlock)``;
+
+export const PrevNavIconBlock = styled(NavIconBlock)`
+  transform: rotate(180deg);
+`;
+
 export const CenterBlock = styled.div`
   display: flex;
   align-items: center;

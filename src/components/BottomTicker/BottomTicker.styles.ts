@@ -41,4 +41,6 @@ export const TickerBlock = styled.div`
   display: flex;
   flex: 1;
   background-color: ${COLORS.SECONDARY_GRAY};
+  padding-left: 1rem;
+  align-items: flex-end;
 `;

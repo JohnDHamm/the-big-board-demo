@@ -9,16 +9,17 @@ import {
 
 interface Props {
   ownerOnClock?: string;
+  ticker: JSX.Element;
 }
 
-const BottomTicker: React.FC<Props> = ({ ownerOnClock = '--' }) => {
+const BottomTicker: React.FC<Props> = ({ ownerOnClock = '--', ticker }) => {
   return (
     <Container>
       <OnClockBlock>
         <OnClockText>ON THE CLOCK:</OnClockText>
         <Name>{ownerOnClock}</Name>
       </OnClockBlock>
-      <TickerBlock></TickerBlock>
+      <TickerBlock>{ticker}</TickerBlock>
     </Container>
   );
 };

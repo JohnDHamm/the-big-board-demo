@@ -40,6 +40,10 @@ const SortToggle: React.FC<Props> = ({
     });
   };
 
+  React.useEffect(() => {
+    setSelected(selectedSortType);
+  }, [selectedSortType]);
+
   return <Container>{renderToggles()}</Container>;
 };
 

@@ -50,6 +50,10 @@ const PositionToggle: React.FC<Props> = ({
     });
   };
 
+  React.useEffect(() => {
+    setSelected(selectedPositions);
+  }, [selectedPositions]);
+
   return <Container>{renderToggles()}</Container>;
 };
 

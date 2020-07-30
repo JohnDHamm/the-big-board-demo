@@ -12,6 +12,14 @@ import sortBy from 'lodash.sortby';
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
 const positions: NFL_Position[] = ['QB', 'RB', 'WR', 'TE', 'D', 'K'];
+const LS_KEY = {
+  PLAYERS_SETTINGS: 'player_settings',
+};
+const SETTINGS_KEYS = {
+  SELECTED_POSITIONS: 'sel_positions',
+  SORTING: 'sort',
+  HIDE_SELECTED: 'hide_selected',
+};
 
 const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
@@ -22,8 +30,8 @@ const PlayersPage: React.FC = () => {
   >([]);
   const [selectedPositions, setSelectedPositions] = React.useState<
     NFL_Position[]
-  >(['RB']);
-  const [sorting, setSorting] = React.useState<Sorting>('RANK');
+  >([]);
+  const [sorting, setSorting] = React.useState<Sorting | ''>('');
   const [hideSelected, setHideSelected] = React.useState<boolean>(false);
 
   const renderPlayers = () => {
@@ -39,6 +47,36 @@ const PlayersPage: React.FC = () => {
         );
       }
     });
+  };
+
+  const updateLocalStorage = (key: string, value: any) => {
+    if (localStorage.getItem(LS_KEY.PLAYERS_SETTINGS)) {
+      const store = localStorage.getItem(LS_KEY.PLAYERS_SETTINGS);
+      if (store) {
+        const updateObj = JSON.parse(store);
+        updateObj[key] = value;
+        localStorage.setItem(
+          LS_KEY.PLAYERS_SETTINGS,
+          JSON.stringify(updateObj)
+        );
+      }
+    }
+  };
+
+  const handlePositionChange = (newSelectedPositions: NFL_Position[]) => {
+    setSelectedPositions(newSelectedPositions);
+    updateLocalStorage(SETTINGS_KEYS.SELECTED_POSITIONS, newSelectedPositions);
+  };
+
+  const handleSortChange = (newSort: Sorting) => {
+    setSorting(newSort);
+    updateLocalStorage(SETTINGS_KEYS.SORTING, newSort);
+  };
+
+  const handleHideSelectedChange = () => {
+    const newValue = !hideSelected;
+    updateLocalStorage(SETTINGS_KEYS.HIDE_SELECTED, newValue);
+    setHideSelected(newValue);
   };
 
   React.useEffect(() => {
@@ -66,6 +104,27 @@ const PlayersPage: React.FC = () => {
     }
   }, [players, selectedPositions, sorting]);
 
+  React.useEffect(() => {
+    if (!localStorage.getItem(LS_KEY.PLAYERS_SETTINGS)) {
+      setSelectedPositions(['QB']);
+      setSorting('RANK');
+      const updateObj = {
+        [SETTINGS_KEYS.SELECTED_POSITIONS]: ['QB'],
+        [SETTINGS_KEYS.SORTING]: 'RANK',
+        [SETTINGS_KEYS.HIDE_SELECTED]: false,
+      };
+      localStorage.setItem(LS_KEY.PLAYERS_SETTINGS, JSON.stringify(updateObj));
+    } else {
+      const savedSettings = localStorage.getItem(LS_KEY.PLAYERS_SETTINGS);
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        setSelectedPositions(parsedSettings[SETTINGS_KEYS.SELECTED_POSITIONS]);
+        setSorting(parsedSettings[SETTINGS_KEYS.SORTING]);
+        setHideSelected(parsedSettings[SETTINGS_KEYS.HIDE_SELECTED]);
+      }
+    }
+  }, []);
+
   return (
     <PageContainer>
       <CenterContent>
@@ -73,17 +132,17 @@ const PlayersPage: React.FC = () => {
           positions={positions}
           selectedPositions={selectedPositions}
           onPositionsToggle={(newSelectedPositions) =>
-            setSelectedPositions(newSelectedPositions)
+            handlePositionChange(newSelectedPositions)
           }
         />
         <SortToggle
           sortTypes={sortTypes}
           selectedSortType={sorting}
-          onSortToggle={(newSort) => setSorting(newSort as Sorting)}
+          onSortToggle={(newSort) => handleSortChange(newSort as Sorting)}
         />
         <HidePlayersToggle
           active={hideSelected}
-          onToggle={() => setHideSelected(!hideSelected)}
+          onToggle={() => handleHideSelectedChange()}
         />
         <div>{players && renderPlayers()}</div>
       </CenterContent>

@@ -3,10 +3,14 @@ import {
   CenterBlock,
   Container,
   NavBlock,
+  NavBtn,
+  NextNavIconBlock,
   Number,
   NumberContainer,
+  PrevNavIconBlock,
   Title,
 } from './DraftRoundTitleBar.styles';
+import NavIcon from '../NavIcon/NavIcon';
 
 interface Props {
   roundNum: number | undefined;
@@ -29,7 +33,11 @@ const DraftRoundTitleBar: React.FC<Props> = ({
     <Container>
       <NavBlock>
         {roundNum && roundNum > 1 && (
-          <div onClick={() => onNavRoundChange(-1)}>{'<'}</div>
+          <NavBtn onClick={() => onNavRoundChange(-1)}>
+            <PrevNavIconBlock>
+              <NavIcon />
+            </PrevNavIconBlock>
+          </NavBtn>
         )}
       </NavBlock>
       <CenterBlock>
@@ -40,7 +48,11 @@ const DraftRoundTitleBar: React.FC<Props> = ({
       </CenterBlock>
       <NavBlock>
         {roundNum && roundNum < totalRounds && (
-          <div onClick={() => onNavRoundChange(1)}>{'>'}</div>
+          <NavBtn onClick={() => onNavRoundChange(1)}>
+            <NextNavIconBlock>
+              <NavIcon />
+            </NextNavIconBlock>
+          </NavBtn>
         )}
       </NavBlock>
     </Container>

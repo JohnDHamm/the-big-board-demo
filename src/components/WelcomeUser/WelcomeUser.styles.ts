@@ -9,14 +9,13 @@ export const Container = styled.div`
 export const WelcomeText = styled.p`
   margin: 0;
   font-family: ${FONTS.BLOCKLETTER};
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: ${COLORS.PRIMARY_GREEN};
 `;
 
 export const Name = styled.p`
   margin: 0;
-  padding-left: 0.5rem;
-
+  padding-left: 0.25rem;
   font-family: ${FONTS.NAMES};
   font-size: 1.75rem;
   color: ${COLORS.WHITE};

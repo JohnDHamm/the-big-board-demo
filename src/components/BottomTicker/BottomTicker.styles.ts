@@ -14,8 +14,8 @@ export const Container = styled.div`
 export const OnClockBlock = styled.div`
   display: flex;
   width: auto;
-  align-items: flex-end;
-  padding: 0.5rem 1rem;
+  align-items: center;
+  padding: 0 1rem;
   background-color: ${COLORS.PRIMARY_GREEN};
 `;
 
@@ -28,8 +28,7 @@ export const OnClockText = styled.p`
 `;
 
 export const Name = styled.p`
-  margin-top: 0;
-  margin-bottom: -0.7rem;
+  margin: 0;
   padding-left: 0.25rem;
   padding-right: 1rem;
   font-family: ${FONTS.NAMES};

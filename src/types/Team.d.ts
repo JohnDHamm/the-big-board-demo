@@ -3,7 +3,6 @@ interface NFL_Team {
   city: string;
   nickname: string;
   abbv: string;
-  logo_url: string;
   colors: {
     primary: string;
     secondary: string;

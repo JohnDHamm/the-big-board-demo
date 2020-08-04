@@ -20,7 +20,6 @@ const testTeam: Team = {
   city: 'Tennessee',
   nickname: 'Titans',
   abbv: 'TEN',
-  logo_url: 'ten.png',
   colors: {
     primary: '#0C2340',
     secondary: '#4B92DB',

@@ -22,7 +22,6 @@ const mockTeam: Team = {
   city: 'Pittsburgh',
   nickname: 'Steelers',
   abbv: 'PIT',
-  logo_url: 'pit.png',
   colors: {
     primary: '#101820',
     secondary: '#FFB612',

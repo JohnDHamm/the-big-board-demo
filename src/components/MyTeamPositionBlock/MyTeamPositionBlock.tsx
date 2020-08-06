@@ -37,7 +37,7 @@ const MyTeamPositionBlock: React.FC<Props> = ({
     players.forEach((player) => {
       slots.push(
         <MyPlayerCard
-          key={player.playerInfo.id}
+          key={player.playerInfo._id}
           player={player.playerInfo}
           round={player.roundSelectionNum}
           team={player.team}

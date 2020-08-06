@@ -8,7 +8,7 @@ export default {
 };
 
 const testPlayer: Player = {
-  id: 'something',
+  _id: 'something',
   firstName: 'John',
   lastName: 'Hamm',
   teamId: 'TEN',
@@ -16,7 +16,7 @@ const testPlayer: Player = {
 };
 
 const testTeam: Team = {
-  id: 'TEN',
+  _id: 'TEN',
   city: 'Tennessee',
   nickname: 'Titans',
   abbv: 'TEN',

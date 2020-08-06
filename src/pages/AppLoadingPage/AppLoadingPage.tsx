@@ -38,7 +38,7 @@ const AppLoadingPage: React.FC = () => {
   const { user } = React.useContext(UserContext);
 
   const [league, setLeague] = React.useState<League>({
-    id: '',
+    _id: '',
     name: '',
     draftOrder: [],
     draftStatus: 'not started',
@@ -140,6 +140,7 @@ const AppLoadingPage: React.FC = () => {
       getLeague(leagueId)
         .then((userLeague: League) => {
           if (userLeague) {
+            // console.log('userLeague', userLeague);
             setLeague(userLeague);
             const updatedDraft = Object.assign(draft);
             updatedDraft.league = userLeague;
@@ -149,6 +150,7 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getOwners(leagueId))
         .then((leagueOwners: Owner[]) => {
           if (leagueOwners.length > 0) {
+            // console.log('leagueOwners', leagueOwners);
             setOwners(leagueOwners);
             const updatedDraft = Object.assign(draft);
             updatedDraft.owners = leagueOwners;
@@ -158,7 +160,8 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getTeams())
         .then((leagueTeams: Team[]) => {
           if (!isEmpty(leagueTeams)) {
-            const formatTeams: TeamsContext = keyby(leagueTeams, 'id');
+            // console.log('leagueTeams', leagueTeams);
+            const formatTeams: TeamsContext = keyby(leagueTeams, '_id');
             setCurrentTeams(formatTeams);
             setTimeout(() => {
               setTeamsAreReady(true);
@@ -168,13 +171,14 @@ const AppLoadingPage: React.FC = () => {
         .then(() => getPlayers())
         .then((leaguePlayers: Player[]) => {
           if (!isEmpty(leaguePlayers)) {
+            // console.log('leaguePlayers', leaguePlayers);
             const playersInfo: PlayerInfo[] = leaguePlayers.map((player) => ({
               available: true,
               positionRank: null,
               ...player,
             }));
 
-            const formatPlayers: PlayersContext = keyby(playersInfo, 'id');
+            const formatPlayers: PlayersContext = keyby(playersInfo, '_id');
             setCurrentPlayers(formatPlayers);
             setTimeout(() => {
               setPlayersAreReady(true);
@@ -189,7 +193,7 @@ const AppLoadingPage: React.FC = () => {
   const checkPlayersAvailability = React.useCallback((): void => {
     const selectedPlayers: DraftPick[] = [];
     for (let key in players) {
-      const matchPick = find(savedPicks, { playerId: players[key].id });
+      const matchPick = find(savedPicks, { playerId: players[key]._id });
       if (matchPick) {
         selectedPlayers.push(matchPick);
       }
@@ -202,7 +206,7 @@ const AppLoadingPage: React.FC = () => {
     setCurrentPlayers(updatedPlayers);
 
     const userPlayers = selectedPlayers.filter(
-      (player) => player.ownerId === user?.id
+      (player) => player.ownerId === user?._id
     );
     setCurrentMyTeam(userPlayers);
     setTimeout(() => setMyTeamIsReady(true), 4);
@@ -239,9 +243,9 @@ const AppLoadingPage: React.FC = () => {
 
   React.useEffect(() => {
     // console.log('league', league);
-    if (league.id !== '') {
+    if (league._id !== '') {
       if (league.draftStatus !== 'not started') {
-        getLeaguePicks(league.id);
+        getLeaguePicks(league._id);
         getPositionRankings(league.scoringType).then((rankings) => {
           console.log('rankings', rankings);
           if (!isEmpty(rankings)) {
@@ -262,7 +266,7 @@ const AppLoadingPage: React.FC = () => {
     const updatePlayers: PlayersContext = Object.assign(players);
     for (let key in players) {
       const rank = savedPositionRankings.filter(
-        (ranking) => ranking.playerId === players[key].id
+        (ranking) => ranking.playerId === players[key]._id
       );
       if (!isEmpty(rank)) {
         updatePlayers[key].positionRank = rank[0].rank;
@@ -275,6 +279,10 @@ const AppLoadingPage: React.FC = () => {
       setTimeout(() => setGoToBoard(true), 15);
     }
   }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
+
+  // React.useEffect(() => {
+  // console.log('players', players);
+  // }, [players]);
 
   return (
     <div>

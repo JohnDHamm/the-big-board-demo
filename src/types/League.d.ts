@@ -8,7 +8,7 @@ interface Position_Slot {
 type DraftStatus = 'not started' | 'open' | 'paused' | 'done';
 
 interface League {
-  id: string;
+  _id: string;
   name: string;
   scoringType: ScoringType;
   positionSlots: Position_Slot[];
@@ -16,4 +16,4 @@ interface League {
   draftStatus: DraftStatus;
 }
 
-type LeagueListItem = Pick<League, 'id' | 'name'>;
+type LeagueListItem = Pick<League, '_id' | 'name'>;

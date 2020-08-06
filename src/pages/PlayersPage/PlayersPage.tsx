@@ -39,7 +39,7 @@ const PlayersPage: React.FC = () => {
       if (!hideSelected || (hideSelected && player.available)) {
         return (
           <PlayerCard
-            key={player.id}
+            key={player._id}
             player={player}
             team={teams[player.teamId]}
             rank={player.positionRank}

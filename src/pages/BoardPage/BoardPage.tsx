@@ -25,7 +25,7 @@ const BoardPage: React.FC = () => {
     const picksToRender: JSX.Element[] = [];
     for (let i = listStartNum; i < listEndNum + 1; i++) {
       const owner: Owner | undefined = draft.owners.find(
-        (owner) => picks[i].ownerId === owner.id
+        (owner) => picks[i].ownerId === owner._id
       );
       const player: PlayerInfo | undefined = players[picks[i].playerId];
       picksToRender.push(

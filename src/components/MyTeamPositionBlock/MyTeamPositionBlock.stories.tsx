@@ -8,7 +8,7 @@ export default {
 };
 
 const mockPlayerInfo: PlayerInfo = {
-  id: 'something',
+  _id: 'something',
   firstName: 'John',
   lastName: 'Hamm',
   teamId: 'TEN',
@@ -18,7 +18,7 @@ const mockPlayerInfo: PlayerInfo = {
 };
 
 const mockTeam: Team = {
-  id: 'PIT',
+  _id: 'PIT',
   city: 'Pittsburgh',
   nickname: 'Steelers',
   abbv: 'PIT',

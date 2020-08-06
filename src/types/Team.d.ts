@@ -1,5 +1,5 @@
 interface NFL_Team {
-  id: string;
+  _id: string;
   city: string;
   nickname: string;
   abbv: string;

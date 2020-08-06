@@ -1,5 +1,5 @@
 interface Owner {
-  id: string;
+  _id: string;
   name: string;
   leagueId: string;
   isCommish: boolean;

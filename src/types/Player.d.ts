@@ -10,7 +10,7 @@ interface NFL_Player_Ranking {
 }
 
 interface Player {
-  id: string;
+  _id: string;
   firstName: string;
   lastName: string;
   teamId: string;

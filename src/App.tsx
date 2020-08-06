@@ -32,7 +32,7 @@ const ProtectedRoutes = () => {
 
   const getCurrentOwnerName = () => {
     const currPickOwner = draft.owners.find(
-      (owner) => owner.id === draft.currentPick.ownerId
+      (owner) => owner._id === draft.currentPick.ownerId
     );
     return currPickOwner ? currPickOwner.name : undefined;
   };

@@ -8,7 +8,7 @@ export default {
 };
 
 const mockPlayer: PlayerInfo = {
-  id: 'JSmith-Schuster-WR',
+  _id: 'JSmith-Schuster-WR',
   firstName: 'JuJu',
   lastName: 'Smith-Schuster',
   teamId: 'PIT',
@@ -18,7 +18,7 @@ const mockPlayer: PlayerInfo = {
 };
 
 const longNamePlayer: PlayerInfo = {
-  id: 'JSmith-Schuster-WR',
+  _id: 'JSmith-Schuster-WR',
   firstName: 'Gregg',
   lastName: 'Something-ReallyLong',
   teamId: 'LAC',
@@ -28,7 +28,7 @@ const longNamePlayer: PlayerInfo = {
 };
 
 const mockTeam: Team = {
-  id: 'PIT',
+  _id: 'PIT',
   city: 'Pittsburgh',
   nickname: 'Steelers',
   abbv: 'PIT',

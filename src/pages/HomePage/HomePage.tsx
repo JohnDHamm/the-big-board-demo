@@ -14,12 +14,22 @@ import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
 import { getLeaguesList, login } from '../../api';
 
+const TEST_LEAGUE = {
+  _id: '5f2c5bd6466faf1f45c3dd53',
+};
+
+const TEST_USER: UserLogin = {
+  name: 'Tester 1',
+  leagueId: TEST_LEAGUE._id,
+  password: 'password',
+};
+
 const HomePage: React.FC = () => {
   const { user, setCurrentUser } = React.useContext(UserContext);
   const history = useHistory();
 
   const [leagues, setLeagues] = React.useState<LeagueListItem[]>([]);
-  const [selectedLeague, setSelectedLeague] = React.useState<string>('');
+  const [selectedLeagueId, setSelectedLeagueId] = React.useState<string>('');
   const [showNameInput, setShowNameInput] = React.useState<boolean>(false);
   const [showPasswordInput, setShowPasswordInput] = React.useState<boolean>(
     false
@@ -46,7 +56,7 @@ const HomePage: React.FC = () => {
   const handleSelectChange = (option: string) => {
     const league = leagues.filter((league) => league.name === option);
     // console.log('league[0].id', league[0].id);
-    setSelectedLeague(league[0].id);
+    setSelectedLeagueId(league[0]._id);
     setShowNameInput(true);
   };
 
@@ -60,25 +70,24 @@ const HomePage: React.FC = () => {
   };
 
   const userLogin = async () => {
-    // if (selectedLeague) {
-    const testUser: UserLogin = {
-      name: 'Richard',
-      password: 'password',
-      // leagueId: selectedLeague,
-      leagueId: 'Nashville_Volleyball-1',
-    };
-    const loggedInUser: User = await login(testUser);
+    // if (selectedLeagueId) {
+    // const user: UserLogin = {
+    //   name,
+    //   password,
+    //   leagueId: selectedLeagueId,
+    // };
+    const loggedInUser: User = await login(TEST_USER);
     setCurrentUser(loggedInUser);
     history.push(ROUTES.APP);
     // }
   };
 
   React.useEffect(() => {
-    console.log('user', user);
+    // console.log('user', user);
   }, [user]);
 
   React.useEffect(() => {
-    console.log('name', name);
+    // console.log('name', name);
     setShowPasswordInput(name.length > 0);
   }, [name]);
 

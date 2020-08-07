@@ -23,7 +23,7 @@ import concat from 'lodash.concat';
 import { calcTotalRounds } from '../../functions';
 
 interface SavedRanking {
-  id: string;
+  _id: string;
   position: NFL_Position;
   scoringType: ScoringType;
   rank: number;
@@ -32,7 +32,7 @@ interface SavedRanking {
 
 const AppLoadingPage: React.FC = () => {
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
-  const { myTeam, setCurrentMyTeam } = React.useContext(MyTeamContext);
+  const { setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { setCurrentTeams } = React.useContext(TeamsContext);
   const { user } = React.useContext(UserContext);
@@ -47,7 +47,7 @@ const AppLoadingPage: React.FC = () => {
   });
   const [owners, setOwners] = React.useState<Owner[]>([]);
   const [savedPicks, setSavedPicks] = React.useState<DraftPick[] | null>(null);
-  const [savedPositionRankings, setSavedRankings] = React.useState<
+  const [savedPositionRankings, setSavedPositionRankings] = React.useState<
     SavedRanking[]
   >([]);
 
@@ -247,9 +247,9 @@ const AppLoadingPage: React.FC = () => {
       if (league.draftStatus !== 'not started') {
         getLeaguePicks(league._id);
         getPositionRankings(league.scoringType).then((rankings) => {
-          console.log('rankings', rankings);
+          // console.log('rankings', rankings);
           if (!isEmpty(rankings)) {
-            setSavedRankings(rankings);
+            setSavedPositionRankings(rankings);
           }
         });
       } else {
@@ -279,10 +279,6 @@ const AppLoadingPage: React.FC = () => {
       setTimeout(() => setGoToBoard(true), 15);
     }
   }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
-
-  // React.useEffect(() => {
-  // console.log('players', players);
-  // }, [players]);
 
   return (
     <div>

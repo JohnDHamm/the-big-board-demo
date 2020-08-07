@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
   const [showPasswordInput, setShowPasswordInput] = React.useState<boolean>(
     false
   );
-  const [showLoginBtn, setShowLoginBtn] = React.useState<boolean>(false);
+  const [showLoginBtn, setShowLoginBtn] = React.useState<boolean>(true);
   const [name, setName] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
 
@@ -92,7 +92,7 @@ const HomePage: React.FC = () => {
   }, [name]);
 
   React.useEffect(() => {
-    setShowLoginBtn(password.length > 0);
+    // setShowLoginBtn(password.length > 0);
   }, [password]);
 
   React.useEffect(() => {

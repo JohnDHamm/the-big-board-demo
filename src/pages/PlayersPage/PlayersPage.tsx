@@ -45,6 +45,8 @@ const PlayersPage: React.FC = () => {
             rank={player.positionRank}
           />
         );
+      } else {
+        return null;
       }
     });
   };

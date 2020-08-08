@@ -6,8 +6,16 @@ import {
   PositionToggle,
   SortToggle,
 } from '../../components';
-import { PlayersContext, TeamsContext } from '../../contexts';
+import {
+  MyTeamContext,
+  PlayersContext,
+  TeamsContext,
+  DraftContext,
+  UserContext,
+} from '../../contexts';
+import { makePick } from '../../api';
 import sortBy from 'lodash.sortby';
+import find from 'lodash.find';
 
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
@@ -22,8 +30,12 @@ const SETTINGS_KEYS = {
 };
 
 const PlayersPage: React.FC = () => {
+  const { user } = React.useContext(UserContext);
+  const { draft } = React.useContext(DraftContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
+  const { myTeam } = React.useContext(MyTeamContext);
+  // console.log('myTeam', myTeam);
 
   const [playersRenderList, setPlayersRenderList] = React.useState<
     PlayerInfo[]
@@ -33,11 +45,50 @@ const PlayersPage: React.FC = () => {
   >([]);
   const [sorting, setSorting] = React.useState<Sorting | ''>('');
   const [hideSelected, setHideSelected] = React.useState<boolean>(false);
+  const [canMakePick, setCanMakePick] = React.useState<boolean>(false);
+
+  const hasOpenPositionSlot = (position: NFL_Position): boolean => {
+    // console.log('position', position);
+    const numSlots =
+      find(draft.league.positionSlots, { position: position })?.total || 0;
+    // console.log('numSlots', numSlots);
+
+    const myPicks = myTeam.filter(
+      (pick) => players[pick.playerId].position === position
+    ).length;
+    // console.log('myPicks', myPicks);
+    return myPicks < numSlots;
+  };
+
+  const handlePick = (playerId: string) => {
+    if (user) {
+      const newPick: DraftSelection = {
+        selectionNumber: draft.currentPick.selectionNumber,
+        leagueId: draft.league._id,
+        ownerId: user._id,
+        playerId,
+      };
+      console.log('newPick', newPick);
+      makePick(newPick)
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
+    }
+  };
 
   const renderPlayers = () => {
     return playersRenderList.map((player) => {
       if (!hideSelected || (hideSelected && player.available)) {
-        return (
+        return canMakePick &&
+          hasOpenPositionSlot(player.position) &&
+          player.available ? (
+          <div key={player._id} onClick={() => handlePick(player._id)}>
+            <PlayerCard
+              player={player}
+              team={teams[player.teamId]}
+              rank={player.positionRank}
+            />
+          </div>
+        ) : (
           <PlayerCard
             key={player._id}
             player={player}
@@ -126,6 +177,13 @@ const PlayersPage: React.FC = () => {
       }
     }
   }, []);
+
+  React.useEffect(() => {
+    setCanMakePick(
+      draft.league.draftStatus === 'open' &&
+        draft.currentPick.ownerId === user?._id
+    );
+  }, [draft, user]);
 
   return (
     <PageContainer>

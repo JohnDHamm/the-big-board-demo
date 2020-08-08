@@ -12,3 +12,9 @@ type DraftPick = CurrentDraftPick & PlayerId;
 interface DraftPickContext {
   [key: number]: DraftPick;
 }
+
+interface LeagueId {
+  leagueId: string;
+}
+
+type DraftSelection = DraftPick & LeagueId;

@@ -86,6 +86,7 @@ const PlayersPage: React.FC = () => {
               player={player}
               team={teams[player.teamId]}
               rank={player.positionRank}
+              selectable={true}
             />
           </div>
         ) : (
@@ -94,6 +95,7 @@ const PlayersPage: React.FC = () => {
             player={player}
             team={teams[player.teamId]}
             rank={player.positionRank}
+            selectable={false}
           />
         );
       } else {

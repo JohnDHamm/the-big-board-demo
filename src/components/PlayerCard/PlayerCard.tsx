@@ -17,10 +17,16 @@ declare global {
     player: PlayerInfo;
     rank: number | null;
     team: Team;
+    selectable: boolean;
   }
 }
 
-const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
+const PlayerCard: React.FC<PlayerCardInterface> = ({
+  player,
+  rank,
+  team,
+  selectable,
+}) => {
   const [colors, setColors] = React.useState(team.colors);
 
   React.useEffect(() => {
@@ -33,7 +39,7 @@ const PlayerCard: React.FC<PlayerCardInterface> = ({ player, rank, team }) => {
   }, [player]);
 
   return (
-    <Container available={player.available}>
+    <Container available={player.available} selectable={selectable}>
       <FootballContainer>
         <Football
           fillColor={

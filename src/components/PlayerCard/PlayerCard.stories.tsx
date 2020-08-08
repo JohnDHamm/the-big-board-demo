@@ -32,6 +32,7 @@ export const Available = () => (
     player={{ available: true, positionRank: 24, ...testPlayer }}
     team={testTeam}
     rank={24}
+    selectable={true}
   />
 );
 
@@ -40,5 +41,6 @@ export const NotAvailable = () => (
     player={{ available: false, positionRank: null, ...testPlayer }}
     team={testTeam}
     rank={null}
+    selectable={false}
   />
 );

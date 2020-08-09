@@ -1,3 +1,4 @@
+import Backdrop from './Backdrop/Backdrop';
 import BottomTicker from './BottomTicker/BottomTicker';
 import Button from './Button/Button';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
@@ -11,6 +12,7 @@ import MyTeamPositionBlock from './MyTeamPositionBlock/MyTeamPositionBlock';
 import NavBar from './NavBar/NavBar';
 import NavIcon from './NavIcon/NavIcon';
 import PickCard from './PickCard/PickCard';
+import PickConfirmModal from './PickConfirmModal/PickConfirmModal';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
 import Select from './Select/Select';
@@ -18,6 +20,7 @@ import SortToggle from './SortToggle/SortToggle';
 import WelcomeUser from './WelcomeUser/WelcomeUser';
 
 export {
+  Backdrop,
   BottomTicker,
   Button,
   CardNameBlock,
@@ -31,6 +34,7 @@ export {
   NavBar,
   NavIcon,
   PickCard,
+  PickConfirmModal,
   PlayerCard,
   PositionToggle,
   Select,

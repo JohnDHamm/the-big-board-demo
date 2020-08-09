@@ -14,21 +14,35 @@ import {
   MyTeamPage,
   PlayersPage,
 } from './pages';
-import { BottomTicker, NavBar, WelcomeUser } from './components';
+import {
+  BottomTicker,
+  NavBar,
+  PickConfirmModal,
+  WelcomeUser,
+} from './components';
 import { useLocation } from 'react-router-dom';
 import {
   DraftContext,
   MyTeamContext,
+  PickConfirmModalContext,
   PlayersContext,
   TeamsContext,
   UserContext,
 } from './contexts';
-import { useDraft, useMyTeam, usePlayers, useTeams, useUser } from './hooks';
+import {
+  useDraft,
+  useMyTeam,
+  usePickConfirmModal,
+  usePlayers,
+  useTeams,
+  useUser,
+} from './hooks';
 
 const ProtectedRoutes = () => {
   const location = useLocation();
   const { user } = React.useContext(UserContext);
   const { draft } = React.useContext(DraftContext);
+  const { modal } = React.useContext(PickConfirmModalContext);
 
   const getCurrentOwnerName = () => {
     const currPickOwner = draft.owners.find(
@@ -39,6 +53,7 @@ const ProtectedRoutes = () => {
 
   return user ? (
     <div>
+      <PickConfirmModal {...modal} />
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
       <BottomTicker
         ownerOnClock={getCurrentOwnerName()}
@@ -61,6 +76,7 @@ const ProtectedRoutes = () => {
 function App() {
   const draft = useDraft();
   const myTeam = useMyTeam();
+  const modal = usePickConfirmModal();
   const players = usePlayers();
   const teams = useTeams();
   const user = useUser();
@@ -71,12 +87,14 @@ function App() {
         <TeamsContext.Provider value={teams}>
           <PlayersContext.Provider value={players}>
             <MyTeamContext.Provider value={myTeam}>
-              <Router>
-                <Switch>
-                  <Route path={ROUTES.APP} component={ProtectedRoutes} />
-                  <Route path={ROUTES.HOME} component={HomePage} />
-                </Switch>
-              </Router>
+              <PickConfirmModalContext.Provider value={modal}>
+                <Router>
+                  <Switch>
+                    <Route path={ROUTES.APP} component={ProtectedRoutes} />
+                    <Route path={ROUTES.HOME} component={HomePage} />
+                  </Switch>
+                </Router>
+              </PickConfirmModalContext.Provider>
             </MyTeamContext.Provider>
           </PlayersContext.Provider>
         </TeamsContext.Provider>

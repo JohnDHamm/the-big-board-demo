@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
 
 export const Container = styled.div`
   height: 2.5rem;
@@ -8,7 +8,7 @@ export const Container = styled.div`
   bottom: 0;
   left: 0;
   display: flex;
-  z-index: 10;
+  z-index: ${Z_HEIGHTS.NAVBAR};
 `;
 
 export const OnClockBlock = styled.div`

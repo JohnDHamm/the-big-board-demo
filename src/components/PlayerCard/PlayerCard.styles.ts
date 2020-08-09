@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
 import { NFL_TEAMS } from '../../assets/images';
 
 export const Container = styled.div<{
@@ -20,6 +20,7 @@ export const FootballContainer = styled.div`
   position: absolute;
   top: -2px;
   left: 0px;
+  z-index: ${Z_HEIGHTS.CARD_FOOTBALL};
 `;
 
 export const FootballText = styled.p`

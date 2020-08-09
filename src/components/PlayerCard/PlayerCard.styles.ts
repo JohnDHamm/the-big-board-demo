@@ -1,14 +1,18 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
 import { NFL_TEAMS } from '../../assets/images';
 
-export const Container = styled.div<{ available: boolean }>`
+export const Container = styled.div<{
+  available: boolean;
+  selectable: boolean;
+}>`
   max-width: 400px;
   height: 42px;
   display: flex;
   margin: 6px 0;
   position: relative;
   ${(props) => (props.available ? null : 'filter: grayscale(100%)')};
+  cursor: ${(props) => (props.selectable ? 'pointer' : 'not-allowed')};
 `;
 
 export const FootballContainer = styled.div`
@@ -16,6 +20,7 @@ export const FootballContainer = styled.div`
   position: absolute;
   top: -2px;
   left: 0px;
+  z-index: ${Z_HEIGHTS.CARD_FOOTBALL};
 `;
 
 export const FootballText = styled.p`

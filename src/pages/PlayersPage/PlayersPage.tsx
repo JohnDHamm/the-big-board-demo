@@ -12,7 +12,9 @@ import {
   TeamsContext,
   DraftContext,
   UserContext,
+  PickConfirmModalContext,
 } from '../../contexts';
+import { MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
 import { makePick } from '../../api';
 import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
@@ -35,7 +37,7 @@ const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
   const { myTeam } = React.useContext(MyTeamContext);
-  // console.log('myTeam', myTeam);
+  const { setCurrentModal } = React.useContext(PickConfirmModalContext);
 
   const [playersRenderList, setPlayersRenderList] = React.useState<
     PlayerInfo[]
@@ -48,19 +50,15 @@ const PlayersPage: React.FC = () => {
   const [canMakePick, setCanMakePick] = React.useState<boolean>(false);
 
   const hasOpenPositionSlot = (position: NFL_Position): boolean => {
-    // console.log('position', position);
     const numSlots =
       find(draft.league.positionSlots, { position: position })?.total || 0;
-    // console.log('numSlots', numSlots);
-
     const myPicks = myTeam.filter(
       (pick) => players[pick.playerId].position === position
     ).length;
-    // console.log('myPicks', myPicks);
     return myPicks < numSlots;
   };
 
-  const handlePick = (playerId: string) => {
+  const handleConfirm = (playerId: string) => {
     if (user) {
       const newPick: DraftSelection = {
         selectionNumber: draft.currentPick.selectionNumber,
@@ -68,10 +66,33 @@ const PlayersPage: React.FC = () => {
         ownerId: user._id,
         playerId,
       };
-      console.log('newPick', newPick);
       makePick(newPick)
-        .then((res) => console.log('res', res))
+        .then((res) => {
+          console.log('saved pick', res);
+          setCurrentModal(MODAL_INITIAL_VALUE);
+        })
         .catch((err) => console.log('err', err));
+    }
+  };
+
+  const handlePick = (playerId: string) => {
+    if (user) {
+      const selPlayer = players[playerId];
+      const playerName = `${selPlayer.firstName} ${selPlayer.lastName}`;
+      const team = teams[selPlayer.teamId];
+      setCurrentModal({
+        visible: true,
+        player: {
+          name: playerName,
+          position: selPlayer.position,
+        },
+        team: {
+          abbv: team.abbv,
+          colors: team.colors,
+        },
+        onCancel: () => setCurrentModal(MODAL_INITIAL_VALUE),
+        onConfirm: () => handleConfirm(playerId),
+      });
     }
   };
 
@@ -86,6 +107,7 @@ const PlayersPage: React.FC = () => {
               player={player}
               team={teams[player.teamId]}
               rank={player.positionRank}
+              selectable={true}
             />
           </div>
         ) : (
@@ -94,6 +116,7 @@ const PlayersPage: React.FC = () => {
             player={player}
             team={teams[player.teamId]}
             rank={player.positionRank}
+            selectable={false}
           />
         );
       } else {

@@ -8,5 +8,6 @@ export default {
 };
 
 export const Default = () => <Button label="sign in" />;
+export const AltStyle = () => <Button label="alternate" alternate={true} />;
 
 export const CustonWidth = () => <Button label="sign in" width="50%" />;

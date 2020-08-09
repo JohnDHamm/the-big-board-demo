@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
 
 export const Container = styled.div`
   height: 3rem;
@@ -14,7 +14,7 @@ export const Container = styled.div`
   align-items: flex-end;
   padding: 0.5rem;
   background-color: ${COLORS.BLACK};
-  z-index: 10;
+  z-index: ${Z_HEIGHTS.NAVBAR};
   overflow: hidden;
 `;
 

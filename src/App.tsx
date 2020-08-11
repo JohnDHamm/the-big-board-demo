@@ -18,6 +18,7 @@ import {
   BottomTicker,
   NavBar,
   PickConfirmModal,
+  SocketListener,
   WelcomeUser,
 } from './components';
 import { useLocation } from 'react-router-dom';
@@ -88,12 +89,14 @@ function App() {
           <PlayersContext.Provider value={players}>
             <MyTeamContext.Provider value={myTeam}>
               <PickConfirmModalContext.Provider value={modal}>
-                <Router>
-                  <Switch>
-                    <Route path={ROUTES.APP} component={ProtectedRoutes} />
-                    <Route path={ROUTES.HOME} component={HomePage} />
-                  </Switch>
-                </Router>
+                <SocketListener>
+                  <Router>
+                    <Switch>
+                      <Route path={ROUTES.APP} component={ProtectedRoutes} />
+                      <Route path={ROUTES.HOME} component={HomePage} />
+                    </Switch>
+                  </Router>
+                </SocketListener>
               </PickConfirmModalContext.Provider>
             </MyTeamContext.Provider>
           </PlayersContext.Provider>

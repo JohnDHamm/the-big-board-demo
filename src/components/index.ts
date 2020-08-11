@@ -18,7 +18,6 @@ import PickIsInModal from './PickIsInModal/PickIsInModal';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
 import Select from './Select/Select';
-import SocketListener from './SocketListener/SocketListener';
 import SortToggle from './SortToggle/SortToggle';
 import WelcomeUser from './WelcomeUser/WelcomeUser';
 
@@ -43,7 +42,6 @@ export {
   PlayerCard,
   PositionToggle,
   Select,
-  SocketListener,
   SortToggle,
   WelcomeUser,
 };

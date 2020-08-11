@@ -22,25 +22,8 @@ import Football from '../Football/Football';
 import { COLORS } from '../../styles';
 import { getOrdinal } from '../../functions';
 
-interface Props {
-  selectionNumber: number;
-  ownerName: string;
-  player: {
-    position: NFL_Position;
-    firstName: string;
-    lastName: string;
-  };
-  team: {
-    abbv: string;
-    colors: {
-      primary: string;
-      secondary: string;
-    };
-  };
-  onDismiss: () => void;
-}
-
-const PickIsInModal: React.FC<Props> = ({
+const PickIsInModal: React.FC<PickIsInModal> = ({
+  visible,
   selectionNumber,
   ownerName,
   player,
@@ -50,7 +33,7 @@ const PickIsInModal: React.FC<Props> = ({
   const { firstName, lastName, position } = player;
   const { abbv, colors } = team;
 
-  return (
+  return visible ? (
     <Container onClick={(e) => e.stopPropagation()}>
       <CloseContainer>
         <CloseBtn onClick={onDismiss}>
@@ -85,7 +68,7 @@ const PickIsInModal: React.FC<Props> = ({
         </Pick>
       </Content>
     </Container>
-  );
+  ) : null;
 };
 
 export default PickIsInModal;

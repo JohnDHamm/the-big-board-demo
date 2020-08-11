@@ -7,28 +7,26 @@ export default {
   component: PickIsInModal,
 };
 
-const StoryWrapper: React.FC = ({ children }) => (
-  <div
-    onClick={() => console.log('click')}
-    style={{ backgroundColor: 'red', padding: '2rem' }}
-  >
-    <h1 style={{ color: 'white' }}>Something behind</h1>
-    {children}
-  </div>
-);
-
-export const Default = () => (
-  <StoryWrapper>
-    <PickIsInModal
-      selectionNumber={42}
-      ownerName="Homer"
-      player={{
-        position: 'QB',
-        firstName: 'Ryan',
-        lastName: 'Fitzpatrick',
-      }}
-      team={{ abbv: 'MIA', colors: { primary: 'teal', secondary: 'orange' } }}
-      onDismiss={() => console.log('dismiss modal!')}
-    />
-  </StoryWrapper>
-);
+export const Default: React.FC = () => {
+  const [showModal, setShowModal] = React.useState<boolean>(true);
+  return (
+    <div
+      onClick={() => console.log('click')}
+      style={{ backgroundColor: 'red', padding: '2rem' }}
+    >
+      <h1 style={{ color: 'white' }}>Something behind</h1>
+      <PickIsInModal
+        visible={showModal}
+        selectionNumber={42}
+        ownerName="Homer"
+        player={{
+          position: 'QB',
+          firstName: 'Ryan',
+          lastName: 'Fitzpatrick',
+        }}
+        team={{ abbv: 'MIA', colors: { primary: 'teal', secondary: 'orange' } }}
+        onDismiss={() => setShowModal(false)}
+      />
+    </div>
+  );
+};

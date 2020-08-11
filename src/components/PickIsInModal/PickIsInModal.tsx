@@ -21,6 +21,8 @@ import CloseIcon from '../CloseIcon/CloseIcon';
 import Football from '../Football/Football';
 import { COLORS } from '../../styles';
 import { getOrdinal } from '../../functions';
+import { PickIsInModalContext } from '../../contexts';
+import { MODAL_INITIAL_VALUE } from '../../contexts/PickIsInModalContext/PickIsInModalContext';
 
 const PickIsInModal: React.FC<PickIsInModal> = ({
   visible,
@@ -28,15 +30,16 @@ const PickIsInModal: React.FC<PickIsInModal> = ({
   ownerName,
   player,
   team,
-  onDismiss,
 }) => {
   const { firstName, lastName, position } = player;
   const { abbv, colors } = team;
 
+  const { setCurrentPickIsInModal } = React.useContext(PickIsInModalContext);
+
   return visible ? (
     <Container onClick={(e) => e.stopPropagation()}>
       <CloseContainer>
-        <CloseBtn onClick={onDismiss}>
+        <CloseBtn onClick={() => setCurrentPickIsInModal(MODAL_INITIAL_VALUE)}>
           <CloseIcon />
         </CloseBtn>
       </CloseContainer>

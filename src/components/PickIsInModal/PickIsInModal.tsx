@@ -20,6 +20,7 @@ import {
 import CloseIcon from '../CloseIcon/CloseIcon';
 import Football from '../Football/Football';
 import { COLORS } from '../../styles';
+import { getOrdinal } from '../../functions';
 
 interface Props {
   selectionNumber: number;
@@ -63,7 +64,7 @@ const PickIsInModal: React.FC<Props> = ({
         <MessageBlock>
           <MessageText>WITH THE</MessageText>
           <PickNumber>{selectionNumber}</PickNumber>
-          <PickNumberOrdinal>nd</PickNumberOrdinal>
+          <PickNumberOrdinal>{getOrdinal(selectionNumber)}</PickNumberOrdinal>
           <MessageText>PICK,</MessageText>
           <OwnerText>{ownerName}</OwnerText>
           <MessageText>SELECTS</MessageText>

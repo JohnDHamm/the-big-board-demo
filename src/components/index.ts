@@ -2,6 +2,7 @@ import Backdrop from './Backdrop/Backdrop';
 import BottomTicker from './BottomTicker/BottomTicker';
 import Button from './Button/Button';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
+import CloseIcon from './CloseIcon/CloseIcon';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import DropdownIcon from './DropdownIcon/DropdownIcon';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
@@ -25,6 +26,7 @@ export {
   BottomTicker,
   Button,
   CardNameBlock,
+  CloseIcon,
   DraftRoundTitleBar,
   DropdownIcon,
   EmptySlotCard,

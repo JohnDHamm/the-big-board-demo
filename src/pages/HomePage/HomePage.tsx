@@ -13,16 +13,17 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
 import { getLeaguesList, login } from '../../api';
+import { socket } from '../../components/SocketListener/SocketListener';
 
-const TEST_LEAGUE = {
-  _id: '5f2c5bd6466faf1f45c3dd53',
-};
+// const TEST_LEAGUE = {
+//   _id: '5f2c5bd6466faf1f45c3dd53',
+// };
 
-const TEST_USER: UserLogin = {
-  name: 'Tester 1',
-  leagueId: TEST_LEAGUE._id,
-  password: 'password',
-};
+// const TEST_USER: UserLogin = {
+//   name: 'Tester 1',
+//   leagueId: TEST_LEAGUE._id,
+//   password: 'password',
+// };
 
 const HomePage: React.FC = () => {
   const { user, setCurrentUser } = React.useContext(UserContext);
@@ -70,16 +71,19 @@ const HomePage: React.FC = () => {
   };
 
   const userLogin = async () => {
-    // if (selectedLeagueId) {
-    // const user: UserLogin = {
-    //   name,
-    //   password,
-    //   leagueId: selectedLeagueId,
-    // };
-    const loggedInUser: User = await login(TEST_USER);
-    setCurrentUser(loggedInUser);
-    history.push(ROUTES.APP);
-    // }
+    if (selectedLeagueId) {
+      const newUser: UserLogin = {
+        name,
+        password: 'password',
+        leagueId: selectedLeagueId,
+      };
+      const loggedInUser: User = await login(newUser);
+      if (loggedInUser) {
+        setCurrentUser(loggedInUser);
+        socket.emit('JoinRoom', loggedInUser.leagueId);
+        history.push(ROUTES.APP);
+      }
+    }
   };
 
   React.useEffect(() => {

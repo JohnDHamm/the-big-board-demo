@@ -14,6 +14,7 @@ import NavBar from './NavBar/NavBar';
 import NavIcon from './NavIcon/NavIcon';
 import PickCard from './PickCard/PickCard';
 import PickConfirmModal from './PickConfirmModal/PickConfirmModal';
+import PickIsInModal from './PickIsInModal/PickIsInModal';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
 import Select from './Select/Select';
@@ -38,6 +39,7 @@ export {
   NavIcon,
   PickCard,
   PickConfirmModal,
+  PickIsInModal,
   PlayerCard,
   PositionToggle,
   Select,

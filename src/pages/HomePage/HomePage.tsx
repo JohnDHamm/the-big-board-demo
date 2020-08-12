@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
 import { getLeaguesList, login } from '../../api';
-import { socket } from '../../components/SocketListener/SocketListener';
+import { socket } from '../../sockets/SocketListener/SocketListener';
 
 // const TEST_LEAGUE = {
 //   _id: '5f2c5bd6466faf1f45c3dd53',

@@ -2,7 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import {
+  CurrentPickContext,
   PlayersContext,
+  PicksContext,
   TeamsContext,
   UserContext,
   MyTeamContext,
@@ -31,9 +33,11 @@ interface SavedRanking {
 }
 
 const AppLoadingPage: React.FC = () => {
+  const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
   const { setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
+  const { setCurrentPicks } = React.useContext(PicksContext);
   const { setCurrentTeams } = React.useContext(TeamsContext);
   const { user } = React.useContext(UserContext);
 
@@ -127,13 +131,17 @@ const AppLoadingPage: React.FC = () => {
         break;
       }
     }
-
-    const updatedDraft = Object.assign(draft);
-    updatedDraft.picks = picksContext;
-    updatedDraft.currentPick = currentPick;
-    setCurrentDraft(updatedDraft);
+    setCurrentPicks(picksContext);
+    setCurrentDraftPick(currentPick);
     setTimeout(() => setPicksAreReady(true), 3);
-  }, [league, owners, savedPicks, initPicks, draft, setCurrentDraft]);
+  }, [
+    league,
+    owners,
+    savedPicks,
+    initPicks,
+    setCurrentDraftPick,
+    setCurrentPicks,
+  ]);
 
   const initDraft = React.useCallback(
     (leagueId: string) => {

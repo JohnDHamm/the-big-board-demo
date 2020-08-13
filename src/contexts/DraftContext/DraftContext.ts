@@ -3,9 +3,7 @@ import React from 'react';
 declare global {
   interface Draft {
     league: League;
-    currentPick: CurrentDraftPick;
     owners: Owner[];
-    picks: DraftPickContext;
   }
 
   interface DraftContextInterface {
@@ -24,11 +22,6 @@ export const DRAFT_INITIAL_VALUE: Draft = {
     scoringType: 'non-ppr',
   },
   owners: [],
-  currentPick: {
-    selectionNumber: 0,
-    ownerId: '',
-  },
-  picks: {},
 };
 
 export const DRAFT_DEFAULT_VALUE: DraftContextInterface = {

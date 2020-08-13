@@ -1,23 +1,115 @@
 import React from 'react';
 import socketIOClient from 'socket.io-client';
 import {
+  CurrentPickContext,
   DraftContext,
+  MyTeamContext,
   PickIsInModalContext,
+  PicksContext,
   PlayersContext,
   TeamsContext,
   UserContext,
 } from '../../contexts';
-import isEmpty from 'lodash.isempty';
 
 const ROOT_URL = 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {
   const { user } = React.useContext(UserContext);
+  const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
-  const { players } = React.useContext(PlayersContext);
+  const { picks, setCurrentPicks } = React.useContext(PicksContext);
+  const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
+  const { myTeam, setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { setCurrentPickIsInModal } = React.useContext(PickIsInModalContext);
+
+  const [newPick, setNewPick] = React.useState<DraftSelection>();
+
+  const updatePlayer = React.useCallback(
+    (playerId: string, players: PlayersContext) => {
+      players[playerId].available = false;
+      setCurrentPlayers(players);
+    },
+    [setCurrentPlayers]
+  );
+
+  const updatePicks = React.useCallback(
+    (newPick: DraftSelection, picks: DraftPickContext) => {
+      picks[newPick.selectionNumber] = newPick;
+      const updateCurrent: CurrentDraftPick = {
+        selectionNumber: newPick.selectionNumber + 1,
+        ownerId: picks[newPick.selectionNumber + 1].ownerId,
+      };
+      // ? what if last pick?
+      setCurrentDraftPick(updateCurrent);
+      setCurrentPicks(picks);
+    },
+    [setCurrentPicks, setCurrentDraftPick]
+  );
+
+  const getOwnerName = React.useCallback(
+    (ownerId: string) => {
+      const owner = draft.owners.find((owner) => owner._id === ownerId);
+      return owner ? owner.name : '';
+    },
+    [draft]
+  );
+
+  React.useEffect(() => {
+    console.log('newPick', newPick);
+    if (
+      newPick &&
+      user &&
+      players &&
+      teams &&
+      setCurrentPickIsInModal &&
+      updatePlayer &&
+      updatePicks
+    ) {
+      if (user?._id !== newPick.ownerId) {
+        // console.log('pick not by user - set modal');
+        const player = players[newPick.playerId];
+        const team = teams[player.teamId];
+        const newModal: PickIsInModal = {
+          visible: true,
+          selectionNumber: newPick.selectionNumber,
+          ownerName: getOwnerName(newPick.ownerId),
+          player: {
+            position: player.position,
+            firstName: player.firstName,
+            lastName: player.lastName,
+          },
+          team: {
+            abbv: team.abbv,
+            colors: team.colors,
+          },
+        };
+        setCurrentPickIsInModal(newModal);
+      } else {
+        // console.log('pick by user - set myTeam');
+        const updateTeam: MyTeam = JSON.parse(JSON.stringify(myTeam));
+        const newSelection: DraftPick = {
+          selectionNumber: newPick.selectionNumber,
+          playerId: newPick.playerId,
+          ownerId: newPick.ownerId,
+        };
+        updateTeam.push(newSelection);
+        setCurrentMyTeam(updateTeam);
+      }
+      updatePicks(newPick, JSON.parse(JSON.stringify(picks)));
+      updatePlayer(newPick.playerId, JSON.parse(JSON.stringify(players)));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    newPick,
+    user,
+    teams,
+    setCurrentPickIsInModal,
+    getOwnerName,
+    updatePlayer,
+    updatePicks,
+  ]);
 
   React.useEffect((): any => {
     socket.on('JoinRoomWelcome', (msg: string) =>
@@ -32,35 +124,13 @@ const SocketListener: React.FC = ({ children }) => {
   React.useEffect((): any => {
     socket.on('PickMade', (pick: DraftSelection) => {
       console.log('pick made', pick);
-      if (
-        !isEmpty(draft) &&
-        !isEmpty(players) &&
-        !isEmpty(teams) &&
-        !isEmpty(user)
-      ) {
-        const owner = draft.owners.find(
-          (owner) => owner._id === draft.currentPick.ownerId
-        );
-        if (user?._id !== owner?._id) {
-          const player = players[pick.playerId];
-          const team = teams[player.teamId];
-          const ownerName = owner ? owner.name : '';
-          const newModal: PickIsInModal = {
-            visible: true,
-            selectionNumber: pick.selectionNumber,
-            ownerName,
-            player,
-            team,
-          };
-          setCurrentPickIsInModal(newModal);
-        } else {
-          //TODO: update MyTeam
-        }
-        //TODO: update draft.currentPick.ownerId + .selectionNumber
-        //TODO: update players[id].available = false
-      }
+      setNewPick(pick);
     });
-  }, [players, teams, draft, setCurrentPickIsInModal, user]);
+  }, []);
+
+  React.useEffect(() => {
+    console.log('draft change', draft);
+  }, [draft]);
 
   return <div>{children}</div>;
 };

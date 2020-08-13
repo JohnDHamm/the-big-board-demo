@@ -1,3 +1,4 @@
+import { useAlert } from './useAlert/useAlert';
 import { useCurrentPick } from './useCurrentPick/useCurrentPick';
 import { useDraft } from './useDraft/useDraft';
 import { useMyTeam } from './useMyTeam/useMyTeam';
@@ -9,6 +10,7 @@ import { useTeams } from './useTeams/useTeams';
 import { useUser } from './useUser/useUser';
 
 export {
+  useAlert,
   useCurrentPick,
   useDraft,
   useMyTeam,

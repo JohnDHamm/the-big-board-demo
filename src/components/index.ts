@@ -1,3 +1,4 @@
+import Alert from './Alert/Alert';
 import Backdrop from './Backdrop/Backdrop';
 import BottomTicker from './BottomTicker/BottomTicker';
 import Button from './Button/Button';
@@ -22,6 +23,7 @@ import SortToggle from './SortToggle/SortToggle';
 import WelcomeUser from './WelcomeUser/WelcomeUser';
 
 export {
+  Alert,
   Backdrop,
   BottomTicker,
   Button,

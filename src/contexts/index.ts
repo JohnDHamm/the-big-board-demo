@@ -1,3 +1,4 @@
+import { AlertContext } from './AlertContext/AlertContext';
 import { CurrentPickContext } from './CurrentPickContext/CurrentPickContext';
 import { DraftContext } from './DraftContext/DraftContext';
 import { MyTeamContext } from './MyTeamContext/MyTeamContext';
@@ -9,6 +10,7 @@ import { TeamsContext } from './TeamsContext/TeamsContext';
 import { UserContext } from './UserContext/UserContext';
 
 export {
+  AlertContext,
   CurrentPickContext,
   DraftContext,
   MyTeamContext,

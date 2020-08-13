@@ -15,6 +15,7 @@ import {
   PlayersPage,
 } from './pages';
 import {
+  Alert,
   BottomTicker,
   NavBar,
   PickConfirmModal,
@@ -24,6 +25,7 @@ import {
 import SocketListener from './sockets/SocketListener/SocketListener';
 import { useLocation } from 'react-router-dom';
 import {
+  AlertContext,
   CurrentPickContext,
   DraftContext,
   MyTeamContext,
@@ -35,6 +37,7 @@ import {
   UserContext,
 } from './contexts';
 import {
+  useAlert,
   useCurrentPick,
   useDraft,
   useMyTeam,
@@ -53,6 +56,7 @@ const ProtectedRoutes = () => {
   const { draft } = React.useContext(DraftContext);
   const { modal } = React.useContext(PickConfirmModalContext);
   const { pickIsInModal } = React.useContext(PickIsInModalContext);
+  const { alert } = React.useContext(AlertContext);
 
   const getCurrentOwnerName = () => {
     const currPickOwner = draft.owners.find(
@@ -63,6 +67,7 @@ const ProtectedRoutes = () => {
 
   return user ? (
     <div>
+      <Alert message={alert} />
       <PickConfirmModal {...modal} />
       <PickIsInModal {...pickIsInModal} />
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
@@ -85,6 +90,7 @@ const ProtectedRoutes = () => {
 };
 
 function App() {
+  const alert = useAlert();
   const currentPick = useCurrentPick();
   const draft = useDraft();
   const myTeam = useMyTeam();
@@ -97,33 +103,35 @@ function App() {
 
   return (
     <UserContext.Provider value={user}>
-      <CurrentPickContext.Provider value={currentPick}>
-        <DraftContext.Provider value={draft}>
-          <TeamsContext.Provider value={teams}>
-            <PlayersContext.Provider value={players}>
-              <PicksContext.Provider value={picks}>
-                <MyTeamContext.Provider value={myTeam}>
-                  <PickConfirmModalContext.Provider value={modal}>
-                    <PickIsInModalContext.Provider value={pickIsInModal}>
-                      <SocketListener>
-                        <Router>
-                          <Switch>
-                            <Route
-                              path={ROUTES.APP}
-                              component={ProtectedRoutes}
-                            />
-                            <Route path={ROUTES.HOME} component={HomePage} />
-                          </Switch>
-                        </Router>
-                      </SocketListener>
-                    </PickIsInModalContext.Provider>
-                  </PickConfirmModalContext.Provider>
-                </MyTeamContext.Provider>
-              </PicksContext.Provider>
-            </PlayersContext.Provider>
-          </TeamsContext.Provider>
-        </DraftContext.Provider>
-      </CurrentPickContext.Provider>
+      <AlertContext.Provider value={alert}>
+        <CurrentPickContext.Provider value={currentPick}>
+          <DraftContext.Provider value={draft}>
+            <TeamsContext.Provider value={teams}>
+              <PlayersContext.Provider value={players}>
+                <PicksContext.Provider value={picks}>
+                  <MyTeamContext.Provider value={myTeam}>
+                    <PickConfirmModalContext.Provider value={modal}>
+                      <PickIsInModalContext.Provider value={pickIsInModal}>
+                        <SocketListener>
+                          <Router>
+                            <Switch>
+                              <Route
+                                path={ROUTES.APP}
+                                component={ProtectedRoutes}
+                              />
+                              <Route path={ROUTES.HOME} component={HomePage} />
+                            </Switch>
+                          </Router>
+                        </SocketListener>
+                      </PickIsInModalContext.Provider>
+                    </PickConfirmModalContext.Provider>
+                  </MyTeamContext.Provider>
+                </PicksContext.Provider>
+              </PlayersContext.Provider>
+            </TeamsContext.Provider>
+          </DraftContext.Provider>
+        </CurrentPickContext.Provider>
+      </AlertContext.Provider>
     </UserContext.Provider>
   );
 }

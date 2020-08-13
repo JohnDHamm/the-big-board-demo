@@ -1,6 +1,7 @@
 import React from 'react';
 import socketIOClient from 'socket.io-client';
 import {
+  AlertContext,
   CurrentPickContext,
   DraftContext,
   MyTeamContext,
@@ -15,6 +16,7 @@ const ROOT_URL = 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {
+  const { setCurrentAlert } = React.useContext(AlertContext);
   const { user } = React.useContext(UserContext);
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
@@ -96,6 +98,8 @@ const SocketListener: React.FC = ({ children }) => {
         };
         updateTeam.push(newSelection);
         setCurrentMyTeam(updateTeam);
+        setCurrentAlert('Congrats! Your pick is complete.');
+        setTimeout(() => setCurrentAlert(null), 4000);
       }
       updatePicks(newPick, JSON.parse(JSON.stringify(picks)));
       updatePlayer(newPick.playerId, JSON.parse(JSON.stringify(players)));

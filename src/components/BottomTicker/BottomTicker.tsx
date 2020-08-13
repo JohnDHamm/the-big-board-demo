@@ -9,7 +9,7 @@ import {
 
 interface Props {
   ownerOnClock?: string;
-  ticker: JSX.Element;
+  ticker?: JSX.Element;
 }
 
 const BottomTicker: React.FC<Props> = ({ ownerOnClock = '--', ticker }) => {

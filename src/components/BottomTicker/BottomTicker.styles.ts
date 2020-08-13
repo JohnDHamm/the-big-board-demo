@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
+import { COLORS, FONTS, HEIGHTS, Z_HEIGHTS } from '../../styles';
 
 export const Container = styled.div`
-  height: 2.5rem;
+  height: ${HEIGHTS.BOTTOM_TICKER};
   width: 100%;
   position: fixed;
   bottom: 0;

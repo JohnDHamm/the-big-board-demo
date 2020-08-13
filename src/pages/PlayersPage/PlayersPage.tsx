@@ -13,6 +13,7 @@ import {
   DraftContext,
   UserContext,
   PickConfirmModalContext,
+  CurrentPickContext,
 } from '../../contexts';
 import { MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
 import { makePick } from '../../api';
@@ -33,6 +34,7 @@ const SETTINGS_KEYS = {
 
 const PlayersPage: React.FC = () => {
   const { user } = React.useContext(UserContext);
+  const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
@@ -61,7 +63,7 @@ const PlayersPage: React.FC = () => {
   const handleConfirm = (playerId: string) => {
     if (user) {
       const newPick: DraftSelection = {
-        selectionNumber: draft.currentPick.selectionNumber,
+        selectionNumber: currentDraftPick.selectionNumber,
         leagueId: draft.league._id,
         ownerId: user._id,
         playerId,
@@ -204,9 +206,9 @@ const PlayersPage: React.FC = () => {
   React.useEffect(() => {
     setCanMakePick(
       draft.league.draftStatus === 'open' &&
-        draft.currentPick.ownerId === user?._id
+        currentDraftPick.ownerId === user?._id
     );
-  }, [draft, user]);
+  }, [draft, user, currentDraftPick]);
 
   return (
     <PageContainer>

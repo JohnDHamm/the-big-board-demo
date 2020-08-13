@@ -8,4 +8,10 @@ export const Z_HEIGHTS = {
 
 export const HEIGHTS = {
   BOTTOM_TICKER: '40px',
+  NAVBAR_TABLET: '3rem',
+  NAVBAR_MOBILE: '2rem',
+};
+
+export const SCREEN_WIDTHS = {
+  MOBILE: 'max-width: 767px',
 };

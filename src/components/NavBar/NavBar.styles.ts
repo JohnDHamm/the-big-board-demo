@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { COLORS, FONTS, Z_HEIGHTS } from '../../styles';
+import { COLORS, FONTS, HEIGHTS, SCREEN_WIDTHS, Z_HEIGHTS } from '../../styles';
 
 export const Container = styled.div`
-  height: 3rem;
+  height: ${HEIGHTS.NAVBAR_TABLET};
   width: 100%;
   position: fixed;
   top: 0;
@@ -16,6 +16,10 @@ export const Container = styled.div`
   background-color: ${COLORS.BLACK};
   z-index: ${Z_HEIGHTS.NAVBAR};
   overflow: hidden;
+
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    height: ${HEIGHTS.NAVBAR_MOBILE};
+  }
 `;
 
 export const LogoContainer = styled.div``;
@@ -32,11 +36,19 @@ export const TextLogo = styled.p<{ active: boolean }>`
   color: ${(props) =>
     props.active ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
   font-weight: 900;
+
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    font-size: 1.25rem;
+  }
 `;
 
 export const TabsContainer = styled.div`
   display: flex;
   margin-right: 2rem;
+
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    margin-right: 1rem;
+  }
 `;
 
 export const TabLink = styled(Link)`
@@ -53,10 +65,17 @@ export const Tab = styled.div<{ active: boolean }>`
   &:hover {
     color: ${(props) => (props.active ? COLORS.PRIMARY_GREEN : COLORS.WHITE)};
   }
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    font-size: 1rem;
+    margin-left: 2rem;
+  }
 `;
 
 export const DisabledTab = styled(Tab)<{ active: boolean }>`
   &:hover {
     color: ${COLORS.DISABLED_GRAY};
+  }
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    font-size: 1rem;
   }
 `;

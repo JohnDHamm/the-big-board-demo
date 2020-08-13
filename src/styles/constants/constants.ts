@@ -9,3 +9,7 @@ export const Z_HEIGHTS = {
 export const HEIGHTS = {
   BOTTOM_TICKER: '40px',
 };
+
+export const SCREEN_WIDTHS = {
+  MOBILE: 'max-width: 767px',
+};

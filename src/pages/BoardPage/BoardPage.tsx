@@ -5,11 +5,19 @@ import {
   PicksContainer,
 } from './BoardPage.styles';
 import { DraftRoundTitleBar, PickCard } from '../../components';
-import { DraftContext, PlayersContext, TeamsContext } from '../../contexts';
+import {
+  DraftContext,
+  PicksContext,
+  PlayersContext,
+  TeamsContext,
+  CurrentPickContext,
+} from '../../contexts';
 import { calcPickRoundNumber, calcTotalRounds } from '../../functions';
 
 const BoardPage: React.FC = () => {
+  const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
+  const { picks } = React.useContext(PicksContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
 
@@ -19,7 +27,6 @@ const BoardPage: React.FC = () => {
   const [currentRoundNum, setCurrentRoundNum] = React.useState<number>();
 
   const renderPicks = (roundNum: number): JSX.Element[] => {
-    const { picks } = draft;
     const listEndNum = roundNum * picksPerRound;
     const listStartNum = listEndNum - picksPerRound + 1;
     const picksToRender: JSX.Element[] = [];
@@ -43,9 +50,9 @@ const BoardPage: React.FC = () => {
 
   React.useEffect(() => {
     setCurrentRoundNum(
-      calcPickRoundNumber(draft.currentPick.selectionNumber, picksPerRound)
+      calcPickRoundNumber(currentDraftPick.selectionNumber, picksPerRound)
     );
-  }, [picksPerRound, draft]);
+  }, [picksPerRound, currentDraftPick]);
 
   React.useEffect(() => {
     console.log('draft', draft);

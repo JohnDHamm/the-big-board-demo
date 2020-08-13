@@ -14,4 +14,5 @@ export const COLORS = {
   SECONDARY_GRAY: '#646464',
   DISABLED_GRAY: '#CECECE',
   WHITE: '#FFFFFF',
+  SUCCESS: '#118652',
 };

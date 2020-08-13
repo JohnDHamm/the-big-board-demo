@@ -22,7 +22,7 @@ const slideUp = keyframes`
 `;
 
 export const Container = styled.div`
-  background-color: ${COLORS.PRIMARY_GREEN};
+  background-color: ${COLORS.SUCCESS};
   width: 100%;
   height: ${ALERT_HEIGHT};
   position: absolute;

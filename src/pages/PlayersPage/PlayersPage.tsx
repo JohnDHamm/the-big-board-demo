@@ -1,6 +1,5 @@
 import React from 'react';
-import { CenterContent } from './PlayersPage.styles';
-import { ThreeUpLayout } from '../layouts';
+import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import {
   HidePlayersToggle,
   PlayerCard,
@@ -215,7 +214,7 @@ const PlayersPage: React.FC = () => {
     <ThreeUpLayout
       left={<div>highest rank available</div>}
       center={
-        <CenterContent>
+        <MobileContentContainer>
           <PositionToggle
             positions={positions}
             selectedPositions={selectedPositions}
@@ -233,7 +232,7 @@ const PlayersPage: React.FC = () => {
             onToggle={() => handleHideSelectedChange()}
           />
           <div>{players && renderPlayers()}</div>
-        </CenterContent>
+        </MobileContentContainer>
       }
       right={<div>my team needs</div>}
     />

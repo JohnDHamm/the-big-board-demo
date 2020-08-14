@@ -1,3 +1,4 @@
 import ThreeUpLayout from './ThreeUpLayout/ThreeUpLayout';
+import MobileContentContainer from './MobileContentContainer/MobileContentContainer';
 
-export { ThreeUpLayout };
+export { MobileContentContainer, ThreeUpLayout };

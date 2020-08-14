@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { COLORS, FONTS, HEIGHTS, Z_HEIGHTS } from '../../styles';
+import { COLORS, FONTS, HEIGHTS, SCREEN_WIDTHS, Z_HEIGHTS } from '../../styles';
 
 const ALERT_HEIGHT = '56px';
 
@@ -38,4 +38,8 @@ export const Message = styled.p`
   font-family: ${FONTS.BLOCKLETTER};
   font-size: 2rem;
   color: ${COLORS.WHITE};
+
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    font-size: 1.25rem;
+  }
 `;

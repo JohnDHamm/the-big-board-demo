@@ -5,6 +5,7 @@ import {
   Container,
   Content,
   FirstName,
+  FirstLine,
   FootballContainer,
   LastName,
   MessageBlock,
@@ -43,15 +44,17 @@ const PickIsInModal: React.FC<PickIsInModal> = ({
           <CloseIcon />
         </CloseBtn>
       </CloseContainer>
+      <Title>
+        <TitleText>THE PICK IS IN...</TitleText>
+      </Title>
       <Content>
-        <Title>
-          <TitleText>THE PICK IS IN...</TitleText>
-        </Title>
         <MessageBlock>
-          <MessageText>WITH THE</MessageText>
-          <PickNumber>{selectionNumber}</PickNumber>
-          <PickNumberOrdinal>{getOrdinal(selectionNumber)}</PickNumberOrdinal>
-          <MessageText>PICK,</MessageText>
+          <FirstLine>
+            <MessageText>WITH THE</MessageText>
+            <PickNumber>{selectionNumber}</PickNumber>
+            <PickNumberOrdinal>{getOrdinal(selectionNumber)}</PickNumberOrdinal>
+            <MessageText>PICK,</MessageText>
+          </FirstLine>
           <OwnerText>{ownerName}</OwnerText>
           <MessageText>SELECTS</MessageText>
         </MessageBlock>

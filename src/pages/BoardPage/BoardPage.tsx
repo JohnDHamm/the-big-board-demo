@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  CenterContent,
-  PageContainer,
-  PicksContainer,
-} from './BoardPage.styles';
+import { CenterContent, PicksContainer } from './BoardPage.styles';
+import { ThreeUpLayout } from '../layouts';
 import { DraftRoundTitleBar, PickCard } from '../../components';
 import {
   DraftContext,
@@ -62,22 +59,26 @@ const BoardPage: React.FC = () => {
   }, [draft, players]);
 
   return (
-    <PageContainer>
-      {draftStarted ? (
-        <CenterContent>
-          <DraftRoundTitleBar
-            roundNum={currentRoundNum}
-            totalRounds={totalRounds}
-            onRoundChange={(newRoundNum) => setCurrentRoundNum(newRoundNum)}
-          />
-          <PicksContainer>
-            {currentRoundNum && renderPicks(currentRoundNum)}
-          </PicksContainer>
-        </CenterContent>
-      ) : (
-        <h3>DRAFT HAS NOT YET STARTED</h3>
-      )}
-    </PageContainer>
+    <ThreeUpLayout
+      left={<div>picks by position</div>}
+      center={
+        draftStarted ? (
+          <CenterContent>
+            <DraftRoundTitleBar
+              roundNum={currentRoundNum}
+              totalRounds={totalRounds}
+              onRoundChange={(newRoundNum) => setCurrentRoundNum(newRoundNum)}
+            />
+            <PicksContainer>
+              {currentRoundNum && renderPicks(currentRoundNum)}
+            </PicksContainer>
+          </CenterContent>
+        ) : (
+          <h3>DRAFT HAS NOT YET STARTED</h3>
+        )
+      }
+      right={<div>picks by owner</div>}
+    />
   );
 };
 

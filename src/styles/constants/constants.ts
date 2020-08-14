@@ -8,10 +8,11 @@ export const Z_HEIGHTS = {
 
 export const HEIGHTS = {
   BOTTOM_TICKER: '40px',
-  NAVBAR_TABLET: '3rem',
-  NAVBAR_MOBILE: '2rem',
+  NAVBAR_TABLET: '4rem',
+  NAVBAR_MOBILE: '3rem',
 };
 
 export const SCREEN_WIDTHS = {
   MOBILE: 'max-width: 767px',
+  DESKTOP: 'max-width: 1279px',
 };

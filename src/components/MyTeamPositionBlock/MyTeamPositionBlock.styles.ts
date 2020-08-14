@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, SCREEN_WIDTHS } from '../../styles';
 
 export const PositionBlock = styled.div<{ position: NFL_Position }>`
   width: 100%;
@@ -9,6 +9,10 @@ export const PositionBlock = styled.div<{ position: NFL_Position }>`
   border-width: 4px;
   border-style: solid;
   border-radius: 8px;
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    border-radius: 0;
+    margin-bottom: 0;
+  }
 `;
 
 export const TitleBlock = styled.div<{ position: NFL_Position }>`
@@ -20,6 +24,9 @@ export const TitleBlock = styled.div<{ position: NFL_Position }>`
   align-items: center;
   background-color: ${(props) => COLORS.NFL_POSITIONS[props.position]};
   border-radius: 4px 4px 0 0;
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    border-radius: 0;
+  }
 `;
 
 export const FootballContainer = styled.div`

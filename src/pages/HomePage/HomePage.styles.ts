@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../styles';
+import { COLORS, FONTS, SCREEN_WIDTHS } from '../../styles';
 
 export const Page = styled.div`
   height: 100vh;
@@ -11,7 +11,7 @@ export const Page = styled.div`
 
 export const TopBlock = styled.div`
   display: flex;
-  flex: 0.25;
+  flex: 0.15;
   justify-content: center;
   align-items: center;
 `;
@@ -25,9 +25,12 @@ export const Logo = styled.p`
 
 export const Content = styled.div`
   width: 400px;
-  flex: 0.75;
+  flex: 0.85;
   flex-direction: column;
   align-items: center;
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    width: 90%;
+  }
 `;
 
 export const SignIn = styled.p`

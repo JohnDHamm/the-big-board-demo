@@ -1,5 +1,6 @@
 import React from 'react';
-import { PageContainer, CenterContent } from './PlayersPage.styles';
+import { CenterContent } from './PlayersPage.styles';
+import { ThreeUpLayout } from '../layouts';
 import {
   HidePlayersToggle,
   PlayerCard,
@@ -211,27 +212,31 @@ const PlayersPage: React.FC = () => {
   }, [draft, user, currentDraftPick]);
 
   return (
-    <PageContainer>
-      <CenterContent>
-        <PositionToggle
-          positions={positions}
-          selectedPositions={selectedPositions}
-          onPositionsToggle={(newSelectedPositions) =>
-            handlePositionChange(newSelectedPositions)
-          }
-        />
-        <SortToggle
-          sortTypes={sortTypes}
-          selectedSortType={sorting}
-          onSortToggle={(newSort) => handleSortChange(newSort as Sorting)}
-        />
-        <HidePlayersToggle
-          active={hideSelected}
-          onToggle={() => handleHideSelectedChange()}
-        />
-        <div>{players && renderPlayers()}</div>
-      </CenterContent>
-    </PageContainer>
+    <ThreeUpLayout
+      left={<div>highest rank available</div>}
+      center={
+        <CenterContent>
+          <PositionToggle
+            positions={positions}
+            selectedPositions={selectedPositions}
+            onPositionsToggle={(newSelectedPositions) =>
+              handlePositionChange(newSelectedPositions)
+            }
+          />
+          <SortToggle
+            sortTypes={sortTypes}
+            selectedSortType={sorting}
+            onSortToggle={(newSort) => handleSortChange(newSort as Sorting)}
+          />
+          <HidePlayersToggle
+            active={hideSelected}
+            onToggle={() => handleHideSelectedChange()}
+          />
+          <div>{players && renderPlayers()}</div>
+        </CenterContent>
+      }
+      right={<div>my team needs</div>}
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CenterContent, PicksContainer } from './BoardPage.styles';
-import { ThreeUpLayout } from '../layouts';
+import { PicksContainer } from './BoardPage.styles';
+import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import { DraftRoundTitleBar, PickCard } from '../../components';
 import {
   DraftContext,
@@ -63,7 +63,7 @@ const BoardPage: React.FC = () => {
       left={<div>picks by position</div>}
       center={
         draftStarted ? (
-          <CenterContent>
+          <MobileContentContainer>
             <DraftRoundTitleBar
               roundNum={currentRoundNum}
               totalRounds={totalRounds}
@@ -72,7 +72,7 @@ const BoardPage: React.FC = () => {
             <PicksContainer>
               {currentRoundNum && renderPicks(currentRoundNum)}
             </PicksContainer>
-          </CenterContent>
+          </MobileContentContainer>
         ) : (
           <h3>DRAFT HAS NOT YET STARTED</h3>
         )

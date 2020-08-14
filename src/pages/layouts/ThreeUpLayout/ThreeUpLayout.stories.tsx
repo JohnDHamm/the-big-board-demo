@@ -13,9 +13,16 @@ export default {
   ],
 };
 
-const Content = () => (
-  <div style={{ border: '1px solid blue', height: '1000px', width: '400px' }}>
-    something else
+const TestContent: React.FC = ({ children }) => (
+  <div
+    style={{
+      border: '1px solid blue',
+      height: '1000px',
+      width: '400px',
+      textAlign: 'center',
+    }}
+  >
+    {children}
   </div>
 );
 
@@ -23,9 +30,21 @@ export const Default = () => (
   <div>
     <NavBar />
     <ThreeUpLayout
-      left={<Content />}
-      center={<Content />}
-      right={<Content />}
+      left={
+        <TestContent>
+          <p>left content</p>
+        </TestContent>
+      }
+      center={
+        <TestContent>
+          <p>center content</p>
+        </TestContent>
+      }
+      right={
+        <TestContent>
+          <p>right content</p>
+        </TestContent>
+      }
     />
     <BottomTicker />
   </div>

@@ -12,7 +12,6 @@ export const Container = styled.div`
   flex: 1;
   justify-content: space-between;
   align-items: flex-end;
-  padding: 0.5rem;
   background-color: ${COLORS.BLACK};
   z-index: ${Z_HEIGHTS.NAVBAR};
   overflow: hidden;
@@ -22,7 +21,13 @@ export const Container = styled.div`
   }
 `;
 
-export const LogoContainer = styled.div``;
+export const LogoContainer = styled.div`
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    padding-left: 0.5rem;
+  }
+`;
 
 export const LogoLink = styled(Link)`
   text-decoration: none;
@@ -45,6 +50,7 @@ export const TextLogo = styled.p<{ active: boolean }>`
 export const TabsContainer = styled.div`
   display: flex;
   margin-right: 2rem;
+  padding-bottom: 0.5rem;
 
   @media screen and (${SCREEN_WIDTHS.MOBILE}) {
     margin-right: 1rem;
@@ -67,7 +73,7 @@ export const Tab = styled.div<{ active: boolean }>`
   }
   @media screen and (${SCREEN_WIDTHS.MOBILE}) {
     font-size: 1rem;
-    margin-left: 2rem;
+    margin-left: 1.55rem;
   }
 `;
 

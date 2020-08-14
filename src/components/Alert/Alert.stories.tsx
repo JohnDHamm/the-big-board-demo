@@ -18,6 +18,6 @@ export const Default = () => (
     }}
   >
     <BottomTicker />
-    <Alert message="alert message!!!" />
+    <Alert message="Congrats! Your pick is complete." />
   </div>
 );

@@ -16,13 +16,13 @@ export const Default = () => (
     <PickIsInModal
       visible={true}
       selectionNumber={42}
-      ownerName="Homer"
+      ownerName="Homer and the banshees"
       player={{
-        position: 'QB',
-        firstName: 'Ryan',
-        lastName: 'Fitzpatrick',
+        position: 'WR',
+        firstName: 'JuJu',
+        lastName: 'Smith-Schuster',
       }}
-      team={{ abbv: 'MIA', colors: { primary: 'teal', secondary: 'orange' } }}
+      team={{ abbv: 'PIT', colors: { primary: 'black', secondary: 'gold' } }}
     />
   </div>
 );

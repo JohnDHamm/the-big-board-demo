@@ -18,7 +18,7 @@ export const TitleText = styled.p`
   margin: 0;
   font-family: ${FONTS.BLOCKLETTER};
   font-size: 1.5rem;
-  color: ${COLORS.SECONDARY_GRAY};
+  color: ${COLORS.PRIMARY_GREEN};
 `;
 
 export const InputBox = styled(Box)`

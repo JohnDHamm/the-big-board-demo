@@ -12,7 +12,8 @@ import {
   UserContext,
 } from '../../contexts';
 
-const ROOT_URL = 'http://localhost:4001';
+// const ROOT_URL = 'http://localhost:4001';
+const ROOT_URL = 'https://big-board-server.herokuapp.com';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {
@@ -59,7 +60,7 @@ const SocketListener: React.FC = ({ children }) => {
   );
 
   React.useEffect(() => {
-    console.log('newPick', newPick);
+    // console.log('newPick', newPick);
     if (
       newPick &&
       user &&
@@ -127,14 +128,10 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('PickMade', (pick: DraftSelection) => {
-      console.log('pick made', pick);
+      // console.log('pick made', pick);
       setNewPick(pick);
     });
   }, []);
-
-  React.useEffect(() => {
-    console.log('draft change', draft);
-  }, [draft]);
 
   return <div>{children}</div>;
 };

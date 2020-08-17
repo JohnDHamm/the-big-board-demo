@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  Container,
+  LoadBlock,
+  LoadedText,
+  Text,
+} from './AppLoadingPage.styles';
 import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import {
@@ -23,6 +29,7 @@ import keyby from 'lodash.keyby';
 import find from 'lodash.find';
 import concat from 'lodash.concat';
 import { calcTotalRounds } from '../../functions';
+import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 
 interface SavedRanking {
   _id: string;
@@ -133,7 +140,7 @@ const AppLoadingPage: React.FC = () => {
     }
     setCurrentPicks(picksContext);
     setCurrentDraftPick(currentPick);
-    setTimeout(() => setPicksAreReady(true), 3);
+    setTimeout(() => setPicksAreReady(true), 3000);
   }, [
     league,
     owners,
@@ -173,7 +180,7 @@ const AppLoadingPage: React.FC = () => {
             setCurrentTeams(formatTeams);
             setTimeout(() => {
               setTeamsAreReady(true);
-            }, 1);
+            }, 1000);
           }
         })
         .then(() => getPlayers())
@@ -190,7 +197,7 @@ const AppLoadingPage: React.FC = () => {
             setCurrentPlayers(formatPlayers);
             setTimeout(() => {
               setPlayersAreReady(true);
-            }, 2);
+            }, 2000);
           }
         })
         .catch((err) => console.log('err', err));
@@ -217,7 +224,7 @@ const AppLoadingPage: React.FC = () => {
       (player) => player.ownerId === user?._id
     );
     setCurrentMyTeam(userPlayers);
-    setTimeout(() => setMyTeamIsReady(true), 4);
+    setTimeout(() => setMyTeamIsReady(true), 4000);
   }, [players, savedPicks, setCurrentMyTeam, setCurrentPlayers, user]);
 
   const getLeaguePicks = (leagueId: string) => {
@@ -264,7 +271,7 @@ const AppLoadingPage: React.FC = () => {
         setTimeout(() => {
           setPicksAreReady(true);
           setMyTeamIsReady(true);
-        }, 3);
+        }, 3000);
       }
     }
   }, [league]);
@@ -284,22 +291,32 @@ const AppLoadingPage: React.FC = () => {
 
   React.useEffect(() => {
     if (teamsAreReady && playersAreReady && picksAreReady && myTeamIsReady) {
-      setTimeout(() => setGoToBoard(true), 15);
+      setTimeout(() => setGoToBoard(true), 1500);
     }
   }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
 
   return (
-    <div>
-      <h1>preparing draft data for</h1>
-      {!isEmpty(league.draftOrder) && !isEmpty(owners) && (
-        <h3>{league.name}</h3>
-      )}
-      {teamsAreReady && <h3>NFL TEAMS</h3>}
-      {playersAreReady && <h3>NFL PLAYERS</h3>}
-      {picksAreReady && <h3>DRAFT SETTINGS AND PICKS</h3>}
-      {myTeamIsReady && <h3>YOUR TEAM ROSTER</h3>}
-      {goToBoard && <Redirect to={ROUTES.BOARD} />}
-    </div>
+    <ThreeUpLayout
+      left={<div></div>}
+      center={
+        <MobileContentContainer>
+          <Container>
+            <Text>preparing draft data for</Text>
+            <LoadedText loaded={true}>{league.name}</LoadedText>
+            <LoadBlock>
+              <LoadedText loaded={teamsAreReady}>NFL TEAMS</LoadedText>
+              <LoadedText loaded={playersAreReady}>NFL PLAYERS</LoadedText>
+              <LoadedText loaded={picksAreReady}>
+                DRAFT SETTINGS AND PICKS
+              </LoadedText>
+              <LoadedText loaded={myTeamIsReady}>YOUR TEAM ROSTER</LoadedText>
+            </LoadBlock>
+            {goToBoard && <Redirect to={ROUTES.BOARD} />}
+          </Container>
+        </MobileContentContainer>
+      }
+      right={<div></div>}
+    />
   );
 };
 

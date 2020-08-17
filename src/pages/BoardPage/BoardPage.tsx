@@ -52,7 +52,7 @@ const BoardPage: React.FC = () => {
   }, [picksPerRound, currentDraftPick]);
 
   React.useEffect(() => {
-    console.log('draft', draft);
+    // console.log('draft', draft);
     if (draft.league.draftStatus !== 'not started') {
       setDraftStarted(true);
     }

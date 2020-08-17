@@ -70,7 +70,7 @@ const PlayersPage: React.FC = () => {
       };
       makePick(newPick)
         .then((res) => {
-          console.log('saved pick', res);
+          // console.log('saved pick', res);
           setCurrentModal(MODAL_INITIAL_VALUE);
         })
         .catch((err) => console.log('err', err));

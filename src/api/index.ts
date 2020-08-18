@@ -7,6 +7,7 @@ import { getPositionRankings } from './getPositionRankings/getPositionRankings';
 import { getTeams } from './getTeams/getTeams';
 import { login } from './login/login';
 import { makePick } from './makePick/makePick';
+import { updateDraftStatus } from './updateDraftStatus/updateDraftStatus';
 
 // export const DEV_API_ROOT_URL = 'http://localhost:4001';
 export const DEV_API_ROOT_URL = 'https://big-board-server.herokuapp.com';
@@ -21,4 +22,5 @@ export {
   getTeams,
   login,
   makePick,
+  updateDraftStatus,
 };

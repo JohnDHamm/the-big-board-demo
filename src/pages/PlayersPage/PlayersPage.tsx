@@ -7,6 +7,7 @@ import {
   SortToggle,
 } from '../../components';
 import {
+  AlertContext,
   MyTeamContext,
   PlayersContext,
   TeamsContext,
@@ -17,9 +18,10 @@ import {
   CurrentPickContext,
 } from '../../contexts';
 import { MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
-import { makePick } from '../../api';
+import { makePick, updateDraftStatus } from '../../api';
 import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
+import { calcTotalRounds } from '../../functions';
 
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
@@ -34,6 +36,7 @@ const SETTINGS_KEYS = {
 };
 
 const PlayersPage: React.FC = () => {
+  const { setCurrentAlert } = React.useContext(AlertContext);
   const { user } = React.useContext(UserContext);
   const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
@@ -74,6 +77,13 @@ const PlayersPage: React.FC = () => {
         .then((res) => {
           // console.log('saved pick', res);
           setCurrentModal(MODAL_INITIAL_VALUE);
+
+          const numOwners = draft.league.draftOrder.length;
+          const numRounds = calcTotalRounds(draft.league.positionSlots);
+          const totalPicks = numRounds * numOwners;
+          if (res.selectionNumber + 1 > totalPicks) {
+            updateDraftStatus(draft.league._id, 'done');
+          }
         })
         .catch((err) => console.log('err', err));
     }
@@ -209,7 +219,10 @@ const PlayersPage: React.FC = () => {
     setCanMakePick(
       draftStatus === 'open' && currentDraftPick.ownerId === user?._id
     );
-  }, [draftStatus, user, currentDraftPick]);
+    if (draftStatus === 'done') {
+      setCurrentAlert('Your draft is complete!');
+    }
+  }, [draftStatus, user, currentDraftPick, setCurrentAlert]);
 
   return (
     <ThreeUpLayout

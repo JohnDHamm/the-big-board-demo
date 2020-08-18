@@ -50,8 +50,6 @@ const SocketListener: React.FC = ({ children }) => {
       const totalPicks = numRounds * numOwners;
       if (newPick.selectionNumber + 1 > totalPicks) {
         setCurrentAlert('Your draft has completed!');
-        setCurrentDraftStatus('done');
-        //TODO: update draft status in db (api)
       } else {
         const updateCurrent: CurrentDraftPick = {
           selectionNumber: newPick.selectionNumber + 1,
@@ -60,13 +58,7 @@ const SocketListener: React.FC = ({ children }) => {
         setCurrentDraftPick(updateCurrent);
       }
     },
-    [
-      setCurrentPicks,
-      setCurrentDraftPick,
-      setCurrentAlert,
-      setCurrentDraftStatus,
-      draft,
-    ]
+    [setCurrentPicks, setCurrentDraftPick, setCurrentAlert, draft]
   );
 
   const getOwnerName = React.useCallback(
@@ -141,6 +133,7 @@ const SocketListener: React.FC = ({ children }) => {
     // socket.on("UpdateConnected", (data) =>
     //   console.log("update connected", data)
     // )
+
     return () => socket.disconnect();
   }, []);
 
@@ -150,6 +143,13 @@ const SocketListener: React.FC = ({ children }) => {
       setNewPick(pick);
     });
   }, []);
+
+  React.useEffect((): any => {
+    socket.on('DraftStatusUpdate', (status: DraftStatus) => {
+      // console.log('status', status);
+      setCurrentDraftStatus(status);
+    });
+  }, [setCurrentDraftStatus]);
 
   return <div>{children}</div>;
 };

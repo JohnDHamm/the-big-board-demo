@@ -4,6 +4,7 @@ import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import { DraftRoundTitleBar, PickCard } from '../../components';
 import {
   DraftContext,
+  DraftStatusContext,
   PicksContext,
   PlayersContext,
   TeamsContext,
@@ -14,6 +15,7 @@ import { calcPickRoundNumber, calcTotalRounds } from '../../functions';
 const BoardPage: React.FC = () => {
   const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
+  const { draftStatus } = React.useContext(DraftStatusContext);
   const { picks } = React.useContext(PicksContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
@@ -52,11 +54,11 @@ const BoardPage: React.FC = () => {
   }, [picksPerRound, currentDraftPick]);
 
   React.useEffect(() => {
-    // console.log('draft', draft);
-    if (draft.league.draftStatus !== 'not started') {
+    // console.log('draftStatus', draftStatus);
+    if (draftStatus !== 'not started') {
       setDraftStarted(true);
     }
-  }, [draft, players]);
+  }, [draftStatus]);
 
   return (
     <ThreeUpLayout

@@ -4,6 +4,7 @@ import {
   AlertContext,
   CurrentPickContext,
   DraftContext,
+  DraftStatusContext,
   MyTeamContext,
   PickIsInModalContext,
   PicksContext,
@@ -11,6 +12,7 @@ import {
   TeamsContext,
   UserContext,
 } from '../../contexts';
+import { calcTotalRounds } from '../../functions';
 
 // const ROOT_URL = 'http://localhost:4001';
 const ROOT_URL = 'https://big-board-server.herokuapp.com';
@@ -21,6 +23,7 @@ const SocketListener: React.FC = ({ children }) => {
   const { user } = React.useContext(UserContext);
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
+  const { setCurrentDraftStatus } = React.useContext(DraftStatusContext);
   const { picks, setCurrentPicks } = React.useContext(PicksContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
@@ -40,15 +43,30 @@ const SocketListener: React.FC = ({ children }) => {
   const updatePicks = React.useCallback(
     (newPick: DraftSelection, picks: DraftPickContext) => {
       picks[newPick.selectionNumber] = newPick;
-      const updateCurrent: CurrentDraftPick = {
-        selectionNumber: newPick.selectionNumber + 1,
-        ownerId: picks[newPick.selectionNumber + 1].ownerId,
-      };
-      // ? what if last pick?
-      setCurrentDraftPick(updateCurrent);
       setCurrentPicks(picks);
+
+      const numOwners = draft.league.draftOrder.length;
+      const numRounds = calcTotalRounds(draft.league.positionSlots);
+      const totalPicks = numRounds * numOwners;
+      if (newPick.selectionNumber + 1 > totalPicks) {
+        setCurrentAlert('Your draft has completed!');
+        setCurrentDraftStatus('done');
+        //TODO: update draft status in db (api)
+      } else {
+        const updateCurrent: CurrentDraftPick = {
+          selectionNumber: newPick.selectionNumber + 1,
+          ownerId: picks[newPick.selectionNumber + 1].ownerId,
+        };
+        setCurrentDraftPick(updateCurrent);
+      }
     },
-    [setCurrentPicks, setCurrentDraftPick]
+    [
+      setCurrentPicks,
+      setCurrentDraftPick,
+      setCurrentAlert,
+      setCurrentDraftStatus,
+      draft,
+    ]
   );
 
   const getOwnerName = React.useCallback(

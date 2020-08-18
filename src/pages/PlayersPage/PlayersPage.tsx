@@ -11,6 +11,7 @@ import {
   PlayersContext,
   TeamsContext,
   DraftContext,
+  DraftStatusContext,
   UserContext,
   PickConfirmModalContext,
   CurrentPickContext,
@@ -36,6 +37,7 @@ const PlayersPage: React.FC = () => {
   const { user } = React.useContext(UserContext);
   const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
+  const { draftStatus } = React.useContext(DraftStatusContext);
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
   const { myTeam } = React.useContext(MyTeamContext);
@@ -205,10 +207,9 @@ const PlayersPage: React.FC = () => {
 
   React.useEffect(() => {
     setCanMakePick(
-      draft.league.draftStatus === 'open' &&
-        currentDraftPick.ownerId === user?._id
+      draftStatus === 'open' && currentDraftPick.ownerId === user?._id
     );
-  }, [draft, user, currentDraftPick]);
+  }, [draftStatus, user, currentDraftPick]);
 
   return (
     <ThreeUpLayout

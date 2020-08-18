@@ -2,7 +2,7 @@ import React from 'react';
 
 declare global {
   interface Draft {
-    league: League;
+    league: Omit<League, 'draftStatus'>;
     owners: Owner[];
   }
 
@@ -17,7 +17,6 @@ export const DRAFT_INITIAL_VALUE: Draft = {
     _id: '',
     name: '',
     draftOrder: [],
-    draftStatus: 'not started',
     positionSlots: [],
     scoringType: 'non-ppr',
   },

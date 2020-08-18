@@ -1,6 +1,7 @@
 import { AlertContext } from './AlertContext/AlertContext';
 import { CurrentPickContext } from './CurrentPickContext/CurrentPickContext';
 import { DraftContext } from './DraftContext/DraftContext';
+import { DraftStatusContext } from './DraftStatusContext/DraftStatusContext';
 import { MyTeamContext } from './MyTeamContext/MyTeamContext';
 import { PickConfirmModalContext } from './PickConfirmModalContext/PickConfirmModalContext';
 import { PickIsInModalContext } from './PickIsInModalContext/PickIsInModalContext';
@@ -13,6 +14,7 @@ export {
   AlertContext,
   CurrentPickContext,
   DraftContext,
+  DraftStatusContext,
   MyTeamContext,
   PickConfirmModalContext,
   PickIsInModalContext,

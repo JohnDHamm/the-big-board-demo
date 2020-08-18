@@ -1,6 +1,7 @@
 import { useAlert } from './useAlert/useAlert';
 import { useCurrentPick } from './useCurrentPick/useCurrentPick';
 import { useDraft } from './useDraft/useDraft';
+import { useDraftStatus } from './useDraftStatus/useDraftStatus';
 import { useMyTeam } from './useMyTeam/useMyTeam';
 import { usePickConfirmModal } from './usePickConfirmModal/usePickConfirmModal';
 import { usePickIsInModal } from './usePickIsInModal/usePickIsInModal';
@@ -13,6 +14,7 @@ export {
   useAlert,
   useCurrentPick,
   useDraft,
+  useDraftStatus,
   useMyTeam,
   usePickConfirmModal,
   usePickIsInModal,

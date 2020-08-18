@@ -8,7 +8,7 @@ declare global {
 }
 
 export const CURRENT_PICK_INITIAL_VALUE: CurrentDraftPick = {
-  selectionNumber: 0,
+  selectionNumber: 1,
   ownerId: '',
 };
 

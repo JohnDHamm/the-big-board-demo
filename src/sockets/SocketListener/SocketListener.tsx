@@ -14,8 +14,7 @@ import {
 } from '../../contexts';
 import { calcTotalRounds } from '../../functions';
 
-// const ROOT_URL = 'http://localhost:4001';
-const ROOT_URL = 'https://big-board-server.herokuapp.com';
+const ROOT_URL = process.env.REACT_APP_API_URL || 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {

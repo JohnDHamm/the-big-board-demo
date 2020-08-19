@@ -1,7 +1,11 @@
 import React from 'react';
 
 declare global {
-  type Alert = string | null;
+  type Alert = {
+    message: string;
+    type: AlertType;
+    sticky?: boolean;
+  } | null;
   interface AlertContextInterface {
     alert: Alert;
     setCurrentAlert: (alert: Alert) => void;

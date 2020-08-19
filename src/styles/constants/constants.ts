@@ -3,7 +3,7 @@ export const Z_HEIGHTS = {
   CARD_FOOTBALL: 10,
   MODAL: 1000,
   NAVBAR: 100,
-  ALERT: 99,
+  ALERT: 101,
 };
 
 export const HEIGHTS = {

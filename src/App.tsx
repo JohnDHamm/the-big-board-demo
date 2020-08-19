@@ -69,7 +69,13 @@ const ProtectedRoutes = () => {
 
   return user ? (
     <div>
-      <Alert message={alert} />
+      {alert && (
+        <Alert
+          message={alert?.message}
+          type={alert?.type}
+          sticky={alert?.sticky}
+        />
+      )}
       <PickConfirmModal {...modal} />
       <PickIsInModal {...pickIsInModal} />
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />

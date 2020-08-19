@@ -15,4 +15,6 @@ export const COLORS = {
   DISABLED_GRAY: '#CECECE',
   WHITE: '#FFFFFF',
   SUCCESS: '#118652',
+  WARN: '#DDBF19',
+  ERR: '#BC2A2A',
 };

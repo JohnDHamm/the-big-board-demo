@@ -18,6 +18,19 @@ export const Default = () => (
     }}
   >
     <BottomTicker />
-    <Alert message="Congrats! Your pick is complete." />
+    <Alert message="Congrats! Your pick is complete." type="success" />
+  </div>
+);
+export const Sticky = () => (
+  <div
+    style={{
+      position: 'relative',
+      width: '100%',
+      height: '100vh',
+      backgroundColor: 'lightgrey',
+    }}
+  >
+    <BottomTicker />
+    <Alert message="The draft has been paused." sticky={true} type="err" />
   </div>
 );

@@ -219,10 +219,7 @@ const PlayersPage: React.FC = () => {
     setCanMakePick(
       draftStatus === 'open' && currentDraftPick.ownerId === user?._id
     );
-    if (draftStatus === 'done') {
-      setCurrentAlert('Your draft is complete!');
-    }
-  }, [draftStatus, user, currentDraftPick, setCurrentAlert]);
+  }, [draftStatus, user, currentDraftPick]);
 
   return (
     <ThreeUpLayout

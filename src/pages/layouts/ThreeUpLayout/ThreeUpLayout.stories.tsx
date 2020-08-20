@@ -4,7 +4,7 @@ import { NavBar, BottomTicker } from '../../../components';
 import { MemoryRouter } from 'react-router-dom';
 
 export default {
-  title: 'layout/ThreeUpLayout',
+  title: 'page layouts/ThreeUpLayout',
   component: ThreeUpLayout,
   decorators: [
     (getStory: () => React.ReactNode) => (

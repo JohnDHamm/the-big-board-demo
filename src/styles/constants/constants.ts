@@ -14,5 +14,6 @@ export const HEIGHTS = {
 
 export const SCREEN_WIDTHS = {
   MOBILE: 'max-width: 767px',
+  TABLET: 'max-width: 1023px',
   DESKTOP: 'max-width: 1279px',
 };

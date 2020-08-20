@@ -13,6 +13,7 @@ import {
   UserContext,
 } from '../../contexts';
 import { calcTotalRounds } from '../../functions';
+import { DURATIONS } from '../../styles';
 
 const ROOT_URL = process.env.REACT_APP_API_URL || 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
@@ -109,11 +110,14 @@ const SocketListener: React.FC = ({ children }) => {
         };
         updateTeam.push(newSelection);
         setCurrentMyTeam(updateTeam);
-        setCurrentAlert({
-          message: 'Congrats! Your pick is complete.',
-          type: 'success',
-        });
-        setTimeout(() => setCurrentAlert(null), 4000);
+        const totalPicks = Object.keys(picks).length;
+        if (newPick.selectionNumber !== totalPicks) {
+          setCurrentAlert({
+            message: 'Congrats! Your pick is complete.',
+            type: 'success',
+          });
+          setTimeout(() => setCurrentAlert(null), DURATIONS.POPUP_ALERT + 250);
+        }
       }
       updatePicks(newPick, JSON.parse(JSON.stringify(picks)));
       updatePlayer(newPick.playerId, JSON.parse(JSON.stringify(players)));
@@ -149,22 +153,23 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('DraftStatusUpdate', (status: DraftStatus) => {
-      console.log('status', status);
+      // console.log('status', status);
       setCurrentDraftStatus(status);
     });
   }, [setCurrentDraftStatus]);
 
   React.useEffect(() => {
+    // console.log('draftStatus change', draftStatus);
+    setCurrentAlert(null);
     switch (draftStatus) {
       case 'open':
         setCurrentAlert({
           message: 'The draft is open!',
           type: 'success',
         });
-        // setTimeout(setCurrentAlert(null), 4000);
+        setTimeout(() => setCurrentAlert(null), DURATIONS.POPUP_ALERT + 250);
         break;
       case 'done':
-        console.log('status change to done');
         setCurrentAlert({
           message: 'The draft is done. Good luck to all!',
           type: 'success',
@@ -191,7 +196,7 @@ const SocketListener: React.FC = ({ children }) => {
   }, [draftStatus, setCurrentAlert]);
 
   React.useEffect(() => {
-    console.log('alert', alert);
+    // console.log('alert', alert);
   }, [alert]);
 
   return <div>{children}</div>;

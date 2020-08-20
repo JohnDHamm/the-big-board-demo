@@ -4,6 +4,7 @@ import {
   AlertContext,
   CurrentPickContext,
   DraftContext,
+  DraftStatusContext,
   MyTeamContext,
   PickIsInModalContext,
   PicksContext,
@@ -11,16 +12,20 @@ import {
   TeamsContext,
   UserContext,
 } from '../../contexts';
+import { calcTotalRounds } from '../../functions';
+import { DURATIONS } from '../../styles';
 
-// const ROOT_URL = 'http://localhost:4001';
-const ROOT_URL = 'https://big-board-server.herokuapp.com';
+const ROOT_URL = process.env.REACT_APP_API_URL || 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {
-  const { setCurrentAlert } = React.useContext(AlertContext);
+  const { alert, setCurrentAlert } = React.useContext(AlertContext);
   const { user } = React.useContext(UserContext);
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
+  const { draftStatus, setCurrentDraftStatus } = React.useContext(
+    DraftStatusContext
+  );
   const { picks, setCurrentPicks } = React.useContext(PicksContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
@@ -40,15 +45,21 @@ const SocketListener: React.FC = ({ children }) => {
   const updatePicks = React.useCallback(
     (newPick: DraftSelection, picks: DraftPickContext) => {
       picks[newPick.selectionNumber] = newPick;
-      const updateCurrent: CurrentDraftPick = {
-        selectionNumber: newPick.selectionNumber + 1,
-        ownerId: picks[newPick.selectionNumber + 1].ownerId,
-      };
-      // ? what if last pick?
-      setCurrentDraftPick(updateCurrent);
       setCurrentPicks(picks);
+
+      const numOwners = draft.league.draftOrder.length;
+      const numRounds = calcTotalRounds(draft.league.positionSlots);
+      const totalPicks = numRounds * numOwners;
+      if (newPick.selectionNumber + 1 > totalPicks) {
+      } else {
+        const updateCurrent: CurrentDraftPick = {
+          selectionNumber: newPick.selectionNumber + 1,
+          ownerId: picks[newPick.selectionNumber + 1].ownerId,
+        };
+        setCurrentDraftPick(updateCurrent);
+      }
     },
-    [setCurrentPicks, setCurrentDraftPick]
+    [setCurrentPicks, setCurrentDraftPick, draft]
   );
 
   const getOwnerName = React.useCallback(
@@ -99,8 +110,14 @@ const SocketListener: React.FC = ({ children }) => {
         };
         updateTeam.push(newSelection);
         setCurrentMyTeam(updateTeam);
-        setCurrentAlert('Congrats! Your pick is complete.');
-        setTimeout(() => setCurrentAlert(null), 4000);
+        const totalPicks = Object.keys(picks).length;
+        if (newPick.selectionNumber !== totalPicks) {
+          setCurrentAlert({
+            message: 'Congrats! Your pick is complete.',
+            type: 'success',
+          });
+          setTimeout(() => setCurrentAlert(null), DURATIONS.POPUP_ALERT + 250);
+        }
       }
       updatePicks(newPick, JSON.parse(JSON.stringify(picks)));
       updatePlayer(newPick.playerId, JSON.parse(JSON.stringify(players)));
@@ -123,6 +140,7 @@ const SocketListener: React.FC = ({ children }) => {
     // socket.on("UpdateConnected", (data) =>
     //   console.log("update connected", data)
     // )
+
     return () => socket.disconnect();
   }, []);
 
@@ -132,6 +150,54 @@ const SocketListener: React.FC = ({ children }) => {
       setNewPick(pick);
     });
   }, []);
+
+  React.useEffect((): any => {
+    socket.on('DraftStatusUpdate', (status: DraftStatus) => {
+      // console.log('status', status);
+      setCurrentDraftStatus(status);
+    });
+  }, [setCurrentDraftStatus]);
+
+  React.useEffect(() => {
+    // console.log('draftStatus change', draftStatus);
+    setCurrentAlert(null);
+    switch (draftStatus) {
+      case 'open':
+        setCurrentAlert({
+          message: 'The draft is open!',
+          type: 'success',
+        });
+        setTimeout(() => setCurrentAlert(null), DURATIONS.POPUP_ALERT + 250);
+        break;
+      case 'done':
+        setCurrentAlert({
+          message: 'The draft is done. Good luck to all!',
+          type: 'success',
+          sticky: true,
+        });
+        break;
+      case 'paused':
+        setCurrentAlert({
+          message: 'The draft has been paused!',
+          type: 'err',
+          sticky: true,
+        });
+        break;
+      case 'not started':
+        setCurrentAlert({
+          message: 'The draft has not started!',
+          type: 'warn',
+          sticky: true,
+        });
+        break;
+      default:
+        setCurrentAlert(null);
+    }
+  }, [draftStatus, setCurrentAlert]);
+
+  React.useEffect(() => {
+    // console.log('alert', alert);
+  }, [alert]);
 
   return <div>{children}</div>;
 };

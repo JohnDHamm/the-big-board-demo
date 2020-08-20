@@ -15,6 +15,7 @@ import {
   UserContext,
   MyTeamContext,
   DraftContext,
+  DraftStatusContext,
 } from '../../contexts';
 import {
   getLeague,
@@ -42,6 +43,7 @@ interface SavedRanking {
 const AppLoadingPage: React.FC = () => {
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
+  const { setCurrentDraftStatus } = React.useContext(DraftStatusContext);
   const { setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { players, setCurrentPlayers } = React.useContext(PlayersContext);
   const { setCurrentPicks } = React.useContext(PicksContext);
@@ -128,7 +130,7 @@ const AppLoadingPage: React.FC = () => {
       }
     }
     let currentPick: CurrentDraftPick = {
-      selectionNumber: 0,
+      selectionNumber: 1,
       ownerId: '',
     };
     for (let i = 1; i < Object.keys(picksContext).length + 1; i++) {
@@ -140,7 +142,7 @@ const AppLoadingPage: React.FC = () => {
     }
     setCurrentPicks(picksContext);
     setCurrentDraftPick(currentPick);
-    setTimeout(() => setPicksAreReady(true), 3000);
+    setTimeout(() => setPicksAreReady(true), 300);
   }, [
     league,
     owners,
@@ -157,6 +159,7 @@ const AppLoadingPage: React.FC = () => {
           if (userLeague) {
             // console.log('userLeague', userLeague);
             setLeague(userLeague);
+            setCurrentDraftStatus(userLeague.draftStatus);
             const updatedDraft = Object.assign(draft);
             updatedDraft.league = userLeague;
             setCurrentDraft(updatedDraft);
@@ -180,7 +183,7 @@ const AppLoadingPage: React.FC = () => {
             setCurrentTeams(formatTeams);
             setTimeout(() => {
               setTeamsAreReady(true);
-            }, 1000);
+            }, 100);
           }
         })
         .then(() => getPlayers())
@@ -197,12 +200,18 @@ const AppLoadingPage: React.FC = () => {
             setCurrentPlayers(formatPlayers);
             setTimeout(() => {
               setPlayersAreReady(true);
-            }, 2000);
+            }, 200);
           }
         })
         .catch((err) => console.log('err', err));
     },
-    [setCurrentTeams, setCurrentPlayers, draft, setCurrentDraft]
+    [
+      setCurrentTeams,
+      setCurrentPlayers,
+      draft,
+      setCurrentDraft,
+      setCurrentDraftStatus,
+    ]
   );
 
   const checkPlayersAvailability = React.useCallback((): void => {
@@ -224,7 +233,7 @@ const AppLoadingPage: React.FC = () => {
       (player) => player.ownerId === user?._id
     );
     setCurrentMyTeam(userPlayers);
-    setTimeout(() => setMyTeamIsReady(true), 4000);
+    setTimeout(() => setMyTeamIsReady(true), 400);
   }, [players, savedPicks, setCurrentMyTeam, setCurrentPlayers, user]);
 
   const getLeaguePicks = (leagueId: string) => {
@@ -271,7 +280,7 @@ const AppLoadingPage: React.FC = () => {
         setTimeout(() => {
           setPicksAreReady(true);
           setMyTeamIsReady(true);
-        }, 3000);
+        }, 300);
       }
     }
   }, [league]);
@@ -291,7 +300,7 @@ const AppLoadingPage: React.FC = () => {
 
   React.useEffect(() => {
     if (teamsAreReady && playersAreReady && picksAreReady && myTeamIsReady) {
-      setTimeout(() => setGoToBoard(true), 1500);
+      setTimeout(() => setGoToBoard(true), 150);
     }
   }, [myTeamIsReady, playersAreReady, teamsAreReady, picksAreReady]);
 

@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { DEV_API_ROOT_URL } from '../index';
+import { API_ROOT_URL } from '../index';
 
 export const getTeams = async () => {
   try {
-    const { data } = await axios.get(`${DEV_API_ROOT_URL}/API/teams`);
+    const { data } = await axios.get(`${API_ROOT_URL}/teams`);
     return data;
   } catch (err) {
     console.error(err);

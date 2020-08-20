@@ -14,16 +14,7 @@ import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
 import { getLeaguesList, login } from '../../api';
 import { socket } from '../../sockets/SocketListener/SocketListener';
-
-// const TEST_LEAGUE = {
-//   _id: '5f2c5bd6466faf1f45c3dd53',
-// };
-
-// const TEST_USER: UserLogin = {
-//   name: 'Tester 1',
-//   leagueId: TEST_LEAGUE._id,
-//   password: 'password',
-// };
+import isEmpty from 'lodash.isempty';
 
 const HomePage: React.FC = () => {
   const { user, setCurrentUser } = React.useContext(UserContext);
@@ -56,7 +47,6 @@ const HomePage: React.FC = () => {
 
   const handleSelectChange = (option: string) => {
     const league = leagues.filter((league) => league.name === option);
-    // console.log('league[0].id', league[0].id);
     setSelectedLeagueId(league[0]._id);
     setShowNameInput(true);
   };
@@ -110,7 +100,7 @@ const HomePage: React.FC = () => {
       </TopBlock>
       <Content>
         <SignIn>SIGN IN</SignIn>
-        {leagues && <ContentItem>{renderSelect()}</ContentItem>}
+        {!isEmpty(leagues) && <ContentItem>{renderSelect()}</ContentItem>}
         {showNameInput && (
           <ContentItem>
             <Input

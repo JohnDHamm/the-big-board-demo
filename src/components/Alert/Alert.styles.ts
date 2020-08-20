@@ -1,7 +1,14 @@
 import styled, { keyframes } from 'styled-components';
-import { COLORS, FONTS, HEIGHTS, SCREEN_WIDTHS, Z_HEIGHTS } from '../../styles';
+import {
+  COLORS,
+  DURATIONS,
+  FONTS,
+  SCREEN_WIDTHS,
+  Z_HEIGHTS,
+} from '../../styles';
 
 const ALERT_HEIGHT = '56px';
+const SLIDE_DURATION = (DURATIONS.POPUP_ALERT / 1000).toString() + 's';
 
 const slideUpAndDown = keyframes`
   from {
@@ -52,7 +59,7 @@ export const Container = styled.div<{ sticky: boolean; type: AlertType }>`
   height: ${ALERT_HEIGHT};
   position: fixed;
   animation-name: ${(props) => (props.sticky ? fadeIn : slideUpAndDown)};
-  animation-duration: ${(props) => (props.sticky ? '0.5s' : '3s')};
+  animation-duration: ${(props) => (props.sticky ? '0.5s' : SLIDE_DURATION)};
   animation-timing-function: ease;
   bottom: ${(props) => (props.sticky ? 0 : `-${ALERT_HEIGHT}`)};
   left: 0;

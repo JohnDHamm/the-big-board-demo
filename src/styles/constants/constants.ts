@@ -17,3 +17,7 @@ export const SCREEN_WIDTHS = {
   TABLET: 'max-width: 1023px',
   DESKTOP: 'max-width: 1279px',
 };
+
+export const DURATIONS = {
+  POPUP_ALERT: 3000,
+};

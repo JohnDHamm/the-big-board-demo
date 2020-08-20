@@ -24,11 +24,10 @@ export const LeftContent = styled(CenterContent)`
   @media screen and (${SCREEN_WIDTHS.TABLET}) {
     display: none;
   }
-  }
 `;
 
 export const RightContent = styled(LeftContent)`
   @media screen and (${SCREEN_WIDTHS.DESKTOP}) {
     display: none;
-
+  }
 `;

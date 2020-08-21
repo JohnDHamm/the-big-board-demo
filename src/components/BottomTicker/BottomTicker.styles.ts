@@ -1,5 +1,24 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { COLORS, FONTS, HEIGHTS, SCREEN_WIDTHS, Z_HEIGHTS } from '../../styles';
+
+const flashingColor = keyframes`
+  0% {
+    background-color: ${COLORS.PRIMARY_GREEN};
+  }
+  50% {
+    background-color: ${COLORS.PRIMARY_GREEN};
+  }
+  51% {
+    background-color: ${COLORS.SUCCESS};
+  }
+  100% {
+    background-color: ${COLORS.SUCCESS};
+  }
+`;
+
+const curAnim = css`
+  animation: ${flashingColor} 1s infinite;
+`;
 
 export const Container = styled.div`
   height: ${HEIGHTS.BOTTOM_TICKER};
@@ -11,16 +30,28 @@ export const Container = styled.div`
   z-index: ${Z_HEIGHTS.NAVBAR};
 `;
 
-export const OnClockBlock = styled.div`
+export const OnClockBlock = styled.div<{ currentPick: boolean }>`
   display: flex;
   width: auto;
   align-items: center;
   padding: 0 1rem;
   background-color: ${COLORS.PRIMARY_GREEN};
-
+  ${(props) => (props.currentPick ? curAnim : null)}
+  
   @media screen and (${SCREEN_WIDTHS.MOBILE}) {
     width: 100%;
     padding: 0 0.5rem;
+  }
+`;
+
+export const Current = styled.p`
+  margin: 0;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 2rem;
+  color: ${COLORS.WHITE};
+
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    font-size: 1.75rem;
   }
 `;
 

@@ -3,7 +3,9 @@ import {
   BtnBlock,
   Content,
   ContentItem,
+  ErrorMsg,
   Page,
+  LoadingMsg,
   Logo,
   SignIn,
   TopBlock,
@@ -26,9 +28,10 @@ const HomePage: React.FC = () => {
   const [showPasswordInput, setShowPasswordInput] = React.useState<boolean>(
     false
   );
-  const [showLoginBtn, setShowLoginBtn] = React.useState<boolean>(true);
+  const [showLoginBtn, setShowLoginBtn] = React.useState<boolean>(false);
   const [name, setName] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
+  const [errorMsg, setErrorMsg] = React.useState<string>('');
 
   const initLeagues = async () => {
     const leaguesList = await getLeaguesList();
@@ -64,14 +67,18 @@ const HomePage: React.FC = () => {
     if (selectedLeagueId) {
       const newUser: UserLogin = {
         name,
-        password: 'password',
+        password,
         leagueId: selectedLeagueId,
       };
-      const loggedInUser: User = await login(newUser);
-      if (loggedInUser) {
-        setCurrentUser(loggedInUser);
-        socket.emit('JoinRoom', loggedInUser.leagueId);
-        history.push(ROUTES.APP);
+      try {
+        const loggedInUser: User = await login(newUser);
+        if (loggedInUser) {
+          setCurrentUser(loggedInUser);
+          socket.emit('JoinRoom', loggedInUser.leagueId);
+          history.push(ROUTES.APP);
+        }
+      } catch (err) {
+        setErrorMsg(err.message);
       }
     }
   };
@@ -86,7 +93,7 @@ const HomePage: React.FC = () => {
   }, [name]);
 
   React.useEffect(() => {
-    // setShowLoginBtn(password.length > 0);
+    setShowLoginBtn(password.length > 0);
   }, [password]);
 
   React.useEffect(() => {
@@ -100,7 +107,11 @@ const HomePage: React.FC = () => {
       </TopBlock>
       <Content>
         <SignIn>SIGN IN</SignIn>
-        {!isEmpty(leagues) && <ContentItem>{renderSelect()}</ContentItem>}
+        {isEmpty(leagues) ? (
+          <LoadingMsg>Loading leagues...</LoadingMsg>
+        ) : (
+          <ContentItem>{renderSelect()}</ContentItem>
+        )}
         {showNameInput && (
           <ContentItem>
             <Input
@@ -124,6 +135,7 @@ const HomePage: React.FC = () => {
             <Button label="sign in" />
           </BtnBlock>
         )}
+        {!isEmpty(errorMsg) && <ErrorMsg>{errorMsg}</ErrorMsg>}
       </Content>
     </Page>
   );

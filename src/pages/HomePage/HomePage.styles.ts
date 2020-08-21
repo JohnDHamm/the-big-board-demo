@@ -41,6 +41,14 @@ export const SignIn = styled.p`
   text-align: center;
 `;
 
+export const LoadingMsg = styled.p`
+  margin: 0;
+  font-family: ${FONTS.BLOCKLETTER};
+  font-size: 2rem;
+  color: ${COLORS.DISABLED_GRAY};
+  text-align: center;
+`;
+
 export const ContentItem = styled.div`
   margin-bottom: 1rem;
 `;
@@ -48,4 +56,13 @@ export const ContentItem = styled.div`
 export const BtnBlock = styled.div`
   margin-top: 2rem;
   width: auto;
+`;
+
+export const ErrorMsg = styled.p`
+  margin: 0;
+  padding-top: 1rem;
+  font-family: ${FONTS.NAMES};
+  font-size: 1.5rem;
+  color: ${COLORS.ERR};
+  text-align: center;
 `;

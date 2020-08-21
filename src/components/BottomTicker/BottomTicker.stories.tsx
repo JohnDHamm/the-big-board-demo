@@ -8,8 +8,17 @@ export default {
   component: BottomTicker,
 };
 
-export const Default = () => (
+export const UserHasCurrentPick = () => (
   <BottomTicker
+    currentPick={true}
+    ownerOnClock="Gayland"
+    ticker={<WelcomeUser name="Gayland" />}
+  />
+);
+
+export const NotCurrentUser = () => (
+  <BottomTicker
+    currentPick={false}
     ownerOnClock="Richard and the girls"
     ticker={<WelcomeUser name="Gayland" />}
   />

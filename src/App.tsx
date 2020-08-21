@@ -80,6 +80,7 @@ const ProtectedRoutes = () => {
       <PickIsInModal {...pickIsInModal} />
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
       <BottomTicker
+        currentPick={user.name === getCurrentOwnerName()}
         ownerOnClock={getCurrentOwnerName()}
         ticker={<WelcomeUser name={user.name} />}
       />

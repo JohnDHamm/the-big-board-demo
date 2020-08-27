@@ -5,7 +5,7 @@ export const Title = styled.p`
   margin: 0;
   color: ${COLORS.PRIMARY_GREEN};
   font-family: ${FONTS.BLOCKLETTER};
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;
 
 export const PlayerBlock = styled.div`
@@ -13,8 +13,8 @@ export const PlayerBlock = styled.div`
 `;
 
 const Text = styled.span`
-  margin-right: 0.5rem;
-  font-size: 1.5rem;
+  margin-right: 0.3rem;
+  font-size: 1.25rem;
   color: ${COLORS.SECONDARY_GRAY};
 `;
 

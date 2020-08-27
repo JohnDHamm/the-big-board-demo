@@ -1,2 +1,5 @@
 import styled from 'styled-components';
-import { SCREEN_WIDTHS } from '../../styles';
+
+export const ContentPadding = styled.div`
+  padding-top: 2rem;
+`;

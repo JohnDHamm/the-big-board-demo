@@ -32,14 +32,6 @@ import concat from 'lodash.concat';
 import { calcTotalRounds } from '../../functions';
 import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 
-interface SavedRanking {
-  _id: string;
-  position: NFL_Position;
-  scoringType: ScoringType;
-  rank: number;
-  playerId: string;
-}
-
 const AppLoadingPage: React.FC = () => {
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft, setCurrentDraft } = React.useContext(DraftContext);
@@ -61,7 +53,7 @@ const AppLoadingPage: React.FC = () => {
   const [owners, setOwners] = React.useState<Owner[]>([]);
   const [savedPicks, setSavedPicks] = React.useState<DraftPick[] | null>(null);
   const [savedPositionRankings, setSavedPositionRankings] = React.useState<
-    SavedRanking[]
+    SavedPositionRanking[]
   >([]);
 
   const [teamsAreReady, setTeamsAreReady] = React.useState<boolean>(false);

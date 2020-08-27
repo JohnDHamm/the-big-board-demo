@@ -1,5 +1,6 @@
 import { getLeague } from './getLeague/getLeague';
 import { getLeaguesList } from './getLeaguesList/getLeaguesList';
+import { getOverallRankings } from './getOverallRankings/getOverallRankings';
 import { getOwners } from './getOwners/getOwners';
 import { getPicks } from './getPicks/getPicks';
 import { getPlayers } from './getPlayers/getPlayers';
@@ -15,6 +16,7 @@ export const API_ROOT_URL =
 export {
   getLeague,
   getLeaguesList,
+  getOverallRankings,
   getOwners,
   getPicks,
   getPlayers,

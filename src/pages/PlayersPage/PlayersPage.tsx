@@ -1,7 +1,9 @@
 import React from 'react';
+import { ContentPadding } from './PlayersPage.styles';
 import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import {
   HidePlayersToggle,
+  HighestAvailablePlayers,
   PlayerCard,
   PositionToggle,
   SortToggle,
@@ -23,6 +25,27 @@ import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
 import { calcTotalRounds } from '../../functions';
 
+const TEST_PLAYERS: HighestRankPlayer[] = [
+  {
+    name: 'John Hamm',
+    position: 'WR',
+    rank: 42,
+    teamAbbv: 'BUF',
+  },
+  {
+    name: 'Steve Smith',
+    position: 'RB',
+    rank: 45,
+    teamAbbv: 'LV',
+  },
+  {
+    name: 'Joe Namath',
+    position: 'QB',
+    rank: 46,
+    teamAbbv: 'NYJ',
+  },
+];
+
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
 const positions: NFL_Position[] = ['QB', 'RB', 'WR', 'TE', 'D', 'K'];
@@ -36,7 +59,6 @@ const SETTINGS_KEYS = {
 };
 
 const PlayersPage: React.FC = () => {
-  const { setCurrentAlert } = React.useContext(AlertContext);
   const { user } = React.useContext(UserContext);
   const { currentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
@@ -223,7 +245,11 @@ const PlayersPage: React.FC = () => {
 
   return (
     <ThreeUpLayout
-      left={<div>highest rank available</div>}
+      left={
+        <ContentPadding>
+          <HighestAvailablePlayers players={TEST_PLAYERS} />
+        </ContentPadding>
+      }
       center={
         <MobileContentContainer>
           <PositionToggle

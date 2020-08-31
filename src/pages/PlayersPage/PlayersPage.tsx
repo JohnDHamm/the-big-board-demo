@@ -9,7 +9,6 @@ import {
   SortToggle,
 } from '../../components';
 import {
-  AlertContext,
   MyTeamContext,
   PlayersContext,
   TeamsContext,

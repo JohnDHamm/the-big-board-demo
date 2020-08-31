@@ -36,4 +36,4 @@ export const Position = styled(BlockText)<{ position: NFL_Position }>`
   color: ${(props) => COLORS.NFL_POSITIONS[props.position]};
 `;
 
-export const Team = styled(BlockText)``;
+export const Team = styled(NameText)``;

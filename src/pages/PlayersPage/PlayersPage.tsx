@@ -24,27 +24,6 @@ import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
 import { calcTotalRounds } from '../../functions';
 
-const TEST_PLAYERS: HighestRankPlayer[] = [
-  {
-    name: 'John Hamm',
-    position: 'WR',
-    rank: 42,
-    teamAbbv: 'BUF',
-  },
-  {
-    name: 'Steve Smith',
-    position: 'RB',
-    rank: 45,
-    teamAbbv: 'LV',
-  },
-  {
-    name: 'Joe Namath',
-    position: 'QB',
-    rank: 46,
-    teamAbbv: 'NYJ',
-  },
-];
-
 type Sorting = 'RANK' | 'A-Z' | 'TEAM';
 const sortTypes: Sorting[] = ['RANK', 'A-Z', 'TEAM'];
 const positions: NFL_Position[] = ['QB', 'RB', 'WR', 'TE', 'D', 'K'];
@@ -76,6 +55,9 @@ const PlayersPage: React.FC = () => {
   const [sorting, setSorting] = React.useState<Sorting | ''>('');
   const [hideSelected, setHideSelected] = React.useState<boolean>(false);
   const [canMakePick, setCanMakePick] = React.useState<boolean>(false);
+  const [overallPlayersList, setOverallPlayersList] = React.useState<
+    HighestRankPlayer[]
+  >([]);
 
   const hasOpenPositionSlot = (position: NFL_Position): boolean => {
     const numSlots =
@@ -191,6 +173,29 @@ const PlayersPage: React.FC = () => {
   };
 
   React.useEffect(() => {
+    const availPlayers: PlayerInfo[] = [];
+    for (let key in players) {
+      if (players[key].available && players[key].overallRank) {
+        availPlayers.push(players[key]);
+      }
+    }
+    const sortedPlayers = sortBy(availPlayers, ['overallRank']);
+    const overallRankPlayers: HighestRankPlayer[] = [];
+
+    sortedPlayers.forEach((player) => {
+      if (player.overallRank) {
+        overallRankPlayers.push({
+          name: `${player.firstName} ${player.lastName}`,
+          rank: player.overallRank,
+          teamAbbv: teams[player.teamId].abbv,
+          position: player.position,
+        });
+      }
+    });
+    setOverallPlayersList(overallRankPlayers.slice(0, 100));
+  }, [players, teams]);
+
+  React.useEffect(() => {
     const list: PlayerInfo[] = [];
     for (let key in players) {
       selectedPositions.forEach((selPos) => {
@@ -246,7 +251,7 @@ const PlayersPage: React.FC = () => {
     <ThreeUpLayout
       left={
         <ContentPadding>
-          <HighestAvailablePlayers players={TEST_PLAYERS} />
+          <HighestAvailablePlayers players={overallPlayersList} />
         </ContentPadding>
       }
       center={

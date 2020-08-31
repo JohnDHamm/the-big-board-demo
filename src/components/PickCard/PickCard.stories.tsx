@@ -15,6 +15,7 @@ const mockPlayer: PlayerInfo = {
   position: 'WR',
   available: false,
   positionRank: null,
+  overallRank: 48,
 };
 
 const longNamePlayer: PlayerInfo = {
@@ -25,6 +26,7 @@ const longNamePlayer: PlayerInfo = {
   position: 'K',
   available: false,
   positionRank: null,
+  overallRank: 48,
 };
 
 const mockTeam: Team = {

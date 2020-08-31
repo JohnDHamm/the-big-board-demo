@@ -29,7 +29,12 @@ const testTeam: Team = {
 
 export const Available = () => (
   <PlayerCard
-    player={{ available: true, positionRank: 24, ...testPlayer }}
+    player={{
+      available: true,
+      positionRank: 24,
+      overallRank: 48,
+      ...testPlayer,
+    }}
     team={testTeam}
     rank={24}
     selectable={true}
@@ -38,7 +43,12 @@ export const Available = () => (
 
 export const NotAvailable = () => (
   <PlayerCard
-    player={{ available: false, positionRank: null, ...testPlayer }}
+    player={{
+      available: false,
+      positionRank: null,
+      overallRank: null,
+      ...testPlayer,
+    }}
     team={testTeam}
     rank={null}
     selectable={false}

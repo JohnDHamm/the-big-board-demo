@@ -11,6 +11,7 @@ interface Player {
 interface Info {
   available: boolean;
   positionRank: number | null;
+  overallRank: number | null;
 }
 
 type PlayerInfo = Player & Info;

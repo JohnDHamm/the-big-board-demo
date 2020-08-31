@@ -29,7 +29,12 @@ const testTeam: Team = {
 
 export const Default = () => (
   <MyPlayerCard
-    player={{ available: true, positionRank: 24, ...testPlayer }}
+    player={{
+      available: true,
+      positionRank: 24,
+      overallRank: 48,
+      ...testPlayer,
+    }}
     team={testTeam}
     round={16}
   />

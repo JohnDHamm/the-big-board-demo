@@ -1,7 +1,11 @@
 import React from 'react';
-import { PicksContainer } from './BoardPage.styles';
+import { ContentPadding, PicksContainer } from './BoardPage.styles';
 import { MobileContentContainer, ThreeUpLayout } from '../layouts';
-import { DraftRoundTitleBar, PickCard } from '../../components';
+import {
+  DraftRoundTitleBar,
+  PickCard,
+  PicksByPosition,
+} from '../../components';
 import {
   DraftContext,
   DraftStatusContext,
@@ -11,6 +15,7 @@ import {
   CurrentPickContext,
 } from '../../contexts';
 import { calcPickRoundNumber, calcTotalRounds } from '../../functions';
+import isEmpty from 'lodash.isempty';
 
 const BoardPage: React.FC = () => {
   const { currentDraftPick } = React.useContext(CurrentPickContext);
@@ -24,6 +29,7 @@ const BoardPage: React.FC = () => {
   const picksPerRound = draft.owners.length;
   const totalRounds = calcTotalRounds(draft.league.positionSlots);
   const [currentRoundNum, setCurrentRoundNum] = React.useState<number>();
+  const [picksByPos, setPicksByPos] = React.useState<PickPosition[][]>([]);
 
   const renderPicks = (roundNum: number): JSX.Element[] => {
     const listEndNum = roundNum * picksPerRound;
@@ -48,6 +54,29 @@ const BoardPage: React.FC = () => {
   };
 
   React.useEffect(() => {
+    if (!isEmpty(picks)) {
+      const allPicksByPosition: PickPosition[][] = [];
+      for (let i = 1; i < totalRounds + 1; i++) {
+        const round: PickPosition[] = [];
+        for (
+          let j = (i - 1) * picksPerRound + 1;
+          j < i * picksPerRound + 1;
+          j++
+        ) {
+          if (picks[j].playerId !== '') {
+            const pickedPlayer = players[picks[j].playerId];
+            round.push(pickedPlayer.position);
+          } else {
+            round.push(null);
+          }
+        }
+        allPicksByPosition.push(round);
+      }
+      setPicksByPos(allPicksByPosition);
+    }
+  }, [picks, picksPerRound, players, totalRounds]);
+
+  React.useEffect(() => {
     setCurrentRoundNum(
       calcPickRoundNumber(currentDraftPick.selectionNumber, picksPerRound)
     );
@@ -62,7 +91,11 @@ const BoardPage: React.FC = () => {
 
   return (
     <ThreeUpLayout
-      left={<div>picks by position</div>}
+      left={
+        <ContentPadding>
+          <PicksByPosition picks={picksByPos} />
+        </ContentPadding>
+      }
       center={
         draftStarted ? (
           <MobileContentContainer>

@@ -10,6 +10,7 @@ import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
 import HidePlayersToggle from './HidePlayersToggle/HidePlayersToggle';
 import HighestAvailablePlayers from './HighestAvailablePlayers/HighestAvailablePlayers';
 import Input from './Input/Input';
+import MyDraftNeeds from './MyDraftNeeds/MyDraftNeeds';
 import MyPlayerCard from './MyPlayerCard/MyPlayerCard';
 import MyTeamPositionBlock from './MyTeamPositionBlock/MyTeamPositionBlock';
 import NavBar from './NavBar/NavBar';
@@ -37,6 +38,7 @@ export {
   HidePlayersToggle,
   HighestAvailablePlayers,
   Input,
+  MyDraftNeeds,
   MyPlayerCard,
   MyTeamPositionBlock,
   NavBar,

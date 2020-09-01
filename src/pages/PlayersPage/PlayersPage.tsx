@@ -4,6 +4,7 @@ import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import {
   HidePlayersToggle,
   HighestAvailablePlayers,
+  MyDraftNeeds,
   PlayerCard,
   PositionToggle,
   SortToggle,
@@ -58,6 +59,7 @@ const PlayersPage: React.FC = () => {
   const [overallPlayersList, setOverallPlayersList] = React.useState<
     HighestRankPlayer[]
   >([]);
+  const [myNeeds, setMyNeeds] = React.useState<PositionNeeds>();
 
   const hasOpenPositionSlot = (position: NFL_Position): boolean => {
     const numSlots =
@@ -173,6 +175,17 @@ const PlayersPage: React.FC = () => {
   };
 
   React.useEffect(() => {
+    const needs: PositionNeeds = { QB: 0, RB: 0, WR: 0, TE: 0, D: 0, K: 0 };
+    draft.league.positionSlots.forEach((slot) => {
+      const myPosPicks = myTeam.filter(
+        (player) => players[player.playerId].position === slot.position
+      );
+      needs[slot.position] = slot.total - myPosPicks.length;
+    });
+    setMyNeeds(needs);
+  }, [players, myTeam, draft, setMyNeeds]);
+
+  React.useEffect(() => {
     const availPlayers: PlayerInfo[] = [];
     for (let key in players) {
       if (players[key].available && players[key].overallRank) {
@@ -275,7 +288,11 @@ const PlayersPage: React.FC = () => {
           <div>{players && renderPlayers()}</div>
         </MobileContentContainer>
       }
-      right={<div>my team needs</div>}
+      right={
+        <ContentPadding>
+          {myNeeds && <MyDraftNeeds myPositionNeeds={myNeeds} />}
+        </ContentPadding>
+      }
     />
   );
 };

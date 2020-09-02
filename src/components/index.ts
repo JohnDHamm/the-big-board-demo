@@ -4,6 +4,7 @@ import BottomTicker from './BottomTicker/BottomTicker';
 import Button from './Button/Button';
 import CardNameBlock from './CardNameBlock/CardNameBlock';
 import CloseIcon from './CloseIcon/CloseIcon';
+import CommishModal from './CommishModal/CommishModal';
 import DraftRoundTitleBar from './DraftRoundTitleBar/DraftRoundTitleBar';
 import DropdownIcon from './DropdownIcon/DropdownIcon';
 import EmptySlotCard from './EmptySlotCard/EmptySlotCard';
@@ -32,6 +33,7 @@ export {
   Button,
   CardNameBlock,
   CloseIcon,
+  CommishModal,
   DraftRoundTitleBar,
   DropdownIcon,
   EmptySlotCard,

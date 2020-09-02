@@ -25,7 +25,7 @@ declare global {
   }
 }
 
-export const MODAL_INITIAL_VALUE: PickIsInModal = {
+export const PICKISIN_MODAL_INITIAL_VALUE: PickIsInModal = {
   visible: false,
   selectionNumber: 0,
   ownerName: '',
@@ -43,11 +43,11 @@ export const MODAL_INITIAL_VALUE: PickIsInModal = {
   },
 };
 
-export const MODAL_DEFAULT_VALUE: PickIsInContextInterface = {
-  pickIsInModal: MODAL_INITIAL_VALUE,
+export const PICKISIN_MODAL_DEFAULT_VALUE: PickIsInContextInterface = {
+  pickIsInModal: PICKISIN_MODAL_INITIAL_VALUE,
   setCurrentPickIsInModal: () => {},
 };
 
 export const PickIsInModalContext = React.createContext<
   PickIsInContextInterface
->(MODAL_DEFAULT_VALUE);
+>(PICKISIN_MODAL_DEFAULT_VALUE);

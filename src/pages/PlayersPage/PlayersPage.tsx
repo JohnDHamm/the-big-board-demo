@@ -19,7 +19,7 @@ import {
   PickConfirmModalContext,
   CurrentPickContext,
 } from '../../contexts';
-import { MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
+import { PICKCONFIRM_MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
 import { makePick, updateDraftStatus } from '../../api';
 import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
@@ -45,7 +45,9 @@ const PlayersPage: React.FC = () => {
   const { players } = React.useContext(PlayersContext);
   const { teams } = React.useContext(TeamsContext);
   const { myTeam } = React.useContext(MyTeamContext);
-  const { setCurrentModal } = React.useContext(PickConfirmModalContext);
+  const { setCurrentPickConfirmModal } = React.useContext(
+    PickConfirmModalContext
+  );
 
   const [playersRenderList, setPlayersRenderList] = React.useState<
     PlayerInfo[]
@@ -81,7 +83,7 @@ const PlayersPage: React.FC = () => {
       makePick(newPick)
         .then((res) => {
           // console.log('saved pick', res);
-          setCurrentModal(MODAL_INITIAL_VALUE);
+          setCurrentPickConfirmModal(PICKCONFIRM_MODAL_INITIAL_VALUE);
 
           const numOwners = draft.league.draftOrder.length;
           const numRounds = calcTotalRounds(draft.league.positionSlots);
@@ -99,7 +101,7 @@ const PlayersPage: React.FC = () => {
       const selPlayer = players[playerId];
       const playerName = `${selPlayer.firstName} ${selPlayer.lastName}`;
       const team = teams[selPlayer.teamId];
-      setCurrentModal({
+      setCurrentPickConfirmModal({
         visible: true,
         player: {
           name: playerName,
@@ -109,7 +111,8 @@ const PlayersPage: React.FC = () => {
           abbv: team.abbv,
           colors: team.colors,
         },
-        onCancel: () => setCurrentModal(MODAL_INITIAL_VALUE),
+        onCancel: () =>
+          setCurrentPickConfirmModal(PICKCONFIRM_MODAL_INITIAL_VALUE),
         onConfirm: () => handleConfirm(playerId),
       });
     }

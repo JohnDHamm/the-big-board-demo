@@ -203,12 +203,23 @@ const SocketListener: React.FC = ({ children }) => {
       };
       setCurrentCommishModal(newModal);
     });
-  }, [
-    setCurrentUser,
-    setCurrentCommishModal,
-    setCurrentPickIsInModal,
-    clearModals,
-  ]);
+  }, [setCurrentUser, setCurrentCommishModal, clearModals]);
+
+  React.useEffect((): any => {
+    socket.on('DraftReopened', (message: string) => {
+      console.log('socket: DraftReopened');
+      const newModal: CommishModal = {
+        visible: true,
+        status: 'The draft is open again!',
+        message,
+        onActionCall: () => {
+          clearModals();
+          setCurrentUser(null);
+        },
+      };
+      setCurrentCommishModal(newModal);
+    });
+  }, [setCurrentUser, setCurrentCommishModal, clearModals]);
 
   React.useEffect((): any => {
     socket.on('DraftStatusUpdate', (status: DraftStatus) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { ButtonWrapper, CommishBlock, Welcome } from './MorePage.styles';
 import { DraftStatusContext, UserContext } from '../../contexts';
 import { Button } from '../../components';
-import { pauseDraft, startDraft } from '../../api';
+import { pauseDraft, reopenDraft, startDraft } from '../../api';
 import { ThreeUpLayout, MobileContentContainer } from '../layouts';
 
 const MorePage: React.FC = () => {
@@ -31,8 +31,13 @@ const MorePage: React.FC = () => {
     }
   };
 
-  const openDraft = () => {
+  const handleReopenDraft = () => {
     console.log('open draft');
+    if (user) {
+      reopenDraft(user?.leagueId, 'message about re-opening draft')
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
+    }
   };
 
   //TODO add Input for entering an optional message useState<string>
@@ -59,7 +64,7 @@ const MorePage: React.FC = () => {
                 </ButtonWrapper>
               )}
               {draftStatus === 'paused' && (
-                <ButtonWrapper onClick={() => openDraft()}>
+                <ButtonWrapper onClick={() => handleReopenDraft()}>
                   <Button label="re-open draft" />
                 </ButtonWrapper>
               )}

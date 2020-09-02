@@ -17,6 +17,7 @@ import {
 import {
   Alert,
   BottomTicker,
+  CommishModal,
   NavBar,
   PickConfirmModal,
   PickIsInModal,
@@ -26,6 +27,7 @@ import SocketListener from './sockets/SocketListener/SocketListener';
 import { useLocation } from 'react-router-dom';
 import {
   AlertContext,
+  CommishModalContext,
   CurrentPickContext,
   DraftContext,
   DraftStatusContext,
@@ -39,6 +41,7 @@ import {
 } from './contexts';
 import {
   useAlert,
+  useCommishModal,
   useCurrentPick,
   useDraft,
   useDraftStatus,
@@ -59,6 +62,7 @@ const ProtectedRoutes = () => {
   const { modal } = React.useContext(PickConfirmModalContext);
   const { pickIsInModal } = React.useContext(PickIsInModalContext);
   const { alert } = React.useContext(AlertContext);
+  const { commishModal } = React.useContext(CommishModalContext);
 
   const getCurrentOwnerName = () => {
     const currPickOwner = draft.owners.find(
@@ -76,6 +80,7 @@ const ProtectedRoutes = () => {
           sticky={alert?.sticky}
         />
       )}
+      <CommishModal {...commishModal} />
       <PickConfirmModal {...modal} />
       <PickIsInModal {...pickIsInModal} />
       <NavBar disabled={location.pathname === ROUTES.APP_LOADING} />
@@ -100,6 +105,7 @@ const ProtectedRoutes = () => {
 
 function App() {
   const alert = useAlert();
+  const commishModal = useCommishModal();
   const currentPick = useCurrentPick();
   const draft = useDraft();
   const draftStatus = useDraftStatus();
@@ -114,38 +120,40 @@ function App() {
   return (
     <UserContext.Provider value={user}>
       <AlertContext.Provider value={alert}>
-        <CurrentPickContext.Provider value={currentPick}>
-          <DraftContext.Provider value={draft}>
-            <DraftStatusContext.Provider value={draftStatus}>
-              <TeamsContext.Provider value={teams}>
-                <PlayersContext.Provider value={players}>
-                  <PicksContext.Provider value={picks}>
-                    <MyTeamContext.Provider value={myTeam}>
-                      <PickConfirmModalContext.Provider value={modal}>
-                        <PickIsInModalContext.Provider value={pickIsInModal}>
-                          <SocketListener>
-                            <Router>
-                              <Switch>
-                                <Route
-                                  path={ROUTES.APP}
-                                  component={ProtectedRoutes}
-                                />
-                                <Route
-                                  path={ROUTES.HOME}
-                                  component={HomePage}
-                                />
-                              </Switch>
-                            </Router>
-                          </SocketListener>
-                        </PickIsInModalContext.Provider>
-                      </PickConfirmModalContext.Provider>
-                    </MyTeamContext.Provider>
-                  </PicksContext.Provider>
-                </PlayersContext.Provider>
-              </TeamsContext.Provider>
-            </DraftStatusContext.Provider>
-          </DraftContext.Provider>
-        </CurrentPickContext.Provider>
+        <CommishModalContext.Provider value={commishModal}>
+          <CurrentPickContext.Provider value={currentPick}>
+            <DraftContext.Provider value={draft}>
+              <DraftStatusContext.Provider value={draftStatus}>
+                <TeamsContext.Provider value={teams}>
+                  <PlayersContext.Provider value={players}>
+                    <PicksContext.Provider value={picks}>
+                      <MyTeamContext.Provider value={myTeam}>
+                        <PickConfirmModalContext.Provider value={modal}>
+                          <PickIsInModalContext.Provider value={pickIsInModal}>
+                            <SocketListener>
+                              <Router>
+                                <Switch>
+                                  <Route
+                                    path={ROUTES.APP}
+                                    component={ProtectedRoutes}
+                                  />
+                                  <Route
+                                    path={ROUTES.HOME}
+                                    component={HomePage}
+                                  />
+                                </Switch>
+                              </Router>
+                            </SocketListener>
+                          </PickIsInModalContext.Provider>
+                        </PickConfirmModalContext.Provider>
+                      </MyTeamContext.Provider>
+                    </PicksContext.Provider>
+                  </PlayersContext.Provider>
+                </TeamsContext.Provider>
+              </DraftStatusContext.Provider>
+            </DraftContext.Provider>
+          </CurrentPickContext.Provider>
+        </CommishModalContext.Provider>
       </AlertContext.Provider>
     </UserContext.Provider>
   );

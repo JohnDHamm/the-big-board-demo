@@ -1,4 +1,5 @@
 import { useAlert } from './useAlert/useAlert';
+import { useCommishModal } from './useCommishModal/useCommishModal';
 import { useCurrentPick } from './useCurrentPick/useCurrentPick';
 import { useDraft } from './useDraft/useDraft';
 import { useDraftStatus } from './useDraftStatus/useDraftStatus';
@@ -12,6 +13,7 @@ import { useUser } from './useUser/useUser';
 
 export {
   useAlert,
+  useCommishModal,
   useCurrentPick,
   useDraft,
   useDraftStatus,

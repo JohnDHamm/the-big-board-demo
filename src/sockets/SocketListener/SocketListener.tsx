@@ -2,6 +2,7 @@ import React from 'react';
 import socketIOClient from 'socket.io-client';
 import {
   AlertContext,
+  CommishModalContext,
   CurrentPickContext,
   DraftContext,
   DraftStatusContext,
@@ -14,13 +15,14 @@ import {
 } from '../../contexts';
 import { calcTotalRounds } from '../../functions';
 import { DURATIONS } from '../../styles';
+import { COMMISH_MODAL_INITIAL_VALUE } from '../../contexts/CommishModalContext/CommishModalContext';
 
 const ROOT_URL = process.env.REACT_APP_API_URL || 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
 
 const SocketListener: React.FC = ({ children }) => {
   const { alert, setCurrentAlert } = React.useContext(AlertContext);
-  const { user } = React.useContext(UserContext);
+  const { user, setCurrentUser } = React.useContext(UserContext);
   const { setCurrentDraftPick } = React.useContext(CurrentPickContext);
   const { draft } = React.useContext(DraftContext);
   const { draftStatus, setCurrentDraftStatus } = React.useContext(
@@ -31,6 +33,7 @@ const SocketListener: React.FC = ({ children }) => {
   const { teams } = React.useContext(TeamsContext);
   const { myTeam, setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { setCurrentPickIsInModal } = React.useContext(PickIsInModalContext);
+  const { setCurrentCommishModal } = React.useContext(CommishModalContext);
 
   const [newPick, setNewPick] = React.useState<DraftSelection>();
 
@@ -152,11 +155,26 @@ const SocketListener: React.FC = ({ children }) => {
   }, []);
 
   React.useEffect((): any => {
-    socket.on('DraftStatusUpdate', (status: DraftStatus) => {
-      // console.log('status', status);
-      setCurrentDraftStatus(status);
+    socket.on('DraftStarted', (message: string) => {
+      const newModal: CommishModal = {
+        visible: true,
+        status: 'The draft has now started!',
+        message,
+        onActionCall: () => {
+          setCurrentUser(null);
+          setCurrentCommishModal(COMMISH_MODAL_INITIAL_VALUE);
+        },
+      };
+      setCurrentCommishModal(newModal);
     });
-  }, [setCurrentDraftStatus]);
+  }, [setCurrentUser, setCurrentCommishModal]);
+
+  // React.useEffect((): any => {
+  //   socket.on('DraftStatusUpdate', (status: DraftStatus) => {
+  //     // console.log('status', status);
+  //     setCurrentDraftStatus(status);
+  //   });
+  // }, [setCurrentDraftStatus]);
 
   React.useEffect(() => {
     // console.log('draftStatus change', draftStatus);

@@ -1,4 +1,5 @@
 import { AlertContext } from './AlertContext/AlertContext';
+import { CommishModalContext } from './CommishModalContext/CommishModalContext';
 import { CurrentPickContext } from './CurrentPickContext/CurrentPickContext';
 import { DraftContext } from './DraftContext/DraftContext';
 import { DraftStatusContext } from './DraftStatusContext/DraftStatusContext';
@@ -12,6 +13,7 @@ import { UserContext } from './UserContext/UserContext';
 
 export {
   AlertContext,
+  CommishModalContext,
   CurrentPickContext,
   DraftContext,
   DraftStatusContext,

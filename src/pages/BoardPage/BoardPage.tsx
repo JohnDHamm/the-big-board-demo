@@ -1,9 +1,14 @@
 import React from 'react';
-import { ContentPadding, PicksContainer } from './BoardPage.styles';
+import {
+  ContentPadding,
+  NotStartedText,
+  PicksContainer,
+} from './BoardPage.styles';
 import { MobileContentContainer, ThreeUpLayout } from '../layouts';
 import {
   DraftRoundTitleBar,
   PickCard,
+  PicksByOwner,
   PicksByPosition,
 } from '../../components';
 import {
@@ -109,10 +114,14 @@ const BoardPage: React.FC = () => {
             </PicksContainer>
           </MobileContentContainer>
         ) : (
-          <h3>DRAFT HAS NOT YET STARTED</h3>
+          <NotStartedText>DRAFT HAS NOT YET STARTED</NotStartedText>
         )
       }
-      right={<div>picks by owner</div>}
+      right={
+        <ContentPadding>
+          <PicksByOwner />
+        </ContentPadding>
+      }
     />
   );
 };

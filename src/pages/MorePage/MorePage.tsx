@@ -2,7 +2,7 @@ import React from 'react';
 import { ButtonWrapper, CommishBlock, Welcome } from './MorePage.styles';
 import { DraftStatusContext, UserContext } from '../../contexts';
 import { Button } from '../../components';
-import { startDraft } from '../../api';
+import { pauseDraft, reopenDraft, startDraft } from '../../api';
 import { ThreeUpLayout, MobileContentContainer } from '../layouts';
 
 const MorePage: React.FC = () => {
@@ -16,18 +16,28 @@ const MorePage: React.FC = () => {
   const handleStartDraft = () => {
     console.log('starting draft');
     if (user) {
-      startDraft(user?.leagueId, 'some message with start').then((res) =>
-        console.log('res', res)
-      );
+      startDraft(user?.leagueId, 'some message with start')
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
     }
   };
 
-  const pauseDraft = () => {
+  const handlePauseDraft = () => {
     console.log('pausing draft');
+    if (user) {
+      pauseDraft(user?.leagueId, 'pausing draft message')
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
+    }
   };
 
-  const openDraft = () => {
+  const handleReopenDraft = () => {
     console.log('open draft');
+    if (user) {
+      reopenDraft(user?.leagueId, 'message about re-opening draft')
+        .then((res) => console.log('res', res))
+        .catch((err) => console.log('err', err));
+    }
   };
 
   //TODO add Input for entering an optional message useState<string>
@@ -49,12 +59,12 @@ const MorePage: React.FC = () => {
                 </ButtonWrapper>
               )}
               {draftStatus === 'open' && (
-                <ButtonWrapper onClick={() => pauseDraft()}>
+                <ButtonWrapper onClick={() => handlePauseDraft()}>
                   <Button label="pause draft" />
                 </ButtonWrapper>
               )}
               {draftStatus === 'paused' && (
-                <ButtonWrapper onClick={() => openDraft()}>
+                <ButtonWrapper onClick={() => handleReopenDraft()}>
                   <Button label="re-open draft" />
                 </ButtonWrapper>
               )}

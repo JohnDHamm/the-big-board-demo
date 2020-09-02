@@ -20,11 +20,11 @@ declare global {
 
   interface PickConfirmContextInterface {
     modal: PickConfirmModal;
-    setCurrentModal: (modalInfo: PickConfirmModal) => void;
+    setCurrentPickConfirmModal: (modalInfo: PickConfirmModal) => void;
   }
 }
 
-export const MODAL_INITIAL_VALUE: PickConfirmModal = {
+export const PICKCONFIRM_MODAL_INITIAL_VALUE: PickConfirmModal = {
   visible: false,
   player: {
     position: '',
@@ -41,11 +41,11 @@ export const MODAL_INITIAL_VALUE: PickConfirmModal = {
   onConfirm: () => null,
 };
 
-export const MODAL_DEFAULT_VALUE: PickConfirmContextInterface = {
-  modal: MODAL_INITIAL_VALUE,
-  setCurrentModal: () => {},
+export const PICKCONFIRM_MODAL_DEFAULT_VALUE: PickConfirmContextInterface = {
+  modal: PICKCONFIRM_MODAL_INITIAL_VALUE,
+  setCurrentPickConfirmModal: () => {},
 };
 
 export const PickConfirmModalContext = React.createContext<
   PickConfirmContextInterface
->(MODAL_DEFAULT_VALUE);
+>(PICKCONFIRM_MODAL_DEFAULT_VALUE);

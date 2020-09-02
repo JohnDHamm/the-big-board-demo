@@ -23,6 +23,8 @@ export const TitleText = styled.p`
 
 export const InputBox = styled(Box)`
   border: 1px solid ${COLORS.SECONDARY_GRAY};
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 `;
 
 export const StyledInput = styled.input`

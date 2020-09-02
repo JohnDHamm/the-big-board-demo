@@ -19,6 +19,7 @@ import NavIcon from './NavIcon/NavIcon';
 import PickCard from './PickCard/PickCard';
 import PickConfirmModal from './PickConfirmModal/PickConfirmModal';
 import PickIsInModal from './PickIsInModal/PickIsInModal';
+import PicksByOwner from './PicksByOwner/PicksByOwner';
 import PicksByPosition from './PicksByPosition/PicksByPosition';
 import PlayerCard from './PlayerCard/PlayerCard';
 import PositionToggle from './PositionToggle/PositionToggle';
@@ -48,6 +49,7 @@ export {
   PickCard,
   PickConfirmModal,
   PickIsInModal,
+  PicksByOwner,
   PicksByPosition,
   PlayerCard,
   PositionToggle,

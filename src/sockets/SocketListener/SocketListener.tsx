@@ -7,6 +7,7 @@ import {
   DraftContext,
   DraftStatusContext,
   MyTeamContext,
+  PickConfirmModalContext,
   PickIsInModalContext,
   PicksContext,
   PlayersContext,
@@ -16,6 +17,8 @@ import {
 import { calcTotalRounds } from '../../functions';
 import { DURATIONS } from '../../styles';
 import { COMMISH_MODAL_INITIAL_VALUE } from '../../contexts/CommishModalContext/CommishModalContext';
+import { PICKISIN_MODAL_INITIAL_VALUE } from '../../contexts/PickIsInModalContext/PickIsInModalContext';
+import { PICKCONFIRM_MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
 
 const ROOT_URL = process.env.REACT_APP_API_URL || 'http://localhost:4001';
 export const socket = socketIOClient(ROOT_URL);
@@ -34,6 +37,9 @@ const SocketListener: React.FC = ({ children }) => {
   const { myTeam, setCurrentMyTeam } = React.useContext(MyTeamContext);
   const { setCurrentPickIsInModal } = React.useContext(PickIsInModalContext);
   const { setCurrentCommishModal } = React.useContext(CommishModalContext);
+  const { setCurrentPickConfirmModal } = React.useContext(
+    PickConfirmModalContext
+  );
 
   const [newPick, setNewPick] = React.useState<DraftSelection>();
 
@@ -149,10 +155,24 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('PickMade', (pick: DraftSelection) => {
-      // console.log('pick made', pick);
+      console.log('pick made', pick);
       setNewPick(pick);
     });
   }, []);
+
+  const clearModals = React.useCallback(() => {
+    console.log('clearing modals');
+    setCurrentAlert(null);
+    setCurrentCommishModal(COMMISH_MODAL_INITIAL_VALUE);
+    setCurrentPickIsInModal(PICKISIN_MODAL_INITIAL_VALUE);
+    setCurrentPickConfirmModal(PICKCONFIRM_MODAL_INITIAL_VALUE);
+    setNewPick(undefined);
+  }, [
+    setCurrentAlert,
+    setCurrentCommishModal,
+    setCurrentPickConfirmModal,
+    setCurrentPickIsInModal,
+  ]);
 
   React.useEffect((): any => {
     socket.on('DraftStarted', (message: string) => {
@@ -161,20 +181,41 @@ const SocketListener: React.FC = ({ children }) => {
         status: 'The draft has now started!',
         message,
         onActionCall: () => {
+          clearModals();
           setCurrentUser(null);
-          setCurrentCommishModal(COMMISH_MODAL_INITIAL_VALUE);
         },
       };
       setCurrentCommishModal(newModal);
     });
-  }, [setCurrentUser, setCurrentCommishModal]);
+  }, [setCurrentUser, setCurrentCommishModal, clearModals]);
 
-  // React.useEffect((): any => {
-  //   socket.on('DraftStatusUpdate', (status: DraftStatus) => {
-  //     // console.log('status', status);
-  //     setCurrentDraftStatus(status);
-  //   });
-  // }, [setCurrentDraftStatus]);
+  React.useEffect((): any => {
+    socket.on('DraftPaused', (message: string) => {
+      console.log('socket: DraftPaused');
+      const newModal: CommishModal = {
+        visible: true,
+        status: 'The draft has been paused!',
+        message,
+        onActionCall: () => {
+          clearModals();
+          setCurrentUser(null);
+        },
+      };
+      setCurrentCommishModal(newModal);
+    });
+  }, [
+    setCurrentUser,
+    setCurrentCommishModal,
+    setCurrentPickIsInModal,
+    clearModals,
+  ]);
+
+  React.useEffect((): any => {
+    socket.on('DraftStatusUpdate', (status: DraftStatus) => {
+      // console.log('status', status);
+      setCurrentDraftStatus(status);
+    });
+  }, [setCurrentDraftStatus]);
 
   React.useEffect(() => {
     // console.log('draftStatus change', draftStatus);

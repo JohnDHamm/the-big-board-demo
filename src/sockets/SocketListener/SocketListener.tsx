@@ -155,13 +155,13 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('PickMade', (pick: DraftSelection) => {
-      console.log('pick made', pick);
+      // console.log('pick made', pick);
       setNewPick(pick);
     });
   }, []);
 
   const clearModals = React.useCallback(() => {
-    console.log('clearing modals');
+    // console.log('clearing modals');
     setCurrentAlert(null);
     setCurrentCommishModal(COMMISH_MODAL_INITIAL_VALUE);
     setCurrentPickIsInModal(PICKISIN_MODAL_INITIAL_VALUE);
@@ -191,7 +191,7 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('DraftPaused', (message: string) => {
-      console.log('socket: DraftPaused');
+      // console.log('socket: DraftPaused');
       const newModal: CommishModal = {
         visible: true,
         status: 'The draft has been paused!',
@@ -207,7 +207,7 @@ const SocketListener: React.FC = ({ children }) => {
 
   React.useEffect((): any => {
     socket.on('DraftReopened', (message: string) => {
-      console.log('socket: DraftReopened');
+      // console.log('socket: DraftReopened');
       const newModal: CommishModal = {
         visible: true,
         status: 'The draft is open again!',

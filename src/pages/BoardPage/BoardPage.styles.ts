@@ -15,3 +15,7 @@ export const NotStartedText = styled.p`
   font-size: 1.5rem;
   color: ${COLORS.DISABLED_GRAY};
 `;
+
+export const OwnerPicksContainer = styled.div`
+  width: 80%;
+`;

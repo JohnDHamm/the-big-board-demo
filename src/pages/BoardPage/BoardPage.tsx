@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ContentPadding,
   NotStartedText,
+  OwnerPicksContainer,
   PicksContainer,
 } from './BoardPage.styles';
 import { MobileContentContainer, ThreeUpLayout } from '../layouts';
@@ -21,6 +22,7 @@ import {
 } from '../../contexts';
 import { calcPickRoundNumber, calcTotalRounds } from '../../functions';
 import isEmpty from 'lodash.isempty';
+import sortBy from 'lodash.sortby';
 
 const BoardPage: React.FC = () => {
   const { currentDraftPick } = React.useContext(CurrentPickContext);
@@ -35,6 +37,7 @@ const BoardPage: React.FC = () => {
   const totalRounds = calcTotalRounds(draft.league.positionSlots);
   const [currentRoundNum, setCurrentRoundNum] = React.useState<number>();
   const [picksByPos, setPicksByPos] = React.useState<PickPosition[][]>([]);
+  const [picksByOwners, setPicksByOwners] = React.useState<OwnerPicks>({});
 
   const renderPicks = (roundNum: number): JSX.Element[] => {
     const listEndNum = roundNum * picksPerRound;
@@ -82,6 +85,29 @@ const BoardPage: React.FC = () => {
   }, [picks, picksPerRound, players, totalRounds]);
 
   React.useEffect(() => {
+    if (!isEmpty(picks)) {
+      const allOwnerPicks: OwnerPicks = {};
+      const owners = sortBy(draft.owners, ['name']);
+      owners.forEach((owner) => {
+        const thisOwnerPicks: OwnerPick[] = [];
+        for (let i = 1; i < Object.keys(picks).length + 1; i++) {
+          if (picks[i].ownerId === owner._id && picks[i].playerId !== '') {
+            const player = players[picks[i].playerId];
+            thisOwnerPicks.push({
+              selectionNumber: i,
+              name: `${player.firstName} ${player.lastName}`,
+              teamAbbv: teams[player.teamId].abbv,
+              position: player.position,
+            });
+          }
+        }
+        allOwnerPicks[owner.name] = thisOwnerPicks;
+      });
+      setPicksByOwners(allOwnerPicks);
+    }
+  }, [draft, picks, players, teams]);
+
+  React.useEffect(() => {
     setCurrentRoundNum(
       calcPickRoundNumber(currentDraftPick.selectionNumber, picksPerRound)
     );
@@ -118,9 +144,11 @@ const BoardPage: React.FC = () => {
         )
       }
       right={
-        <ContentPadding>
-          <PicksByOwner />
-        </ContentPadding>
+        <OwnerPicksContainer>
+          <ContentPadding>
+            <PicksByOwner ownerPicks={picksByOwners} />
+          </ContentPadding>
+        </OwnerPicksContainer>
       }
     />
   );

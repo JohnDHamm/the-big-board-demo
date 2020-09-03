@@ -1,3 +1,4 @@
+import Accordion from './Accordion/Accordion';
 import Alert from './Alert/Alert';
 import Backdrop from './Backdrop/Backdrop';
 import BottomTicker from './BottomTicker/BottomTicker';
@@ -28,6 +29,7 @@ import SortToggle from './SortToggle/SortToggle';
 import WelcomeUser from './WelcomeUser/WelcomeUser';
 
 export {
+  Accordion,
   Alert,
   Backdrop,
   BottomTicker,

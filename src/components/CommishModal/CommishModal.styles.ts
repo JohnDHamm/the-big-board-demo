@@ -1,6 +1,5 @@
 import styled, { keyframes } from 'styled-components';
 import { COLORS, Z_HEIGHTS, FONTS, SCREEN_WIDTHS } from '../../styles';
-import { NFL_TEAMS } from '../../assets/images';
 
 const slideUp = keyframes`
   from {
@@ -23,7 +22,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding: 2rem 1rem; */
   padding-top: 2rem;
 `;
 

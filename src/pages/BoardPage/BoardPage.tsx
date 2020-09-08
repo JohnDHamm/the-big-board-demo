@@ -114,7 +114,6 @@ const BoardPage: React.FC = () => {
   }, [picksPerRound, currentDraftPick]);
 
   React.useEffect(() => {
-    // console.log('draftStatus', draftStatus);
     if (draftStatus !== 'not started') {
       setDraftStarted(true);
     }
@@ -140,7 +139,9 @@ const BoardPage: React.FC = () => {
             </PicksContainer>
           </MobileContentContainer>
         ) : (
-          <NotStartedText>DRAFT HAS NOT YET STARTED</NotStartedText>
+          <ContentPadding>
+            <NotStartedText>DRAFT HAS NOT YET STARTED</NotStartedText>
+          </ContentPadding>
         )
       }
       right={

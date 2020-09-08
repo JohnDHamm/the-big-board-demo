@@ -20,7 +20,7 @@ import {
   CurrentPickContext,
 } from '../../contexts';
 import { PICKCONFIRM_MODAL_INITIAL_VALUE } from '../../contexts/PickConfirmModalContext/PickConfirmModalContext';
-import { makePick, updateDraftStatus } from '../../api';
+import { getPicks, makePick, updateDraftStatus } from '../../api';
 import sortBy from 'lodash.sortby';
 import find from 'lodash.find';
 import { calcTotalRounds } from '../../functions';
@@ -98,22 +98,28 @@ const PlayersPage: React.FC = () => {
 
   const handlePick = (playerId: string) => {
     if (user) {
-      const selPlayer = players[playerId];
-      const playerName = `${selPlayer.firstName} ${selPlayer.lastName}`;
-      const team = teams[selPlayer.teamId];
-      setCurrentPickConfirmModal({
-        visible: true,
-        player: {
-          name: playerName,
-          position: selPlayer.position,
-        },
-        team: {
-          abbv: team.abbv,
-          colors: team.colors,
-        },
-        onCancel: () =>
-          setCurrentPickConfirmModal(PICKCONFIRM_MODAL_INITIAL_VALUE),
-        onConfirm: () => handleConfirm(playerId),
+      // check if current selection # is correct
+      getPicks(user.leagueId).then((picks) => {
+        if (currentDraftPick.selectionNumber === picks.length + 1) {
+          console.log('current #', currentDraftPick.selectionNumber);
+          const selPlayer = players[playerId];
+          const playerName = `${selPlayer.firstName} ${selPlayer.lastName}`;
+          const team = teams[selPlayer.teamId];
+          setCurrentPickConfirmModal({
+            visible: true,
+            player: {
+              name: playerName,
+              position: selPlayer.position,
+            },
+            team: {
+              abbv: team.abbv,
+              colors: team.colors,
+            },
+            onCancel: () =>
+              setCurrentPickConfirmModal(PICKCONFIRM_MODAL_INITIAL_VALUE),
+            onConfirm: () => handleConfirm(playerId),
+          });
+        }
       });
     }
   };

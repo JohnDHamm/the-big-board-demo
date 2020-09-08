@@ -161,7 +161,7 @@ const AppLoadingPage: React.FC = () => {
         owners,
       };
       setCurrentDraft(newDraft);
-      if (!isEmpty(league.draftOrder) && !isEmpty(savedPicks)) {
+      if (!isEmpty(league.draftOrder) && league.draftStatus !== 'not started') {
         const numOwners = owners.length;
         const numRounds = calcTotalRounds(league.positionSlots);
         const totalPicks = numRounds * numOwners;

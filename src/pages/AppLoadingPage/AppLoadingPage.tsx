@@ -161,47 +161,49 @@ const AppLoadingPage: React.FC = () => {
         owners,
       };
       setCurrentDraft(newDraft);
-      const numOwners = owners.length;
-      const numRounds = calcTotalRounds(league.positionSlots);
-      const totalPicks = numRounds * numOwners;
-      const completeDraftOrder: string[] = createCompleteDraftOrder(
-        league.draftOrder,
-        totalPicks
-      );
-      const emptyPick: Pick<DraftPick, 'playerId'> = {
-        playerId: '',
-      };
-      let emptyPicks: DraftPickContext = {};
-      for (let i = 1; i < totalPicks + 1; i++) {
-        emptyPicks[i] = {
-          selectionNumber: i,
-          ownerId: completeDraftOrder[i - 1],
-          ...emptyPick,
+      if (!isEmpty(league.draftOrder) && !isEmpty(savedPicks)) {
+        const numOwners = owners.length;
+        const numRounds = calcTotalRounds(league.positionSlots);
+        const totalPicks = numRounds * numOwners;
+        const completeDraftOrder: string[] = createCompleteDraftOrder(
+          league.draftOrder,
+          totalPicks
+        );
+        const emptyPick: Pick<DraftPick, 'playerId'> = {
+          playerId: '',
         };
-      }
-      const picksContext: DraftPickContext = emptyPicks;
-      const savedPicksContext: DraftPickContext = keyby(
-        savedPicks,
-        'selectionNumber'
-      );
-      if (!isEmpty(savedPicksContext)) {
-        for (let key in savedPicksContext) {
-          picksContext[key] = savedPicksContext[key];
+        let emptyPicks: DraftPickContext = {};
+        for (let i = 1; i < totalPicks + 1; i++) {
+          emptyPicks[i] = {
+            selectionNumber: i,
+            ownerId: completeDraftOrder[i - 1],
+            ...emptyPick,
+          };
         }
-      }
-      let currentPick: CurrentDraftPick = {
-        selectionNumber: 1,
-        ownerId: '',
-      };
-      for (let i = 1; i < Object.keys(picksContext).length + 1; i++) {
-        if (picksContext[i].playerId === '') {
-          currentPick.selectionNumber = i;
-          currentPick.ownerId = picksContext[i].ownerId;
-          break;
+        const picksContext: DraftPickContext = emptyPicks;
+        const savedPicksContext: DraftPickContext = keyby(
+          savedPicks,
+          'selectionNumber'
+        );
+        if (!isEmpty(savedPicksContext)) {
+          for (let key in savedPicksContext) {
+            picksContext[key] = savedPicksContext[key];
+          }
         }
+        let currentPick: CurrentDraftPick = {
+          selectionNumber: 1,
+          ownerId: '',
+        };
+        for (let i = 1; i < Object.keys(picksContext).length + 1; i++) {
+          if (picksContext[i].playerId === '') {
+            currentPick.selectionNumber = i;
+            currentPick.ownerId = picksContext[i].ownerId;
+            break;
+          }
+        }
+        setCurrentPicks(picksContext);
+        setCurrentDraftPick(currentPick);
       }
-      setCurrentPicks(picksContext);
-      setCurrentDraftPick(currentPick);
       setTimeout(() => setPicksAreReady(true), 1500);
     }
   }, [

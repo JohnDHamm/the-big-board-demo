@@ -3,12 +3,12 @@ import { HEIGHTS, SCREEN_WIDTHS } from '../../../styles';
 
 export const Container = styled.div`
   width: 100%;
-  padding-top: ${HEIGHTS.NAVBAR_TABLET};
+  padding-top: ${HEIGHTS.NAVBAR_DESKTOP};
   padding-bottom: calc(${HEIGHTS.BOTTOM_TICKER} + 2rem);
   display: flex;
   justify-content: center;
-  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
-    padding-top: ${HEIGHTS.NAVBAR_MOBILE};
+  @media screen and (${SCREEN_WIDTHS.TABLET}) {
+    padding-top: ${HEIGHTS.NAVBAR_TABLET};
   }
 `;
 

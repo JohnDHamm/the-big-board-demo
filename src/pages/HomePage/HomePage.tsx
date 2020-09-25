@@ -4,13 +4,13 @@ import {
   Content,
   ContentItem,
   ErrorMsg,
-  Page,
   LoadingMsg,
-  Logo,
+  LogoContainer,
+  Page,
   SignIn,
   TopBlock,
 } from './HomePage.styles';
-import { Button, Input, Select } from '../../components';
+import { Button, Input, Logo, Select } from '../../components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import { UserContext } from '../../contexts';
@@ -103,7 +103,9 @@ const HomePage: React.FC = () => {
   return (
     <Page>
       <TopBlock>
-        <Logo>THE BIG BOARD</Logo>
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
       </TopBlock>
       <Content>
         <SignIn>SIGN IN</SignIn>

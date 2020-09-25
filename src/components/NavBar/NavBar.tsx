@@ -1,14 +1,15 @@
 import React from 'react';
 import {
   Container,
-  DisabledTab,
   LogoContainer,
-  LogoLink,
+  MobileTabIcon,
   Tab,
+  TabBlock,
   TabsContainer,
   TabLink,
   TextLogo,
 } from './NavBar.styles';
+import Logo from '../Logo/Logo';
 import { useLocation } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 
@@ -31,30 +32,44 @@ const NavBar: React.FC<Props> = ({ disabled = false }) => {
       {disabled ? (
         <Container>
           <LogoContainer>
-            <TextLogo active={false}>The Big Board</TextLogo>
+            <Logo />
           </LogoContainer>
-          <TabsContainer>
-            <DisabledTab active={false}>Players</DisabledTab>
-            <DisabledTab active={false}>My Team</DisabledTab>
-            <DisabledTab active={false}>More</DisabledTab>
-          </TabsContainer>
         </Container>
       ) : (
         <Container>
           <LogoContainer>
-            <LogoLink to={ROUTES.BOARD}>
-              <TextLogo active={path === ROUTES.BOARD}>The Big Board</TextLogo>
-            </LogoLink>
+            <Logo />
           </LogoContainer>
           <TabsContainer>
+            <TabLink to={ROUTES.BOARD}>
+              <TabBlock>
+                <MobileTabIcon active={path === ROUTES.BOARD}>S</MobileTabIcon>
+                <Tab active={path === ROUTES.BOARD}>Selections</Tab>
+              </TabBlock>
+            </TabLink>
             <TabLink to={ROUTES.PLAYERS}>
-              <Tab active={path === ROUTES.PLAYERS}>Players</Tab>
+              <TabBlock>
+                <MobileTabIcon active={path === ROUTES.PLAYERS}>
+                  P
+                </MobileTabIcon>
+                <Tab active={path === ROUTES.PLAYERS}>Players</Tab>
+              </TabBlock>
             </TabLink>
             <TabLink to={ROUTES.MY_TEAM}>
-              <Tab active={path === ROUTES.MY_TEAM}>My Team</Tab>
+              <TabBlock>
+                <MobileTabIcon active={path === ROUTES.MY_TEAM}>
+                  T
+                </MobileTabIcon>
+                <Tab active={path === ROUTES.MY_TEAM}>My Team</Tab>
+              </TabBlock>
             </TabLink>
             <TabLink to={ROUTES.MORE}>
-              <Tab active={path === ROUTES.MORE}>More</Tab>
+              <TabBlock>
+                <MobileTabIcon active={path === ROUTES.MY_TEAM}>
+                  M
+                </MobileTabIcon>
+                <Tab active={path === ROUTES.MORE}>More</Tab>
+              </TabBlock>
             </TabLink>
           </TabsContainer>
         </Container>

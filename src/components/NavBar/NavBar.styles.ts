@@ -25,11 +25,16 @@ export const Container = styled.div`
 `;
 
 export const LogoContainer = styled.div`
-  padding-bottom: 0.5rem;
+  width: 280px;
   padding-left: 1rem;
+  padding-top: 0.5rem;
+
   @media screen and (${SCREEN_WIDTHS.TABLET}) {
+    width: 240px;
     padding-left: 0rem;
-    padding-bottom: 0;
+  }
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    width: 200px;
   }
 `;
 

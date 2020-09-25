@@ -16,11 +16,11 @@ export const TopBlock = styled.div`
   align-items: center;
 `;
 
-export const Logo = styled.p`
-  margin: 0;
-  font-family: ${FONTS.BLOCKLETTER};
-  font-size: 4rem;
-  color: ${COLORS.PRIMARY_GREEN};
+export const LogoContainer = styled.div`
+  width: 480px;
+  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
+    width: 300px;
+  }
 `;
 
 export const Content = styled.div`

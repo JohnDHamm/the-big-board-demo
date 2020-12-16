@@ -38,23 +38,6 @@ export const LogoContainer = styled.div`
   }
 `;
 
-export const TextLogo = styled.p<{ active: boolean }>`
-  margin: 0;
-  margin-bottom: -0.5rem;
-  font-family: ${FONTS.BLOCKLETTER};
-  font-size: 2.25rem;
-  color: ${(props) =>
-    props.active ? COLORS.PRIMARY_GREEN : COLORS.DISABLED_GRAY};
-  font-weight: 900;
-
-  @media screen and (${SCREEN_WIDTHS.MOBILE}) {
-    font-size: 1.75rem;
-  }
-  @media screen and (${SCREEN_WIDTHS.TABLET}) {
-    margin-bottom: 0;
-  }
-`;
-
 export const TabsContainer = styled.div`
   display: flex;
   margin-right: 2rem;

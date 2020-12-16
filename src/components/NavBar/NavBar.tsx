@@ -7,7 +7,6 @@ import {
   TabBlock,
   TabsContainer,
   TabLink,
-  TextLogo,
 } from './NavBar.styles';
 import Logo from '../Logo/Logo';
 import { useLocation } from 'react-router-dom';

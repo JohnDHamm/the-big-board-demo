@@ -64,9 +64,7 @@ const NavBar: React.FC<Props> = ({ disabled = false }) => {
             </TabLink>
             <TabLink to={ROUTES.MORE}>
               <TabBlock>
-                <MobileTabIcon active={path === ROUTES.MY_TEAM}>
-                  M
-                </MobileTabIcon>
+                <MobileTabIcon active={path === ROUTES.MORE}>M</MobileTabIcon>
                 <Tab active={path === ROUTES.MORE}>More</Tab>
               </TabBlock>
             </TabLink>

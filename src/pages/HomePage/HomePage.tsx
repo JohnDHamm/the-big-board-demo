@@ -108,7 +108,7 @@ const HomePage: React.FC = () => {
         </LogoContainer>
       </TopBlock>
       <Content>
-        <SignIn>SIGN IN</SignIn>
+        <SignIn>DEMO</SignIn>
         {isEmpty(leagues) ? (
           <LoadingMsg>Loading leagues...</LoadingMsg>
         ) : (

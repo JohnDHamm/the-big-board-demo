@@ -38,11 +38,11 @@ const Select: React.FC<Props> = ({ options, onSelect }) => {
   return (
     <div>
       <TitleBlock>
-        <TitleText>{!selection || 'LEAGUE'}</TitleText>
+        <TitleText>{!selection || 'TEAM MANAGER'}</TitleText>
       </TitleBlock>
       <SelectBox onClick={() => setShowOptions(!showOptions)}>
         <SelectBoxText hasSelection={selection !== null}>
-          {selection || 'SELECT LEAGUE'}
+          {selection || 'SELECT TEAM MANAGER'}
         </SelectBoxText>
         <IconBlock>
           <DropdownIcon strokeColor={COLORS.SECONDARY_GRAY} />

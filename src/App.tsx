@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 import { ROUTES } from './routes';
 import {
-  AppLoadingPage,
   BoardPage,
   HomePage,
   MorePage,
@@ -90,13 +89,12 @@ const ProtectedRoutes = () => {
         ticker={<WelcomeUser name={user.name} />}
       />
       <Switch>
-        <Route path={ROUTES.APP_LOADING} component={AppLoadingPage} />
         <Route path={ROUTES.BOARD} component={BoardPage} />
         <Route path={ROUTES.PLAYERS} component={PlayersPage} />
         <Route path={ROUTES.MY_TEAM} component={MyTeamPage} />
         <Route path={ROUTES.MORE} component={MorePage} />
       </Switch>
-      <Redirect to={ROUTES.APP_LOADING} />
+      <Redirect to={ROUTES.BOARD} />
     </div>
   ) : (
     <Redirect to={ROUTES.HOME} />

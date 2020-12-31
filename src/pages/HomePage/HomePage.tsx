@@ -2,15 +2,15 @@ import React from 'react';
 import {
   BtnBlock,
   Content,
-  ContentItem,
+  DemoTitle,
   DescriptionBlock,
-  LoadedText,
+  LoadingText,
+  LoadingFootball,
+  LoadingFootballContainer,
   LogoContainer,
-  NarrowContent,
   Page,
-  SignIn,
+  SelectBlock,
   StyledSpan,
-  TopBlock,
 } from './HomePage.styles';
 import { Button, Logo, Select } from '../../components';
 import { useHistory } from 'react-router-dom';
@@ -42,6 +42,8 @@ import concat from 'lodash.concat';
 import find from 'lodash.find';
 import { DEMO_LEAGUE_ID } from '../../data';
 import { COLORS } from '../../styles';
+
+const Football = require('../../assets/images/football_white_BB.png');
 
 type PageStatus = 'loading' | 'ready' | 'joining';
 
@@ -188,7 +190,7 @@ const HomePage: React.FC = () => {
       setCurrentPlayers(formatPlayers);
       setTimeout(() => {
         setPlayersAreReady(true);
-      }, 1000);
+      }, 2000);
     }
   }, [
     savedPlayers,
@@ -296,7 +298,7 @@ const HomePage: React.FC = () => {
           setCurrentTeams(formatTeams);
           setTimeout(() => {
             setTeamsAreReady(true);
-          }, 1000);
+          }, 2000);
         }
       })
       .then(() => getPlayers())
@@ -338,20 +340,23 @@ const HomePage: React.FC = () => {
 
   return (
     <Page>
-      <TopBlock>
-        <LogoContainer>
-          <Logo />
-        </LogoContainer>
-      </TopBlock>
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
       <Content>
-        <SignIn>DEMO</SignIn>
+        <DemoTitle>DEMO</DemoTitle>
         <DescriptionBlock>
           Welcome to the demo for The Big Board, a fantasy football draft party
           app. This demo lets you experience the fun and excitement of draft day
           without the hassle of league fees or embarrassing trash talk!
         </DescriptionBlock>
         {pageStatus === 'loading' && (
-          <LoadedText>LOADING DEMO LEAGUE DATA</LoadedText>
+          <>
+            <LoadingFootballContainer>
+              <LoadingFootball src={Football} />
+            </LoadingFootballContainer>
+            <LoadingText>LOADING DEMO LEAGUE DATA</LoadingText>
+          </>
         )}
         {pageStatus === 'ready' && (
           <>
@@ -362,11 +367,9 @@ const HomePage: React.FC = () => {
               <StyledSpan> IS ON THE CLOCK (PICK #{nextPickNumber})</StyledSpan>
             </div>
             {nextPickOwner && (
-              <NarrowContent>
-                <BtnBlock onClick={() => userLogin(nextPickOwner)}>
-                  <Button label={`SIGN IN AS ${nextPickOwner.name}`} />
-                </BtnBlock>
-              </NarrowContent>
+              <BtnBlock onClick={() => userLogin(nextPickOwner)}>
+                <Button label={`SIGN IN AS ${nextPickOwner.name}`} />
+              </BtnBlock>
             )}
             <DescriptionBlock>
               If you’d like to experience the app as a second player to see how
@@ -374,9 +377,7 @@ const HomePage: React.FC = () => {
               device or in an incognito browser window, and then sign in as a
               different player from the list below:
             </DescriptionBlock>
-            <ContentItem style={{ width: '400px' }}>
-              {renderSelect()}
-            </ContentItem>
+            <SelectBlock>{renderSelect()}</SelectBlock>
             {alternateOwner && (
               <BtnBlock onClick={() => userLogin(alternateOwner)}>
                 <Button label={`SIGN IN AS ${alternateOwner.name}`} />
@@ -386,9 +387,10 @@ const HomePage: React.FC = () => {
         )}
         {pageStatus === 'joining' && (
           <>
-            <LoadedText loaded={playersAreReady}>
-              JOINING THE DRAFT AS {user?.name}
-            </LoadedText>
+            <LoadingFootballContainer>
+              <LoadingFootball src={Football} />
+            </LoadingFootballContainer>
+            <LoadingText>JOINING THE DRAFT AS {user?.name}</LoadingText>
           </>
         )}
       </Content>

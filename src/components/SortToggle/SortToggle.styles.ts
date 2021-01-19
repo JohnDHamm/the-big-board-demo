@@ -11,6 +11,10 @@ export const Container = styled.div`
 export const FootballContainer = styled.div`
   width: 66px;
   margin: 0.5rem 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const SortText = styled.p<{ selected: boolean }>`

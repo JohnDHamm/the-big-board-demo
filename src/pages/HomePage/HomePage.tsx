@@ -5,14 +5,13 @@ import {
   DemoTitle,
   DescriptionBlock,
   LoadingText,
-  LoadingFootball,
   LoadingFootballContainer,
   LogoContainer,
   Page,
   SelectBlock,
   StyledSpan,
 } from './HomePage.styles';
-import { Button, Logo, Select } from '../../components';
+import { AnimFootball, Button, Logo, Select } from '../../components';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../routes';
 import {
@@ -42,8 +41,6 @@ import concat from 'lodash.concat';
 import find from 'lodash.find';
 import { DEMO_LEAGUE_ID } from '../../data';
 import { COLORS } from '../../styles';
-
-const Football = require('../../assets/images/football_white_BB.png');
 
 type PageStatus = 'loading' | 'ready' | 'joining';
 
@@ -353,7 +350,7 @@ const HomePage: React.FC = () => {
         {pageStatus === 'loading' && (
           <>
             <LoadingFootballContainer>
-              <LoadingFootball src={Football} />
+              <AnimFootball />
             </LoadingFootballContainer>
             <LoadingText>LOADING DEMO LEAGUE DATA</LoadingText>
           </>
@@ -388,7 +385,7 @@ const HomePage: React.FC = () => {
         {pageStatus === 'joining' && (
           <>
             <LoadingFootballContainer>
-              <LoadingFootball src={Football} />
+              <AnimFootball />
             </LoadingFootballContainer>
             <LoadingText>JOINING THE DRAFT AS {user?.name}</LoadingText>
           </>

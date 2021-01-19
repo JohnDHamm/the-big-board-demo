@@ -24,6 +24,10 @@ export const PositionCircle = styled.div<{
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const PositionText = styled.p<{ selected: boolean }>`

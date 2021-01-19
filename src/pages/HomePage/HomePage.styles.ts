@@ -102,8 +102,7 @@ const fade = keyframes`
 
 export const LoadingFootballContainer = styled.div`
   margin-top: 3rem;
-  width: 100px;
-  height: 100px;
+  width: 150px;
 `;
 
 export const LoadingFootball = styled.img`

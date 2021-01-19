@@ -1,5 +1,6 @@
 import Accordion from './Accordion/Accordion';
 import Alert from './Alert/Alert';
+import AnimFootball from './AnimFootball/AnimFootball';
 import Backdrop from './Backdrop/Backdrop';
 import BottomTicker from './BottomTicker/BottomTicker';
 import Button from './Button/Button';
@@ -32,6 +33,7 @@ import WelcomeUser from './WelcomeUser/WelcomeUser';
 export {
   Accordion,
   Alert,
+  AnimFootball,
   Backdrop,
   BottomTicker,
   Button,
